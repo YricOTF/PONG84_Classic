@@ -31,41 +31,48 @@ html,body{font-family:'SF Mono','Courier New','PingFang SC','Microsoft YaHei','N
 .hdr-btn.disabled{opacity:.35;pointer-events:none;}
 #pauseBtn{right:52px;}
 #fsBtn{right:10px;}
-.hud-layer{position:absolute;inset:0;pointer-events:none;z-index:22;}
-.scoreboard{position:absolute;top:4px;left:50%;transform:translateX(-50%);display:none;gap:22px;font-size:22px;font-weight:700;color:var(--crt-mid);align-items:center;text-shadow:0 0 5px var(--crt-glow);}
-.scoreboard.show{display:flex;}
-.scoreboard .active{color:#fff;text-shadow:0 0 12px var(--crt-glow),0 0 26px var(--crt-glow);}
-.scoreboard .score-sep{font-size:11px;color:var(--crt-mid);}
-.inline-status{position:absolute;top:36px;left:50%;transform:translateX(-50%);display:none;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;max-width:76%;pointer-events:none;}
+
+/* 道具提示 —— 标题与电视机的空隙中 */
+.inline-status{position:fixed;top:48px;left:50%;transform:translateX(-50%);display:none;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;max-width:76%;pointer-events:none;z-index:55;}
 .inline-status.show{display:flex;}
-.status-chip{display:flex;align-items:center;gap:5px;font-size:9px;letter-spacing:.4px;padding:2px 8px;border-radius:3px;background:rgba(0,0,0,.7);border:1px solid var(--crt-dim);}
+.status-chip{display:flex;align-items:center;gap:5px;font-size:9px;letter-spacing:.4px;padding:3px 9px;border-radius:3px;background:rgba(0,0,0,.72);border:1px solid var(--crt-dim);}
 .status-chip .chip-name{white-space:nowrap;font-weight:700;}
 .status-chip.hidden{display:none;}
 .mini-bar{display:block;width:30px;height:3px;background:rgba(255,255,255,.16);border-radius:1.5px;overflow:hidden;flex-shrink:0;}
 .mini-bar-fill{display:block;height:100%;width:100%;background:#fff;border-radius:1.5px;transition:width .1s linear;}
-.timer-display{position:absolute;top:62px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--crt-mid);letter-spacing:2px;opacity:0;transition:opacity .3s;text-shadow:0 0 5px var(--crt-glow);}
-.timer-display.show{opacity:1;}
-.timer-display.urgent{color:#ff3333;text-shadow:0 0 10px rgba(255,51,51,.6);}
-.round-display{position:absolute;top:6px;right:6px;font-size:10px;color:var(--crt-mid);letter-spacing:1px;z-index:28;pointer-events:none;text-shadow:0 0 4px rgba(0,0,0,.8);}
-.round-display .rv{color:var(--crt-color);font-weight:700;}
-.shields{position:absolute;top:82px;left:50%;transform:translateX(-50%);display:flex;gap:30px;font-size:10px;color:var(--crt-mid);opacity:0;transition:opacity .3s;}
-.shields.show{opacity:1;}
-.shields.timermode{top:96px;}
-.shield-indicator{display:flex;align-items:center;gap:3px;opacity:0;transition:opacity .3s;}
-.shield-indicator.active{opacity:1;color:var(--crt-color);text-shadow:0 0 8px var(--crt-glow);}
-.shield-indicator svg{width:12px;height:12px;}
+
+/* 加护信息 —— 屏幕右下角 */
 .top-info{position:fixed;right:10px;bottom:10px;display:none;flex-direction:column;align-items:flex-end;gap:3px;z-index:41;pointer-events:none;max-width:220px;}
 .top-info.show{display:flex;}
 .blessing-chip{display:flex;align-items:center;gap:5px;font-size:9.5px;letter-spacing:.4px;padding:3px 8px;border-radius:4px;background:rgba(0,0,0,.75);border:1px solid var(--crt-dim);white-space:nowrap;max-width:100%;}
 .blessing-chip .bl-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;box-shadow:0 0 6px currentColor;}
 .blessing-chip .bl-txt{color:var(--crt-mid);text-overflow:ellipsis;overflow:hidden;}
 .blessing-chip .bl-shield{color:#88aaff;font-weight:700;margin-left:2px;font-size:9px;}
-.stats-panel{position:fixed;top:48px;left:10px;font-size:9px;line-height:1.45;color:var(--crt-mid);letter-spacing:.4px;z-index:41;pointer-events:none;text-shadow:0 0 4px rgba(0,0,0,.9);display:flex;flex-direction:column;gap:1px;font-variant-numeric:tabular-nums;background:rgba(0,0,0,.5);padding:4px 7px;border-radius:4px;border:1px solid rgba(255,255,255,.05);}
+
+.stats-panel{position:fixed;top:76px;left:10px;font-size:9px;line-height:1.45;color:var(--crt-mid);letter-spacing:.4px;z-index:41;pointer-events:none;text-shadow:0 0 4px rgba(0,0,0,.9);display:flex;flex-direction:column;gap:1px;font-variant-numeric:tabular-nums;background:rgba(0,0,0,.5);padding:4px 7px;border-radius:4px;border:1px solid rgba(255,255,255,.05);}
 .stats-panel .stat-row{display:flex;gap:5px;align-items:center;}
 .stats-panel .stat-label{color:var(--crt-mid);}
 .stats-panel .stat-value{color:var(--crt-color);}
 .stats-panel .stat-value.warn{color:#ffaa33;}
 .stats-panel .stat-value.bad{color:#ff4444;}
+
+.hud-layer{position:absolute;inset:0;pointer-events:none;z-index:22;}
+.scoreboard{position:absolute;top:6px;left:50%;transform:translateX(-50%);display:none;gap:22px;font-size:22px;font-weight:700;color:var(--crt-mid);align-items:center;text-shadow:0 0 5px var(--crt-glow);}
+.scoreboard.show{display:flex;}
+.scoreboard .active{color:#fff;text-shadow:0 0 12px var(--crt-glow),0 0 26px var(--crt-glow);}
+.scoreboard .score-sep{font-size:11px;color:var(--crt-mid);}
+.timer-display{position:absolute;top:36px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--crt-mid);letter-spacing:2px;opacity:0;transition:opacity .3s;text-shadow:0 0 5px var(--crt-glow);}
+.timer-display.show{opacity:1;}
+.timer-display.urgent{color:#ff3333;text-shadow:0 0 10px rgba(255,51,51,.6);}
+.round-display{position:absolute;top:6px;right:6px;font-size:10px;color:var(--crt-mid);letter-spacing:1px;z-index:28;pointer-events:none;text-shadow:0 0 4px rgba(0,0,0,.8);}
+.round-display .rv{color:var(--crt-color);font-weight:700;}
+.shields{position:absolute;top:60px;left:50%;transform:translateX(-50%);display:flex;gap:30px;font-size:10px;color:var(--crt-mid);opacity:0;transition:opacity .3s;}
+.shields.show{opacity:1;}
+.shields.timermode{top:74px;}
+.shield-indicator{display:flex;align-items:center;gap:3px;opacity:0;transition:opacity .3s;}
+.shield-indicator.active{opacity:1;color:var(--crt-color);text-shadow:0 0 8px var(--crt-glow);}
+.shield-indicator svg{width:12px;height:12px;}
+
 .game-layout{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;height:100%;padding:0 4px;z-index:5;}
 .ctrl-side{display:none;flex-direction:column;justify-content:center;gap:10px;width:54px;flex-shrink:0;z-index:40;}
 body.show-ctrl .ctrl-side{display:flex;}
@@ -98,6 +105,7 @@ body.simple-mode .mc-btn{box-shadow:none;}
 .crt-label{display:flex;justify-content:space-between;align-items:center;padding:5px 12px 0;font-size:9px;color:#666;letter-spacing:2px;text-transform:uppercase;}
 .crt-power-led{width:6px;height:6px;border-radius:50%;background:var(--crt-color);box-shadow:0 0 6px var(--crt-glow);animation:ledPulse 3s ease-in-out infinite;}
 @keyframes ledPulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+
 .overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;background:radial-gradient(ellipse at center,#0b110b 0%,#040604 100%);z-index:50;transition:opacity .22s ease;overflow-y:auto;overflow-x:hidden;padding:56px 14px 22px;scrollbar-width:thin;-webkit-overflow-scrolling:touch;}
 .overlay::-webkit-scrollbar{width:5px;}
 .overlay::-webkit-scrollbar-thumb{background:var(--crt-dim);border-radius:3px;}
@@ -305,7 +313,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
   .top-info{max-width:160px;}
   .blessing-chip{font-size:8.5px;padding:2px 6px;}
   .status-chip{font-size:8px;padding:2px 6px;}
-  .stats-panel{font-size:8px;left:6px;top:44px;}
+  .stats-panel{font-size:8px;left:6px;top:70px;}
 }
 </style>
 </head>
@@ -325,6 +333,22 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
     <button id="fsBtn" class="hdr-btn" title="全屏" aria-label="全屏">
       <svg id="fsIcon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
     </button>
+  </div>
+
+  <!-- 道具提示 —— 标题与电视机的空隙中 -->
+  <div class="inline-status" id="statusBar">
+    <div class="status-chip hidden" id="chipP1Powerup">
+      <span class="chip-name" id="chipP1PowerupLabel">道具</span>
+      <span class="mini-bar"><span class="mini-bar-fill" id="chipP1PowerupBar"></span></span>
+    </div>
+    <div class="status-chip hidden" id="chipBerserk">
+      <span class="chip-name" style="color:#ff6622;">狂暴</span>
+      <span class="mini-bar"><span class="mini-bar-fill" id="chipBerserkBar" style="background:#ff6622"></span></span>
+    </div>
+    <div class="status-chip hidden" id="chipCurve">
+      <span class="chip-name" style="color:#ffaa33;">变轨</span>
+      <span class="mini-bar"><span class="mini-bar-fill" id="chipCurveBar" style="background:#ffaa33"></span></span>
+    </div>
   </div>
 
   <div class="stats-panel" id="statsPanel">
@@ -353,20 +377,6 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
             <canvas id="gameCanvas"></canvas>
             <div class="hud-layer" id="hudLayer">
               <div class="scoreboard" id="scoreboard"><span id="scorePlayer">0</span><span class="score-sep">—</span><span id="scoreAI">0</span></div>
-              <div class="inline-status" id="statusBar">
-                <div class="status-chip hidden" id="chipP1Powerup">
-                  <span class="chip-name" id="chipP1PowerupLabel">道具</span>
-                  <span class="mini-bar"><span class="mini-bar-fill" id="chipP1PowerupBar"></span></span>
-                </div>
-                <div class="status-chip hidden" id="chipBerserk">
-                  <span class="chip-name" style="color:#ff6622;">狂暴</span>
-                  <span class="mini-bar"><span class="mini-bar-fill" id="chipBerserkBar" style="background:#ff6622"></span></span>
-                </div>
-                <div class="status-chip hidden" id="chipCurve">
-                  <span class="chip-name" style="color:#ffaa33;">变轨</span>
-                  <span class="mini-bar"><span class="mini-bar-fill" id="chipCurveBar" style="background:#ffaa33"></span></span>
-                </div>
-              </div>
               <div class="timer-display" id="timerDisplay">00:00</div>
               <div class="shields" id="shieldsBox">
                 <div class="shield-indicator" id="shieldP1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span id="shieldP1Count">0</span></div>
@@ -880,7 +890,9 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <div class="kv"><span class="k">大球</span><span class="v">球体变为 2 倍大小</span></div>
           <div class="kv"><span class="k">小球</span><span class="v">球体变为一半大小</span></div>
           <div class="kv"><span class="k">长拍</span><span class="v">随机一方球拍加长 50%</span></div>
-          <p>道具剩余时间会在比分下方用彩色短线显示。</p>
+          <p>道具剩余时间显示在标题下方。同一道具不会连续出现。</p>
+          <h3>球速上限</h3>
+          <p>无论经过多少次加速，球的总速度都不会超过初始速度的 1.8 倍。</p>
         </div>
       </div>
       <div class="tab-content" id="manTab-bl">
@@ -962,7 +974,7 @@ let blurAutoPause = true;
 let paddleSpeedSetting = 1.0;
 const getTheme = () => CRT_THEMES[crtTheme];
 
-const SETTINGS_KEY = 'pong84.settings.v9';
+const SETTINGS_KEY = 'pong84.settings.v10';
 function loadSettings() {
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
@@ -1170,7 +1182,7 @@ const banBanner = $('banBanner');
 canvas.width = LOGICAL_W;
 canvas.height = LOGICAL_H;
 
-const isFullscreen = () => !!(document.fullscreenElement || window.webkitFullscreenElement || document.msFullscreenElement);
+const isFullscreen = () => !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
 function lockLandscape() { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {}); }
 function requestFullscreen() {
   const el = document.documentElement;
@@ -1204,7 +1216,7 @@ function layoutGame() {
   const decoPad = mob ? 8 : 12, bezelPad = mob ? 4 : 6, labelH = mob ? 12 : 16;
   const hDeco = 2 * (decoPad + bezelPad);
   const vDeco = 2 * (decoPad + bezelPad) + labelH;
-  const topChrome = mob ? 78 : 88;
+  const topChrome = mob ? 96 : 104;
   const bottomChrome = mob ? 12 : 16;
   const availW = vw - outerPad * 2 - (mob ? (ctrlW + ctrlGap) * 2 : 0);
   const availH = vh - topChrome - bottomChrome - outerPad * 2;
@@ -1251,6 +1263,8 @@ const POWERUPS = {
 const POWERUP_WEIGHTS = { speed:1.25, slow:1.25, big:1.25, small:1.25, long:1.0 };
 const SPIN_CURVE_PROB = 0.40;
 const SPIN_SPEED_PROB = 0.40;
+// 道具基础出现概率（原 0.025 → 0.020，减少 20%）
+const POWERUP_BASE_PROB = 0.020;
 
 let gameRunning = false, paused = false, animId = null, lastFrameTime = 0;
 let currentDiff = 'normal', gameMode = 'ai', winScore = 11;
@@ -1267,6 +1281,7 @@ const p4Paddle = { x:0, y:0, width:12, height:100, baseHeight:100, speed:8, targ
 const ball = { x:0, y:0, size:10, baseSize:10, maxSize:20, speedX:0, speedY:0, baseSpeed:4.5, initialSpeed:4.5, maxSpeed:14, spin:0 };
 let playerScore = 0, aiScore = 0;
 let activePowerups = [], powerupTimer = 0;
+let lastPowerupType = null;
 let isCurvedBall = false, curveTimer = 0, curveChangeTimer = 0, curveMaxTimer = 1;
 let p1ShieldCount = 0, p2ShieldCount = 0;
 let aiMistakeTimer = 0, aiMistakeType = 'none';
@@ -1330,7 +1345,6 @@ function isAiControlled() {
   return false;
 }
 
-/* 完整性追踪器 */
 const Integrity = {
   active: false, hash: '', sessionNonce: '', startTime: 0, hits: 0, p1Hits: 0,
   scoreEvents: [], sampleCounter: 0, frameCount: 0,
@@ -1422,9 +1436,8 @@ function startPingLoop() {
 }
 function stopPingLoop() { if (pingInterval) { clearInterval(pingInterval); pingInterval = null; } stats.ping = -1; }
 
-/* 联机 */
 const MQTT_BROKER = 'wss://broker.emqx.io:8084/mqtt';
-const TOPIC_PREFIX = 'pong84/v20/';
+const TOPIC_PREFIX = 'pong84/v21/';
 let onlineTransport = 'mqtt';
 let mqttClient = null;
 let localId = Math.random().toString(36).slice(2, 10);
@@ -1949,9 +1962,6 @@ function applyRemoteState4(s) {
   updateScore(); updateShields(); updateStatusChips();
 }
 
-/* ============================================================
-   排行榜 + 设备封禁
-   ============================================================ */
 const LB_TOPIC_PREFIX = 'pong84/lb/v5/';
 const LB_BAN_PREFIX = 'pong84/ban/v1/';
 const LB_SECRET = 'pong84_personal_lb_v5_2025_doNotShare_xQ4mK9pL';
@@ -2280,7 +2290,6 @@ function lbConnect() {
     lbPublishMine();
   });
   leaderboardClient.on('message', (topic, payload) => {
-    // 设备封禁
     if (topic.indexOf(LB_BAN_PREFIX) === 0) {
       const devId = topic.slice(LB_BAN_PREFIX.length);
       if (devId === DEVICE_ID) {
@@ -2296,7 +2305,6 @@ function lbConnect() {
       }
       return;
     }
-    // 排行榜条目
     if (topic.indexOf(LB_TOPIC_PREFIX) !== 0) return;
     const id = topic.slice(LB_TOPIC_PREFIX.length);
     if (!id || id.indexOf('/') >= 0 || id.length > 32) return;
@@ -2317,7 +2325,7 @@ function lbConnect() {
   leaderboardClient.on('close', () => { if (leaderboardStatus === 'connected') { leaderboardStatus = 'connecting'; lbScheduleRender(); } });
 }
 function lbPublishMine() {
-  if (deviceBanned) return; // 被封禁的设备不再上传排行榜数据
+  if (deviceBanned) return;
   if (!leaderboardClient || !leaderboardClient.connected) return;
   const entry = lbEntryFromMyStats();
   entry.sig = computeSig(entry);
@@ -2332,7 +2340,7 @@ function lbScoreValidForReport() {
   if (gameMode !== 'ai') return false;
   if (playerScore <= aiScore) return false;
   if (isDebugDirty()) return false;
-  if (deviceBanned) return false; // 设备被封禁，成绩不上报
+  if (deviceBanned) return false;
   if (!lastIntegrityResult || !lastIntegrityResult.ok) return false;
   if (timerMode) {
     if (currentDiff !== 'hell') return false;
@@ -2402,7 +2410,7 @@ const COUNTDOWN_TIPS = [
   '变速变轨球会左右大幅甩动，注意预判',
   '先达到目标分且领先 2 分才能获胜',
   '封顶分 = 目标分 +4，谁先到达谁赢',
-  '道具剩余时间显示在比分下方',
+  '道具剩余时间显示在标题下方',
   '加护只在人机对战中生效',
   '首发加护会让你的一回合拍子由 AI 代打',
   '盾牌加护可叠加到 3 个护盾',
@@ -2411,7 +2419,9 @@ const COUNTDOWN_TIPS = [
   '赌神加护有极小概率直接获胜',
   '狂乱加护在特殊回合会大幅增强',
   '排行榜只统计通过完整性校验的对局',
-  '球拍速度可在设置里调节，不影响计分'
+  '球拍速度可在设置里调节，不影响计分',
+  '同一种道具不会连续出现',
+  '球速上限为初始速度的 1.8 倍'
 ];
 function pickTip() { return COUNTDOWN_TIPS[Math.floor(Math.random() * COUNTDOWN_TIPS.length)]; }
 function showCountdownTip() { if (countdownTip) { countdownTip.textContent = pickTip(); countdownTip.classList.add('show'); } }
@@ -3109,7 +3119,9 @@ function syncUI() {
   updateAiPanelBlocks();
 }
 
-/* 游戏逻辑 */
+/* ============================================================
+   游戏逻辑
+   ============================================================ */
 function recomputeSpeeds() {
   const W = LOGICAL_W, H = LOGICAL_H;
   const d = DIFFICULTY[currentDiff];
@@ -3216,6 +3228,7 @@ function resetBall(direction) {
   ball.size = ball.baseSize; ball.spin = 0;
   isCurvedBall = false; curveTimer = 0; curveChangeTimer = 0; curveMaxTimer = 1;
   activePowerups = []; powerupTimer = 0;
+  lastPowerupType = null;
   aiMistakeTimer = 0; aiMistakeType = 'none';
   phosphorTrail = []; floatTexts = []; berserkStack = 0;
   player.height = player.baseHeight;
@@ -3224,7 +3237,8 @@ function resetBall(direction) {
   p4Paddle.height = p4Paddle.baseHeight;
   ball.baseSpeed = gBallBaseSpeed * cheatBallSpeedMul;
   ball.initialSpeed = ball.baseSpeed;
-  ball.maxSpeed = ball.baseSpeed * 2.8;
+  /* 球速上限：初始速度的 1.8 倍 */
+  ball.maxSpeed = ball.initialSpeed * 1.8;
   ball.x = LOGICAL_W / 2; ball.y = LOGICAL_H / 2;
   const angle = (Math.random() * 0.6 - 0.3) * Math.PI;
   ball.speedX = Math.cos(angle) * ball.baseSpeed * (direction || 1);
@@ -3275,13 +3289,23 @@ function onRoundStart() {
   updateShields();
   updateBlessingDisplay();
 }
+/* 修复：排除上一次出现的道具，避免连续同一道具 */
 function spawnPowerup() {
   const types = Object.keys(POWERUPS);
-  let total = 0;
-  const weights = types.map(t => { const w = POWERUP_WEIGHTS[t] || 1; total += w; return w; });
+  let weights = types.map(t => {
+    let w = POWERUP_WEIGHTS[t] || 1;
+    if (t === lastPowerupType) w = 0;
+    return w;
+  });
+  let total = weights.reduce((a, b) => a + b, 0);
+  if (total <= 0) {
+    weights = types.map(t => POWERUP_WEIGHTS[t] || 1);
+    total = weights.reduce((a, b) => a + b, 0);
+  }
   let r = Math.random() * total;
   let chosen = types[0];
   for (let i = 0; i < types.length; i++) { r -= weights[i]; if (r <= 0) { chosen = types[i]; break; } }
+  lastPowerupType = chosen;
   activePowerups.push({ type: chosen, timer: POWERUPS[chosen].duration, applied:false, maxTimer: POWERUPS[chosen].duration, owner:null });
   AudioEngine.powerup();
   updateStatusChips();
@@ -3697,6 +3721,13 @@ function movePaddles(dt) {
   }
 }
 function moveBall(dt) {
+  /* 总速度硬上限 —— 初始速度的 1.8 倍 */
+  const sp = Math.hypot(ball.speedX, ball.speedY);
+  if (sp > ball.maxSpeed) {
+    const scale = ball.maxSpeed / sp;
+    ball.speedX *= scale;
+    ball.speedY *= scale;
+  }
   const totalDx = ball.speedX * dt, totalDy = ball.speedY * dt;
   const maxStep = Math.max(ball.size * 0.5, 4);
   const dist = Math.hypot(totalDx, totalDy);
@@ -3735,7 +3766,8 @@ function update(dt) {
     ball.speedY += ball.spin * 0.55 * dt;
     ball.spin *= Math.pow(0.978, dt);
     if (Math.abs(ball.spin) <= 0.01) ball.spin = 0;
-    const vyMax = ball.baseSpeed * 2.5;
+    /* Y 速度上限与总速度上限一致 */
+    const vyMax = ball.maxSpeed;
     ball.speedY = clamp(ball.speedY, -vyMax, vyMax);
   }
   if (isCurvedBall) {
@@ -3755,7 +3787,8 @@ function update(dt) {
   }
   powerupTimer += dt;
   const preset = ONLINE_DIFF_PRESETS[onlineDiff] || ONLINE_DIFF_PRESETS.hard;
-  let puProb = 0.025 * debugParams.powerupRate;
+  /* 道具基础概率减少 20%：0.025 → 0.020 */
+  let puProb = POWERUP_BASE_PROB * debugParams.powerupRate;
   if (gameMode === 'online' && playerCount === 4) puProb *= preset.powerupRate;
   if (gameMode !== 'ai') puProb *= 1.15;
   if (powerupTimer > 100 && activePowerups.length === 0 && Math.random() < puProb * dt) { spawnPowerup(); powerupTimer = 0; }
