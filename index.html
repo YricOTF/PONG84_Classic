@@ -31,8 +31,6 @@ html,body{font-family:'SF Mono','Courier New','PingFang SC','Microsoft YaHei','N
 .hdr-btn.disabled{opacity:.35;pointer-events:none;}
 #pauseBtn{right:52px;}
 #fsBtn{right:10px;}
-
-/* 道具提示 —— 标题与电视机的空隙中 */
 .inline-status{position:fixed;top:48px;left:50%;transform:translateX(-50%);display:none;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;max-width:76%;pointer-events:none;z-index:55;}
 .inline-status.show{display:flex;}
 .status-chip{display:flex;align-items:center;gap:5px;font-size:9px;letter-spacing:.4px;padding:3px 9px;border-radius:3px;background:rgba(0,0,0,.72);border:1px solid var(--crt-dim);}
@@ -40,22 +38,18 @@ html,body{font-family:'SF Mono','Courier New','PingFang SC','Microsoft YaHei','N
 .status-chip.hidden{display:none;}
 .mini-bar{display:block;width:30px;height:3px;background:rgba(255,255,255,.16);border-radius:1.5px;overflow:hidden;flex-shrink:0;}
 .mini-bar-fill{display:block;height:100%;width:100%;background:#fff;border-radius:1.5px;transition:width .1s linear;}
-
-/* 加护信息 —— 屏幕右下角 */
 .top-info{position:fixed;right:10px;bottom:10px;display:none;flex-direction:column;align-items:flex-end;gap:3px;z-index:41;pointer-events:none;max-width:220px;}
 .top-info.show{display:flex;}
 .blessing-chip{display:flex;align-items:center;gap:5px;font-size:9.5px;letter-spacing:.4px;padding:3px 8px;border-radius:4px;background:rgba(0,0,0,.75);border:1px solid var(--crt-dim);white-space:nowrap;max-width:100%;}
 .blessing-chip .bl-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;box-shadow:0 0 6px currentColor;}
 .blessing-chip .bl-txt{color:var(--crt-mid);text-overflow:ellipsis;overflow:hidden;}
 .blessing-chip .bl-shield{color:#88aaff;font-weight:700;margin-left:2px;font-size:9px;}
-
 .stats-panel{position:fixed;top:76px;left:10px;font-size:9px;line-height:1.45;color:var(--crt-mid);letter-spacing:.4px;z-index:41;pointer-events:none;text-shadow:0 0 4px rgba(0,0,0,.9);display:flex;flex-direction:column;gap:1px;font-variant-numeric:tabular-nums;background:rgba(0,0,0,.5);padding:4px 7px;border-radius:4px;border:1px solid rgba(255,255,255,.05);}
 .stats-panel .stat-row{display:flex;gap:5px;align-items:center;}
 .stats-panel .stat-label{color:var(--crt-mid);}
 .stats-panel .stat-value{color:var(--crt-color);}
 .stats-panel .stat-value.warn{color:#ffaa33;}
 .stats-panel .stat-value.bad{color:#ff4444;}
-
 .hud-layer{position:absolute;inset:0;pointer-events:none;z-index:22;}
 .scoreboard{position:absolute;top:6px;left:50%;transform:translateX(-50%);display:none;gap:22px;font-size:22px;font-weight:700;color:var(--crt-mid);align-items:center;text-shadow:0 0 5px var(--crt-glow);}
 .scoreboard.show{display:flex;}
@@ -72,7 +66,6 @@ html,body{font-family:'SF Mono','Courier New','PingFang SC','Microsoft YaHei','N
 .shield-indicator{display:flex;align-items:center;gap:3px;opacity:0;transition:opacity .3s;}
 .shield-indicator.active{opacity:1;color:var(--crt-color);text-shadow:0 0 8px var(--crt-glow);}
 .shield-indicator svg{width:12px;height:12px;}
-
 .game-layout{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;height:100%;padding:0 4px;z-index:5;}
 .ctrl-side{display:none;flex-direction:column;justify-content:center;gap:10px;width:54px;flex-shrink:0;z-index:40;}
 body.show-ctrl .ctrl-side{display:flex;}
@@ -105,7 +98,6 @@ body.simple-mode .mc-btn{box-shadow:none;}
 .crt-label{display:flex;justify-content:space-between;align-items:center;padding:5px 12px 0;font-size:9px;color:#666;letter-spacing:2px;text-transform:uppercase;}
 .crt-power-led{width:6px;height:6px;border-radius:50%;background:var(--crt-color);box-shadow:0 0 6px var(--crt-glow);animation:ledPulse 3s ease-in-out infinite;}
 @keyframes ledPulse{0%,100%{opacity:1;}50%{opacity:.35;}}
-
 .overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;background:radial-gradient(ellipse at center,#0b110b 0%,#040604 100%);z-index:50;transition:opacity .22s ease;overflow-y:auto;overflow-x:hidden;padding:56px 14px 22px;scrollbar-width:thin;-webkit-overflow-scrolling:touch;}
 .overlay::-webkit-scrollbar{width:5px;}
 .overlay::-webkit-scrollbar-thumb{background:var(--crt-dim);border-radius:3px;}
@@ -335,7 +327,6 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
     </button>
   </div>
 
-  <!-- 道具提示 —— 标题与电视机的空隙中 -->
   <div class="inline-status" id="statusBar">
     <div class="status-chip hidden" id="chipP1Powerup">
       <span class="chip-name" id="chipP1PowerupLabel">道具</span>
@@ -582,7 +573,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <div class="setting-label">选择位置</div>
           <div class="slot-picker" id="slotPicker"></div>
         </div>
-        <button class="mc-btn start" id="onlineStartBtn" style="display:none;">开始游戏（主机）</button>
+        <button class="mc-btn start" id="onlineStartBtn" data-start style="display:none;">开始游戏（主机）</button>
         <button class="mc-btn start hidden-section" id="clientReadyBtn">准备</button>
       </div>
       <div class="tab-content" id="roomTab-settings">
@@ -872,6 +863,11 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <h3>四人模式</h3>
           <p>每队两人，分列球场左右两侧。球出左边界右队得分，出右边界左队得分。</p>
           <p>两队统一采用「同列」或「异列」形态。同列下可开启互挤（两拍互相推挤）或关闭（各占半场）；异列下两拍都可自由走满全场。</p>
+          <p>四人模式下主机一人也可开始，其余空位由 AI 补齐。客户端加入房间时无需预先选择人数，系统会自动匹配主机模式。</p>
+          <h3>发球</h3>
+          <p>每次得分后 1.5 秒发球，最后 0.5 秒会在球场中央显示发球方向箭头。</p>
+          <h3>AI 攻击性</h3>
+          <p>AI 会主动打出角度，难度越高越倾向于攻击边角。</p>
           <h3>完整性校验</h3>
           <p>每局游戏都会实时记录球、球拍的位置轨迹与得分事件。整局结束后会校验对局时长、击球次数、得分事件数量与间隔，任何一项不符成绩都会被丢弃。</p>
           <h3>设备识别</h3>
@@ -916,6 +912,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <div class="kv"><span class="k">局域网</span><span class="v">不配置 STUN 服务器，仅使用本机网络候选地址，多台设备在同一 Wi-Fi 下直连</span></div>
           <h3>流程</h3>
           <p>主机点击「创建房间」得到 6 位房间号 → 对方点击「加入房间」输入房间号 → 建立 P2P 直连 → 主机配置房间设置 → 主机点击开始。</p>
+          <p>客户端无需预先选择人数，加入时会自动匹配主机模式。</p>
         </div>
       </div>
     </div>
@@ -974,7 +971,7 @@ let blurAutoPause = true;
 let paddleSpeedSetting = 1.0;
 const getTheme = () => CRT_THEMES[crtTheme];
 
-const SETTINGS_KEY = 'pong84.settings.v10';
+const SETTINGS_KEY = 'pong84.settings.v12';
 function loadSettings() {
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
@@ -1263,8 +1260,9 @@ const POWERUPS = {
 const POWERUP_WEIGHTS = { speed:1.25, slow:1.25, big:1.25, small:1.25, long:1.0 };
 const SPIN_CURVE_PROB = 0.40;
 const SPIN_SPEED_PROB = 0.40;
-// 道具基础出现概率（原 0.025 → 0.020，减少 20%）
 const POWERUP_BASE_PROB = 0.020;
+const SERVE_DELAY_FRAMES = 90;
+const SERVE_HINT_FRAMES = 30;
 
 let gameRunning = false, paused = false, animId = null, lastFrameTime = 0;
 let currentDiff = 'normal', gameMode = 'ai', winScore = 11;
@@ -1437,7 +1435,7 @@ function startPingLoop() {
 function stopPingLoop() { if (pingInterval) { clearInterval(pingInterval); pingInterval = null; } stats.ping = -1; }
 
 const MQTT_BROKER = 'wss://broker.emqx.io:8084/mqtt';
-const TOPIC_PREFIX = 'pong84/v21/';
+const TOPIC_PREFIX = 'pong84/v23/';
 let onlineTransport = 'mqtt';
 let mqttClient = null;
 let localId = Math.random().toString(36).slice(2, 10);
@@ -1722,12 +1720,21 @@ async function createRoom() {
   mqttClient.on('message', (topic, payload) => {
     let msg; try { msg = JSON.parse(payload.toString()); } catch (e) { return; }
     if (playerCount === 4) {
-      if (msg.from && msg.type && (msg.type === 'hello4' || msg.type === 'answer4' || msg.type === 'ice4')) handleFourSignal(msg, msg.from);
-    } else handleSignalMessage(msg);
+      if (msg.from && (msg.type === 'hello4' || msg.type === 'answer4' || msg.type === 'ice4')) {
+        handleFourSignal(msg, msg.from);
+      }
+    } else {
+      if (!msg.from && (msg.type === 'hello' || msg.type === 'offer' || msg.type === 'answer' || msg.type === 'ice')) {
+        handleSignalMessage(msg);
+      }
+    }
   });
   mqttClient.on('error', () => { onlineInstruction.textContent = '信令服务器连接失败'; showRetry(); });
   connectTimeout = setTimeout(() => { if (playerCount === 2 && (!rtcDc || rtcDc.readyState !== 'open')) onlineInstruction.textContent = '等待连接超时'; }, 60000);
 }
+
+/* 关键修复：客户端同时向主机发送双人和四人的 hello，
+   由主机根据自己模式响应，客户端自动切换模式 */
 async function joinRoom(rawCode) {
   const code = (rawCode || '').trim();
   if (!/^[0-9]{6}$/.test(code)) { onlineInstruction.textContent = '请输入 6 位数字房间号'; return false; }
@@ -1738,61 +1745,107 @@ async function joinRoom(rawCode) {
   stats.ping = -1; updateStatsDisplay();
   if (rtcPc) { try { rtcPc.close(); } catch (e) {} rtcPc = null; }
   if (mqttClient) { try { mqttClient.end(true); } catch (e) {} mqttClient = null; }
-  if (playerCount === 4) {
-    if (typeof mqtt === 'undefined') { onlineInstruction.textContent = 'MQTT 库未加载'; showRetry(); return true; }
-    try {
-      mqttClient = mqtt.connect(MQTT_BROKER, { clean: true, connectTimeout: 8000, reconnectPeriod: 0, clientId: 'pong84_c4_' + localId });
-    } catch (e) { onlineInstruction.textContent = '加入失败：' + e.message; showRetry(); return true; }
-    mqttClient.on('connect', () => {
-      hideRetry();
-      mqttClient.subscribe(clientTopic(code, localId), { qos: 1 }, (err) => {
-        if (err) { onlineInstruction.textContent = '订阅失败'; showRetry(); return; }
-        startFourHello();
-      });
-    });
-    mqttClient.on('message', (topic, payload) => {
-      let msg; try { msg = JSON.parse(payload.toString()); } catch (e) { return; }
-      handleFourClientSignal(msg);
-    });
-    mqttClient.on('error', () => { onlineInstruction.textContent = '信令服务器连接失败'; showRetry(); });
-    connectTimeout = setTimeout(() => { if (!rtcDc) { onlineInstruction.textContent = '连接超时'; showRetry(); } }, 60000);
-    return true;
-  }
-  createRtc();
-  rtcPc.ondatachannel = (e) => setupDataChannel(e.channel);
+
+  // 统一创建 rtcPc，模式由主机响应决定
+  rtcPc = new RTCPeerConnection(rtcConfig());
+  rtcPc.onicecandidate = (e) => {
+    if (!e.candidate) return;
+    if (mqttClient && mqttClient.connected) {
+      try {
+        mqttClient.publish(roomTopic(currentRoom, 'host'), JSON.stringify({ type: 'ice', candidate: e.candidate }), { qos: 1 });
+        mqttClient.publish(roomTopic(currentRoom, 'host'), JSON.stringify({ type: 'ice4', from: localId, candidate: e.candidate }), { qos: 1 });
+      } catch (err) {}
+    }
+  };
+  rtcPc.ondatachannel = (e) => {
+    if (playerCount === 4) setupFourClientChannel(e.channel);
+    else setupDataChannel(e.channel);
+  };
+  rtcPc.onconnectionstatechange = () => {
+    if (!rtcPc) return;
+    const st = rtcPc.connectionState;
+    if (st === 'failed') { onlineInstruction.textContent = '连接失败，请重试'; showRetry(); }
+    else if (st === 'disconnected' || st === 'closed') {
+      if (gameRunning) endGame('连接断开', false);
+      onlineInstruction.textContent = '连接已断开';
+    }
+  };
+
   updateRoomUI();
+
   if (typeof mqtt === 'undefined') { onlineInstruction.textContent = 'MQTT 库未加载'; showRetry(); return true; }
   try {
     mqttClient = mqtt.connect(MQTT_BROKER, { clean: true, connectTimeout: 8000, reconnectPeriod: 0, clientId: 'pong84_c_' + code + '_' + Math.random().toString(16).slice(2, 10) });
   } catch (e) { onlineInstruction.textContent = '加入失败：' + e.message; showRetry(); return true; }
   mqttClient.on('connect', () => {
     hideRetry();
-    mqttClient.subscribe(roomTopic(code, 'client'), { qos: 1 }, (err) => {
+    mqttClient.subscribe(clientTopic(code, localId), { qos: 1 }, (err) => {
       if (err) { onlineInstruction.textContent = '订阅失败'; showRetry(); return; }
-      startHelloLoop();
+      startDualModeProbe();
     });
   });
   mqttClient.on('message', (topic, payload) => {
     let msg; try { msg = JSON.parse(payload.toString()); } catch (e) { return; }
-    handleSignalMessage(msg);
+    if (helloInterval && (msg.type === 'welcome4' || msg.type === 'offer' || msg.type === 'offer4')) {
+      clearInterval(helloInterval); helloInterval = null;
+    }
+    if (msg.type === 'welcome4') {
+      if (playerCount !== 4) {
+        playerCount = 4;
+        document.querySelectorAll('[data-opt-players]').forEach(b => b.classList.toggle('selected', parseInt(b.dataset.optPlayers, 10) === 4));
+        rtcPc.ondatachannel = (e) => setupFourClientChannel(e.channel);
+      }
+      handleFourClientSignal(msg);
+    } else if (msg.type === 'offer4') {
+      if (playerCount !== 4) {
+        playerCount = 4;
+        document.querySelectorAll('[data-opt-players]').forEach(b => b.classList.toggle('selected', parseInt(b.dataset.optPlayers, 10) === 4));
+        rtcPc.ondatachannel = (e) => setupFourClientChannel(e.channel);
+      }
+      handleFourClientSignal(msg);
+    } else if (msg.type === 'offer') {
+      if (playerCount !== 2) {
+        playerCount = 2;
+        document.querySelectorAll('[data-opt-players]').forEach(b => b.classList.toggle('selected', parseInt(b.dataset.optPlayers, 10) === 2));
+        rtcPc.ondatachannel = (e) => setupDataChannel(e.channel);
+      }
+      handleSignalMessage(msg);
+    } else if (msg.type === 'answer' || msg.type === 'ice') {
+      handleSignalMessage(msg);
+    } else if (msg.type === 'answer4' || msg.type === 'ice4') {
+      handleFourClientSignal(msg);
+    } else if (msg.type === 'full') {
+      onlineInstruction.textContent = '房间已满，无法加入'; showRetry();
+    } else if (msg.type === 'kicked') {
+      onlineInstruction.textContent = '你已被主机移出房间';
+      onlineCleanup(); resetOnlinePanel(); navStack = []; applyPanel('main');
+    }
   });
   mqttClient.on('error', () => { onlineInstruction.textContent = '信令服务器连接失败'; showRetry(); });
-  connectTimeout = setTimeout(() => { if (!rtcDc || rtcDc.readyState !== 'open') { onlineInstruction.textContent = '连接超时'; showRetry(); } }, 60000);
+  connectTimeout = setTimeout(() => { if (!rtcDc) { onlineInstruction.textContent = '连接超时'; showRetry(); } }, 60000);
   return true;
 }
+
 let fourHelloCount = 0;
-function startFourHello() {
+function startDualModeProbe() {
   if (helloInterval) clearInterval(helloInterval);
-  fourHelloCount = 0;
+  let count = 0;
   const send = () => {
-    fourHelloCount++;
-    signalSend('host', { type: 'hello4', from: localId, name: playerName, prefSlot: 0 });
-    if (fourHelloCount >= 25) { clearInterval(helloInterval); helloInterval = null; }
+    count++;
+    if (hostBusy) return;
+    if (mqttClient && mqttClient.connected) {
+      try {
+        mqttClient.publish(roomTopic(currentRoom, 'host'), JSON.stringify({ type: 'hello' }), { qos: 1 });
+        mqttClient.publish(roomTopic(currentRoom, 'host'), JSON.stringify({ type: 'hello4', from: localId, name: playerName, prefSlot: 0 }), { qos: 1 });
+      } catch (e) {}
+    }
+    if (count >= 25) { clearInterval(helloInterval); helloInterval = null; }
   };
   send();
   helloInterval = setInterval(send, 700);
-  onlineInstruction.textContent = '已发送请求，等待主机分配位置...';
+  onlineInstruction.textContent = '已发送请求，等待主机响应...';
 }
+
 function handleFourClientSignal(msg) {
   if (!msg || typeof msg !== 'object') return;
   if (msg.type === 'full') { onlineInstruction.textContent = '房间已满，无法加入'; showRetry(); return; }
@@ -1809,16 +1862,11 @@ function handleFourClientSignal(msg) {
     return;
   }
   if (msg.type === 'offer4') {
-    if (!rtcPc) {
-      rtcPc = new RTCPeerConnection(rtcConfig());
-      rtcPc.onicecandidate = (e) => { if (e.candidate) signalSend('host', { type:'ice4', from: localId, candidate: e.candidate }); };
-      rtcPc.ondatachannel = (e) => { setupFourClientChannel(e.channel); };
-      rtcPc.onconnectionstatechange = () => {
-        const st = rtcPc.connectionState;
-        if (st === 'failed' || st === 'closed') onlineInstruction.textContent = '连接已断开';
-      };
-    }
-    rtcPc.setRemoteDescription(msg.sdp).then(() => rtcPc.createAnswer())
+    rtcPc.setRemoteDescription(msg.sdp).then(() => {
+      for (const c of pendingCandidates) rtcPc.addIceCandidate(c).catch(()=>{});
+      pendingCandidates = [];
+      return rtcPc.createAnswer();
+    })
       .then(ans => rtcPc.setLocalDescription(ans))
       .then(() => { signalSend('host', { type:'answer4', from: localId, sdp: rtcPc.localDescription }); })
       .catch(() => {});
@@ -2421,7 +2469,9 @@ const COUNTDOWN_TIPS = [
   '排行榜只统计通过完整性校验的对局',
   '球拍速度可在设置里调节，不影响计分',
   '同一种道具不会连续出现',
-  '球速上限为初始速度的 1.8 倍'
+  '球速上限为初始速度的 1.8 倍',
+  'AI 会主动打出角度',
+  '发球前 0.5 秒提示方向'
 ];
 function pickTip() { return COUNTDOWN_TIPS[Math.floor(Math.random() * COUNTDOWN_TIPS.length)]; }
 function showCountdownTip() { if (countdownTip) { countdownTip.textContent = pickTip(); countdownTip.classList.add('show'); } }
@@ -2907,7 +2957,7 @@ function updateRoomUI() {
       const info = slotInfo[s];
       if (info && !info.isAI) { humanCount++; if (s === 1 || info.ready) readyCount++; }
     }
-    const canStart = isHost && humanCount >= 2 && readyCount === humanCount;
+    const canStart = isHost && (playerCount === 4 ? humanCount >= 1 : humanCount >= 2) && readyCount === humanCount;
     onlineStartBtn.style.display = canStart ? 'block' : 'none';
     clientReadyBtn.classList.toggle('hidden-section', isHost);
     if (!isHost) {
@@ -3119,9 +3169,7 @@ function syncUI() {
   updateAiPanelBlocks();
 }
 
-/* ============================================================
-   游戏逻辑
-   ============================================================ */
+/* 游戏逻辑 */
 function recomputeSpeeds() {
   const W = LOGICAL_W, H = LOGICAL_H;
   const d = DIFFICULTY[currentDiff];
@@ -3237,7 +3285,6 @@ function resetBall(direction) {
   p4Paddle.height = p4Paddle.baseHeight;
   ball.baseSpeed = gBallBaseSpeed * cheatBallSpeedMul;
   ball.initialSpeed = ball.baseSpeed;
-  /* 球速上限：初始速度的 1.8 倍 */
   ball.maxSpeed = ball.initialSpeed * 1.8;
   ball.x = LOGICAL_W / 2; ball.y = LOGICAL_H / 2;
   const angle = (Math.random() * 0.6 - 0.3) * Math.PI;
@@ -3289,7 +3336,6 @@ function onRoundStart() {
   updateShields();
   updateBlessingDisplay();
 }
-/* 修复：排除上一次出现的道具，避免连续同一道具 */
 function spawnPowerup() {
   const types = Object.keys(POWERUPS);
   let weights = types.map(t => {
@@ -3392,7 +3438,11 @@ function checkPaddle(paddle, isPlayer, slot) {
   if (isLeft && movingRight) return false;
   if (!isLeft && !movingRight) return false;
   const ph = paddle.height;
-  const hitPos = clamp((ball.y - (paddle.y + ph / 2)) / (ph / 2), -1, 1);
+  let hitPos = clamp((ball.y - (paddle.y + ph / 2)) / (ph / 2), -1, 1);
+  if (!isLeft && isAiControlled()) {
+    const attackMul = { easy: 1.05, normal: 1.25, hard: 1.45, hell: 1.65 }[currentDiff] || 1.25;
+    hitPos = clamp(hitPos * attackMul, -1, 1);
+  }
   const angle = hitPos * (Math.PI / 3);
   ball.baseSpeed = Math.min(ball.baseSpeed + ball.initialSpeed * 0.05, ball.maxSpeed);
   const dir = isLeft ? 1 : -1;
@@ -3450,11 +3500,11 @@ function handleOutOfBounds() {
     berserkStack = 0;
     const wasCurved = isCurvedBall;
     if (wasCurved && gameMode === 'ai' && playerBlessing === 'frenzy' && Math.random() < 0.15) {
-      ballRespawnDelay = 30; nextBallDirection = 1; return;
+      ballRespawnDelay = SERVE_DELAY_FRAMES; nextBallDirection = 1; return;
     }
     if (p1ShieldCount > 0) {
       p1ShieldCount--; updateShields(); updateBlessingDisplay(); AudioEngine.shieldBreak();
-      ballRespawnDelay = 30; nextBallDirection = 1; return;
+      ballRespawnDelay = SERVE_DELAY_FRAMES; nextBallDirection = 1; return;
     }
     let scoreAmount = 1;
     if (gameMode === 'ai' && aiBlessing === 'spear' && Math.random() < 0.06) scoreAmount = 2;
@@ -3466,19 +3516,19 @@ function handleOutOfBounds() {
       endGame('赌神加护触发！电脑直接获胜', false); return;
     }
     if (checkWin()) return;
-    ballRespawnDelay = 30; nextBallDirection = 1;
+    ballRespawnDelay = SERVE_DELAY_FRAMES; nextBallDirection = 1;
   } else if (ball.x > LOGICAL_W) {
     berserkStack = 0;
     const wasCurved = isCurvedBall;
     if (wasCurved && gameMode === 'ai' && aiBlessing === 'frenzy' && Math.random() < 0.15) {
-      ballRespawnDelay = 30; nextBallDirection = -1; return;
+      ballRespawnDelay = SERVE_DELAY_FRAMES; nextBallDirection = -1; return;
     }
     if (p2ShieldCount > 0) {
       let ignoreShield = false;
       if (gameMode === 'ai' && playerBlessing === 'spear' && Math.random() < 0.5) ignoreShield = true;
       if (!ignoreShield) {
         p2ShieldCount--; updateShields(); updateBlessingDisplay(); AudioEngine.shieldBreak();
-        ballRespawnDelay = 30; nextBallDirection = -1; return;
+        ballRespawnDelay = SERVE_DELAY_FRAMES; nextBallDirection = -1; return;
       }
     }
     let scoreAmount = 1;
@@ -3490,7 +3540,7 @@ function handleOutOfBounds() {
       endGame('赌神加护触发！直接获胜', true); return;
     }
     if (checkWin()) return;
-    ballRespawnDelay = 30; nextBallDirection = -1;
+    ballRespawnDelay = SERVE_DELAY_FRAMES; nextBallDirection = -1;
   }
 }
 function endTimerGame() {
@@ -3721,7 +3771,6 @@ function movePaddles(dt) {
   }
 }
 function moveBall(dt) {
-  /* 总速度硬上限 —— 初始速度的 1.8 倍 */
   const sp = Math.hypot(ball.speedX, ball.speedY);
   if (sp > ball.maxSpeed) {
     const scale = ball.maxSpeed / sp;
@@ -3766,7 +3815,6 @@ function update(dt) {
     ball.speedY += ball.spin * 0.55 * dt;
     ball.spin *= Math.pow(0.978, dt);
     if (Math.abs(ball.spin) <= 0.01) ball.spin = 0;
-    /* Y 速度上限与总速度上限一致 */
     const vyMax = ball.maxSpeed;
     ball.speedY = clamp(ball.speedY, -vyMax, vyMax);
   }
@@ -3787,7 +3835,6 @@ function update(dt) {
   }
   powerupTimer += dt;
   const preset = ONLINE_DIFF_PRESETS[onlineDiff] || ONLINE_DIFF_PRESETS.hard;
-  /* 道具基础概率减少 20%：0.025 → 0.020 */
   let puProb = POWERUP_BASE_PROB * debugParams.powerupRate;
   if (gameMode === 'online' && playerCount === 4) puProb *= preset.powerupRate;
   if (gameMode !== 'ai') puProb *= 1.15;
@@ -3852,6 +3899,42 @@ function drawPaddle(paddle, theme, opts) {
       ctx.shadowBlur = 0;
     }
   }
+}
+function drawServeHint() {
+  if (ballRespawnDelay <= 0 || ballRespawnDelay > SERVE_HINT_FRAMES) return;
+  const t = getTheme();
+  const cx = LOGICAL_W / 2;
+  const cy = LOGICAL_H / 2;
+  const progress = 1 - (ballRespawnDelay / SERVE_HINT_FRAMES);
+  const alpha = 0.35 + 0.65 * progress;
+  const dir = nextBallDirection;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.strokeStyle = t.color;
+  ctx.shadowColor = t.glow;
+  ctx.shadowBlur = 20;
+  ctx.lineWidth = 4;
+  ctx.lineCap = 'round';
+  const arrowLen = 50 + 40 * progress;
+  ctx.beginPath();
+  ctx.moveTo(cx - dir * 15, cy);
+  ctx.lineTo(cx + dir * arrowLen, cy);
+  ctx.stroke();
+  const headBack = cx + dir * (arrowLen - 20);
+  ctx.beginPath();
+  ctx.moveTo(cx + dir * arrowLen, cy);
+  ctx.lineTo(headBack, cy - 14);
+  ctx.moveTo(cx + dir * arrowLen, cy);
+  ctx.lineTo(headBack, cy + 14);
+  ctx.stroke();
+  const ringR = 8 + (1 - progress) * 22;
+  ctx.globalAlpha = alpha * 0.6;
+  ctx.beginPath();
+  ctx.arc(cx, cy, ringR, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.restore();
+  ctx.shadowBlur = 0;
+  ctx.globalAlpha = 1;
 }
 function draw() {
   const t = getTheme();
@@ -3920,6 +4003,7 @@ function draw() {
     drawPaddle(player, t, { side:'left', shields: p1ShieldCount, firstStrike: playerControlledByAI, frenzy: frenzyActiveP1, longPaddle: p1IsLong, berserk: p1IsBerserk });
     drawPaddle(ai, t, { side:'right', shields: p2ShieldCount, frenzy: frenzyActiveP2, longPaddle: p2IsLong });
   }
+  drawServeHint();
   if (ballRespawnDelay <= 0 && gameRunning && !countdownActive) {
     const r = ball.size / 2;
     if (!simple && phosphorTrail.length > 0) {
