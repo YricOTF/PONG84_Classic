@@ -576,7 +576,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
         <div id="roomBlessingWrap" style="width:100%;margin-top:8px;">
           <div class="setting-label">我的加护</div>
           <div class="opt-grid" id="roomBlessingPicker"></div>
-          <div class="room-hint">加护在本局游戏中生效</div>
+          <div class="room-hint">四人模式加护强度为单人的 65%</div>
         </div>
         <button class="mc-btn start" id="onlineStartBtn" data-start style="display:none;">开始游戏（主机）</button>
         <button class="mc-btn start hidden-section" id="clientReadyBtn">准备</button>
@@ -586,11 +586,8 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <div class="side-menu" id="roomSideMenu">
             <button class="side-item active" data-rset="diff">难度预设</button>
             <button class="side-item" data-rset="mode">比赛模式</button>
-            <button class="side-item" data-rset="score">获胜比分</button>
-            <button class="side-item" data-rset="time">比赛时长</button>
-            <button class="side-item" data-rset="speed">球速倍率</button>
+            <button class="side-item" data-rset="feel">球速与手感</button>
             <button class="side-item" data-rset="team">队伍形态</button>
-            <button class="side-item" data-rset="paddle">拍长/拍速</button>
           </div>
           <div class="side-body">
             <div class="rset-pane active" data-rsetpane="diff">
@@ -609,10 +606,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
                 <button class="opt-btn selected" data-opt-omode="normal">常规</button>
                 <button class="opt-btn" data-opt-omode="timer">计时赛</button>
               </div>
-              <p class="room-hint" style="text-align:left;margin-top:8px;">常规：先达到比分且领先 2 分获胜<br>计时赛：时间结束分高者胜</p>
-            </div>
-            <div class="rset-pane" data-rsetpane="score">
-              <div class="setting-label">获胜比分</div>
+              <div class="setting-label" style="margin-top:10px;" id="onlineScoreLabel">获胜比分</div>
               <div class="opt-grid" id="onlineScoreBlock">
                 <button class="opt-btn" data-opt-score="5">5</button>
                 <button class="opt-btn" data-opt-score="7">7</button>
@@ -620,18 +614,15 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
                 <button class="opt-btn" data-opt-score="15">15</button>
                 <button class="opt-btn" data-opt-score="21">21</button>
               </div>
-              <p class="room-hint" style="text-align:left;margin-top:8px;">仅常规模式生效</p>
-            </div>
-            <div class="rset-pane" data-rsetpane="time">
-              <div class="setting-label">比赛时长</div>
+              <div class="setting-label" style="margin-top:10px;" id="onlineTimeLabel">比赛时长</div>
               <div class="opt-grid" id="onlineTimeBlock">
                 <button class="opt-btn" data-opt-otime="30">30 秒</button>
                 <button class="opt-btn selected" data-opt-otime="60">1 分钟</button>
                 <button class="opt-btn" data-opt-otime="120">2 分钟</button>
               </div>
-              <p class="room-hint" style="text-align:left;margin-top:8px;">仅计时赛模式生效</p>
+              <p class="room-hint" style="text-align:left;margin-top:8px;">常规：先达到比分且领先 2 分获胜<br>计时赛：时间结束分高者胜</p>
             </div>
-            <div class="rset-pane" data-rsetpane="speed">
+            <div class="rset-pane" data-rsetpane="feel">
               <div class="setting-label">球速倍率</div>
               <div class="opt-grid">
                 <button class="opt-btn" data-opt-obspeed="0.8">0.8x</button>
@@ -640,6 +631,19 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
                 <button class="opt-btn" data-opt-obspeed="1.5">1.5x</button>
                 <input type="text" inputmode="decimal" class="score-input" id="onlineSpeedCustom" placeholder="自定义">
               </div>
+              <div class="setting-label" style="margin-top:10px;">球拍长度（全局）</div>
+              <div class="debug-row" style="padding:4px 0;">
+                <label style="flex:0 0 40px;font-size:9px;">长度</label>
+                <input type="range" id="onlinePaddleMul" min="0.5" max="1.8" step="0.05" value="1.0">
+                <span class="debug-val" id="onlinePaddleMulVal" style="flex:0 0 44px;">1.00x</span>
+              </div>
+              <div class="setting-label" style="margin-top:8px;">球拍速度（全局）</div>
+              <div class="debug-row" style="padding:4px 0;">
+                <label style="flex:0 0 40px;font-size:9px;">速度</label>
+                <input type="range" id="onlinePaddleSpeed" min="0.5" max="1.8" step="0.05" value="1.0">
+                <span class="debug-val" id="onlinePaddleSpeedVal" style="flex:0 0 44px;">1.00x</span>
+              </div>
+              <p class="room-hint" style="text-align:left;margin-top:8px;">所有玩家的球拍长度与速度统一使用以上倍率</p>
             </div>
             <div class="rset-pane" data-rsetpane="team">
               <div class="setting-label">队伍形态（两队统一）</div>
@@ -653,13 +657,6 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
                 <button class="opt-btn" data-opt-squeeze="off">关闭</button>
               </div>
               <p class="room-hint" style="text-align:left;margin-top:8px;">同列+互挤：两拍可互相推挤 · 同列+不挤：各占半场 · 异列：全高自由</p>
-            </div>
-            <div class="rset-pane" data-rsetpane="paddle">
-              <div class="setting-label">拍长倍率（四人模式生效）</div>
-              <div id="paddleMulPanel" style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;"></div>
-              <div class="setting-label">拍速倍率（四人模式生效）</div>
-              <div id="paddleSpeedPanel" style="display:flex;flex-direction:column;gap:6px;"></div>
-              <p class="room-hint" style="text-align:left;margin-top:8px;">每个槽位单独设置，仅主机可调</p>
             </div>
           </div>
         </div>
@@ -881,10 +878,8 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <p>每次得分后 1.5 秒发球，最后 0.5 秒会在球场中央显示发球方向箭头。</p>
           <h3>AI 攻击性</h3>
           <p>AI 会主动打出角度，难度越高越倾向于攻击边角。</p>
-          <h3>完整性校验</h3>
-          <p>每局游戏都会实时记录球、球拍的位置轨迹与得分事件。整局结束后会校验对局时长、击球次数、得分事件数量与间隔，任何一项不符成绩都会被丢弃。</p>
-          <h3>设备识别</h3>
-          <p>为防止排行榜被批量刷分，游戏会根据浏览器环境生成一个匿名设备标识，用于识别异常设备。设备标识不含任何个人信息，只用于反作弊。</p>
+          <h3>帧率与物理</h3>
+          <p>游戏物理使用固定步长更新，与屏幕刷新率解耦。无论显示器是 60Hz、90Hz 还是 144Hz，比赛节奏完全一致。</p>
         </div>
       </div>
       <div class="tab-content" id="manTab-ball">
@@ -906,18 +901,25 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
       </div>
       <div class="tab-content" id="manTab-bl">
         <div class="manual">
-          <h3>加护一览</h3>
+          <h3>加护一览（单人 / 双人模式）</h3>
           <div class="kv"><span class="k">无加护</span><span class="v">没有任何特殊效果。</span></div>
-          <div class="kv"><span class="k">首发</span><span class="v">在第 1、11、21……回合，你的球拍会由地狱 AI 代打一回合。</span></div>
-          <div class="kv"><span class="k">旋转</span><span class="v">击球位置更容易打出旋转球，判定范围比正常大 40%。</span></div>
-          <div class="kv"><span class="k">长拍</span><span class="v">球拍永久加长 30%（不会与道具长拍叠加）。</span></div>
-          <div class="kv"><span class="k">狂乱</span><span class="v">在第 8、16、24……回合，双方特殊球触发率提升 50%。特殊球即将让你丢分时，有 15% 概率被挡下。</span></div>
-          <div class="kv"><span class="k">狂暴</span><span class="v">每次击球使球速提升 7%，最多叠加 4 层（+28%）。丢分后重置。</span></div>
-          <div class="kv"><span class="k">盾牌</span><span class="v">每回合开始时 10% 概率获得一个护盾（最多 3 个）。护盾可以抵消一次失分。</span></div>
-          <div class="kv"><span class="k">长矛</span><span class="v">进球时有 6% 概率一次得两分。并且有 50% 概率无视对方护盾。</span></div>
-          <div class="kv"><span class="k">赌神</span><span class="v">进球时有 0.008% 概率直接获得整局胜利。</span></div>
-          <h3>联机模式加护</h3>
-          <p>在联机房间内每位玩家可以独立选择加护，主机在房间设置里可为四人模式各个槽位单独调整拍长与拍速。</p>
+          <div class="kv"><span class="k">首发</span><span class="v">第 1、11、21……回合，你的球拍会由地狱 AI 代打一回合。</span></div>
+          <div class="kv"><span class="k">旋转</span><span class="v">旋转球判定范围比正常大 40%。</span></div>
+          <div class="kv"><span class="k">长拍</span><span class="v">球拍永久加长 30%。</span></div>
+          <div class="kv"><span class="k">狂乱</span><span class="v">8n 回合特殊球几率 +50%；特殊球即将丢分时 15% 概率不丢分。</span></div>
+          <div class="kv"><span class="k">狂暴</span><span class="v">每次击球球速 +7%，最多 4 层（+28%）。</span></div>
+          <div class="kv"><span class="k">盾牌</span><span class="v">每回合 10% 获得护盾，上限 3 个。</span></div>
+          <div class="kv"><span class="k">长矛</span><span class="v">进球 6% 双倍；50% 无视护盾。</span></div>
+          <div class="kv"><span class="k">赌神</span><span class="v">进球 0.008% 概率直接获胜。</span></div>
+          <h3>四人模式加护（削弱约 35%）</h3>
+          <div class="kv"><span class="k">旋转</span><span class="v">判定范围 +25%</span></div>
+          <div class="kv"><span class="k">长拍</span><span class="v">球拍 +20%</span></div>
+          <div class="kv"><span class="k">狂乱</span><span class="v">特殊球几率 +35%；10% 不丢分</span></div>
+          <div class="kv"><span class="k">狂暴</span><span class="v">每层 +5%，最高 +20%</span></div>
+          <div class="kv"><span class="k">盾牌</span><span class="v">7% 概率，上限 2 个</span></div>
+          <div class="kv"><span class="k">长矛</span><span class="v">双倍 4%；穿透 35%</span></div>
+          <div class="kv"><span class="k">赌神</span><span class="v">0.005% 概率直接获胜</span></div>
+          <p>每个玩家可独立选择自己的加护，游戏开始后在屏幕右下角显示自己和敌方队伍主槽位的加护。</p>
         </div>
       </div>
       <div class="tab-content" id="manTab-net">
@@ -952,7 +954,6 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
 
 <script>
 "use strict";
-
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
   || (navigator.maxTouchPoints > 0 && 'ontouchstart' in window);
 if (isMobile) document.body.classList.add('is-mobile');
@@ -960,6 +961,22 @@ if (isMobile) document.body.classList.add('is-mobile');
 const LOGICAL_W = 960, LOGICAL_H = 540, FPS_REF = 60;
 const BALL_SPEED_BONUS = 1.1;
 const clamp = (v, a, b) => (v < a ? a : (v > b ? b : v));
+
+/* 四人模式加护削弱系数 */
+const FOUR_NERF = {
+  spinDiv: 1.25,        // 旋转判定：0.4 / 1.25（单人 /1.4）
+  longPaddleMul: 1.20,  // 长拍：+20%（单人 +30%）
+  frenzyCurveMul: 1.35, // 狂乱特殊球几率倍数（单人 1.5）
+  frenzySaveChance: 0.10, // 狂乱不丢分概率（单人 0.15）
+  berserkPer: 0.05,     // 狂暴每层加成（单人 0.07）
+  shieldChance: 0.07,   // 盾牌概率（单人 0.10）
+  shieldMax: 2,         // 盾牌上限（单人 3）
+  spearDouble: 0.04,    // 长矛双倍概率（单人 0.06）
+  spearPierce: 0.35,    // 长矛穿透概率（单人 0.50）
+  gamblerChance: 0.00005 // 赌神概率（单人 0.00008）
+};
+
+function isFourPlayerOnline() { return gameMode === 'online' && playerCount === 4; }
 
 function hexToRgb(hex) {
   const h = hex.replace('#','');
@@ -986,7 +1003,7 @@ let blurAutoPause = true;
 let paddleSpeedSetting = 1.0;
 const getTheme = () => CRT_THEMES[crtTheme];
 
-const SETTINGS_KEY = 'pong84.settings.v13';
+const SETTINGS_KEY = 'pong84.settings.v15';
 function loadSettings() {
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
@@ -1173,6 +1190,10 @@ const onlineRetry = $('onlineRetry');
 const btnRetrySignal = $('btnRetrySignal');
 const transportHint = $('transportHint');
 const onlineSpeedCustomEl = $('onlineSpeedCustom');
+const onlinePaddleMulEl = $('onlinePaddleMul');
+const onlinePaddleMulVal = $('onlinePaddleMulVal');
+const onlinePaddleSpeedEl = $('onlinePaddleSpeed');
+const onlinePaddleSpeedVal = $('onlinePaddleSpeedVal');
 const roomPlayerList = $('roomPlayerList');
 const slotPickerWrap = $('slotPickerWrap');
 const slotPicker = $('slotPicker');
@@ -1250,12 +1271,12 @@ const DIFFICULTY = {
   easy:   { aiSpeedMul:0.253, aiReaction:0.28, paddleHeightRatio:0.26,  ballCrossTime:1.65, curveProb:0.015,  mistakeRate:0.30, mistakeDuration:[20,50], label:'简单' },
   normal: { aiSpeedMul:0.627, aiReaction:0.56, paddleHeightRatio:0.22,  ballCrossTime:1.65, curveProb:0.0275, mistakeRate:0.15, mistakeDuration:[15,35], label:'普通' },
   hard:   { aiSpeedMul:0.946, aiReaction:0.72, paddleHeightRatio:0.185, ballCrossTime:1.32, curveProb:0.04,   mistakeRate:0.07, mistakeDuration:[10,25], label:'困难' },
-  hell:   { aiSpeedMul:1.14,  aiReaction:0.80, paddleHeightRatio:0.15,  ballCrossTime:1.32, curveProb:0.055,  mistakeRate:0.02, mistakeDuration:[5,15],  label:'地狱' }
+  hell:   { aiSpeedMul:1.06,  aiReaction:0.80, paddleHeightRatio:0.15,  ballCrossTime:1.32, curveProb:0.055,  mistakeRate:0.02, mistakeDuration:[5,15],  label:'地狱' }
 };
-DIFFICULTY.easy.curveProb   *= 0.6;
-DIFFICULTY.normal.curveProb *= 0.6;
-DIFFICULTY.hard.curveProb   *= 0.6;
-DIFFICULTY.hell.curveProb   *= 0.6;
+DIFFICULTY.easy.curveProb   *= 0.66;
+DIFFICULTY.normal.curveProb *= 0.66;
+DIFFICULTY.hard.curveProb   *= 0.66;
+DIFFICULTY.hell.curveProb   *= 0.66;
 
 const ONLINE_DIFF_PRESETS = {
   easy:   { label:'简单', paddleHeightMul: 1.20, powerupRate: 1.35, curveProbMul: 0.55, ballSpeedMul: 0.85, desc:'球拍偏长 · 道具率高 · 变轨少 · 球速慢' },
@@ -1315,7 +1336,6 @@ let frenzyActiveP1 = false;
 let frenzyActiveP2 = false;
 let berserkStack = 0;
 const BERSERK_MAX = 4;
-const BERSERK_PER = 0.07;
 let gameStartedOnce = false;
 
 let playerCount = 2;
@@ -1351,7 +1371,6 @@ function drawFloatTexts() {
   ctx.shadowBlur = 0;
   ctx.globalAlpha = 1;
 }
-
 function isAiControlled() {
   if (onlineRole !== null) return false;
   if (gameMode === 'ai') return true;
@@ -1450,7 +1469,7 @@ function startPingLoop() {
 function stopPingLoop() { if (pingInterval) { clearInterval(pingInterval); pingInterval = null; } stats.ping = -1; }
 
 const MQTT_BROKER = 'wss://broker.emqx.io:8084/mqtt';
-const TOPIC_PREFIX = 'pong84/v24/';
+const TOPIC_PREFIX = 'pong84/v26/';
 let onlineTransport = 'mqtt';
 let mqttClient = null;
 let localId = Math.random().toString(36).slice(2, 10);
@@ -1459,6 +1478,8 @@ let remotePaddleY = null, netAccum = 0, pendingCandidates = [];
 let hostBusy = false, connectTimeout = null, helloInterval = null;
 let onlineBallSpeed = 1.0, onlineMode = 'normal', onlineTimerSeconds = 60;
 let onlineDiff = 'hard';
+let onlinePaddleMul = 1.0;
+let onlinePaddleSpeed = 1.0;
 let clientReady = false, remoteName = '对手';
 
 let fourPeers = {};
@@ -1466,8 +1487,6 @@ let mySlot = 1;
 let slotInfo = { 1:null, 2:null, 3:null, 4:null };
 let myBlessing = 'none';
 let roomBlessings = { 1:'none', 2:'none', 3:'none', 4:'none' };
-let roomPaddleMul = { 1:1.0, 2:1.0, 3:1.0, 4:1.0 };
-let roomPaddleSpeed = { 1:1.0, 2:1.0, 3:1.0, 4:1.0 };
 
 function generateRoomCode() { return String(Math.floor(Math.random() * 1000000)).padStart(6, '0'); }
 function roomTopic(room, side) { return TOPIC_PREFIX + room + '/' + side; }
@@ -1632,8 +1651,8 @@ function broadcastRoomState() {
     diff: onlineDiff, mode: onlineMode, timerSeconds: onlineTimerSeconds,
     ballSpeed: onlineBallSpeed, winScore: winScore,
     blessings: roomBlessings,
-    paddleMul: roomPaddleMul,
-    paddleSpeed: roomPaddleSpeed
+    paddleMul: onlinePaddleMul,
+    paddleSpeed: onlinePaddleSpeed
   };
   for (const cid in fourPeers) {
     const p = fourPeers[cid];
@@ -1686,6 +1705,8 @@ function setupDataChannel(channel) {
         if (typeof msg.ballSpeed === 'number') onlineBallSpeed = msg.ballSpeed;
         if (typeof msg.diff === 'string') currentDiff = msg.diff;
         if (msg.blessings) roomBlessings = msg.blessings;
+        if (typeof msg.paddleMul === 'number') onlinePaddleMul = msg.paddleMul;
+        if (typeof msg.paddleSpeed === 'number') onlinePaddleSpeed = msg.paddleSpeed;
         updateControlsHint();
         startGame();
       }
@@ -1696,9 +1717,7 @@ function setupDataChannel(channel) {
       roomBlessings[2] = String(msg.value || 'none');
       try { channel.send(JSON.stringify({ t:'roomBlessings', values: roomBlessings })); } catch (e) {}
     }
-    else if (msg.t === 'roomBlessings') {
-      roomBlessings = msg.values || roomBlessings;
-    }
+    else if (msg.t === 'roomBlessings') { roomBlessings = msg.values || roomBlessings; }
     else if (msg.t === 'end') { if (onlineRole === 'client') { endGame(msg.msg, msg.isWin); } }
     else if (msg.t === 'ping') { try { rtcDc.send(JSON.stringify({ t:'pong', ts: msg.ts })); } catch (e) {} }
     else if (msg.t === 'pong') { const rtt = Date.now() - msg.ts; if (rtt >= 0 && rtt < 5000) stats.ping = rtt; }
@@ -1725,8 +1744,6 @@ function onlineCleanup() {
   clientReady = false; remoteName = '对手';
   myBlessing = 'none';
   roomBlessings = { 1:'none', 2:'none', 3:'none', 4:'none' };
-  roomPaddleMul = { 1:1.0, 2:1.0, 3:1.0, 4:1.0 };
-  roomPaddleSpeed = { 1:1.0, 2:1.0, 3:1.0, 4:1.0 };
   stats.ping = -1; updateStatsDisplay();
 }
 function showRetry() { onlineRetry.classList.remove('hidden-section'); }
@@ -1946,8 +1963,8 @@ function setupFourClientChannel(channel) {
         if (roomBlessings[mySlot]) myBlessing = roomBlessings[mySlot];
         updateRoomUI();
       }
-      if (msg.paddleMul) roomPaddleMul = msg.paddleMul;
-      if (msg.paddleSpeed) roomPaddleSpeed = msg.paddleSpeed;
+      if (typeof msg.paddleMul === 'number') onlinePaddleMul = msg.paddleMul;
+      if (typeof msg.paddleSpeed === 'number') onlinePaddleSpeed = msg.paddleSpeed;
       syncUI();
     } else if (msg.t === 'start4') {
       winScore = msg.winScore || winScore;
@@ -1958,8 +1975,8 @@ function setupFourClientChannel(channel) {
       if (msg.formation) teamFormation = msg.formation;
       if (typeof msg.squeeze === 'boolean') teamSqueeze = msg.squeeze;
       if (msg.blessings) roomBlessings = msg.blessings;
-      if (msg.paddleMul) roomPaddleMul = msg.paddleMul;
-      if (msg.paddleSpeed) roomPaddleSpeed = msg.paddleSpeed;
+      if (typeof msg.paddleMul === 'number') onlinePaddleMul = msg.paddleMul;
+      if (typeof msg.paddleSpeed === 'number') onlinePaddleSpeed = msg.paddleSpeed;
       playerCount = 4;
       startGame();
     } else if (msg.t === 'state4') { applyRemoteState4(msg); }
@@ -1978,6 +1995,7 @@ function getPaddleBySlot(slot) {
   if (slot === 4) return p4Paddle;
   return null;
 }
+function getBlessingBySlot(slot) { return roomBlessings[slot] || 'none'; }
 function sendHostState() {
   if (playerCount === 4) { sendHostState4(); return; }
   if (!rtcDc || rtcDc.readyState !== 'open') return;
@@ -2515,7 +2533,9 @@ const COUNTDOWN_TIPS = [
   '同一种道具不会连续出现',
   '球速上限为初始速度的 1.8 倍',
   'AI 会主动打出角度',
-  '发球前 0.5 秒提示方向'
+  '发球前 0.5 秒提示方向',
+  '物理帧率与屏幕刷新率已解耦',
+  '四人模式每位玩家可选独立加护'
 ];
 function pickTip() { return COUNTDOWN_TIPS[Math.floor(Math.random() * COUNTDOWN_TIPS.length)]; }
 function showCountdownTip() { if (countdownTip) { countdownTip.textContent = pickTip(); countdownTip.classList.add('show'); } }
@@ -2823,6 +2843,24 @@ if (onlineSpeedCustomEl) {
     }
   });
 }
+if (onlinePaddleMulEl) {
+  onlinePaddleMulEl.value = onlinePaddleMul;
+  onlinePaddleMulVal.textContent = onlinePaddleMul.toFixed(2) + 'x';
+  onlinePaddleMulEl.addEventListener('input', () => {
+    onlinePaddleMul = parseFloat(onlinePaddleMulEl.value);
+    onlinePaddleMulVal.textContent = onlinePaddleMul.toFixed(2) + 'x';
+    if (onlineRole === 'host') broadcastRoomState();
+  });
+}
+if (onlinePaddleSpeedEl) {
+  onlinePaddleSpeedEl.value = onlinePaddleSpeed;
+  onlinePaddleSpeedVal.textContent = onlinePaddleSpeed.toFixed(2) + 'x';
+  onlinePaddleSpeedEl.addEventListener('input', () => {
+    onlinePaddleSpeed = parseFloat(onlinePaddleSpeedEl.value);
+    onlinePaddleSpeedVal.textContent = onlinePaddleSpeed.toFixed(2) + 'x';
+    if (onlineRole === 'host') broadcastRoomState();
+  });
+}
 document.querySelectorAll('[data-opt-omode]').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('[data-opt-omode]').forEach(b => b.classList.remove('selected'));
@@ -3016,7 +3054,7 @@ function updateRoomUI() {
     $('roomTab-settings').classList.remove('active');
     document.querySelectorAll('#roomTabs .tab').forEach(t => t.classList.toggle('active', t.dataset.roomtab === 'info'));
   }
-  // 渲染加护选择器
+  // 加护选择器
   const bw = $('roomBlessingWrap');
   const bp = $('roomBlessingPicker');
   if (bw && bp) {
@@ -3039,44 +3077,21 @@ function updateRoomUI() {
       });
     });
   }
-  // 渲染拍长/拍速面板（仅主机可调）
-  const pmp = $('paddleMulPanel');
-  const psp = $('paddleSpeedPanel');
-  if (pmp && psp) {
-    const isHostRoom = onlineRole === 'host';
-    const slotNames = ['','左上','左下','右上','右下'];
-    pmp.innerHTML = [1,2,3,4].map(s => {
-      const v = roomPaddleMul[s];
-      return '<div class="debug-row" style="padding:2px 0;">' +
-        '<label style="flex:0 0 40px;font-size:9px;">' + slotNames[s] + '</label>' +
-        '<input type="range" data-pmul="' + s + '" min="0.5" max="2" step="0.05" value="' + v + '"' + (isHostRoom ? '' : ' disabled') + '>' +
-        '<span class="debug-val" style="flex:0 0 40px;font-size:9px;">' + v.toFixed(2) + 'x</span>' +
-      '</div>';
-    }).join('');
-    psp.innerHTML = [1,2,3,4].map(s => {
-      const v = roomPaddleSpeed[s];
-      return '<div class="debug-row" style="padding:2px 0;">' +
-        '<label style="flex:0 0 40px;font-size:9px;">' + slotNames[s] + '</label>' +
-        '<input type="range" data-pspd="' + s + '" min="0.5" max="2" step="0.05" value="' + v + '"' + (isHostRoom ? '' : ' disabled') + '>' +
-        '<span class="debug-val" style="flex:0 0 40px;font-size:9px;">' + v.toFixed(2) + 'x</span>' +
-      '</div>';
-    }).join('');
-    pmp.querySelectorAll('[data-pmul]').forEach(inp => {
-      inp.addEventListener('input', () => {
-        const s = parseInt(inp.dataset.pmul, 10);
-        roomPaddleMul[s] = parseFloat(inp.value);
-        inp.nextElementSibling.textContent = roomPaddleMul[s].toFixed(2) + 'x';
-        if (onlineRole === 'host') broadcastRoomState();
-      });
-    });
-    psp.querySelectorAll('[data-pspd]').forEach(inp => {
-      inp.addEventListener('input', () => {
-        const s = parseInt(inp.dataset.pspd, 10);
-        roomPaddleSpeed[s] = parseFloat(inp.value);
-        inp.nextElementSibling.textContent = roomPaddleSpeed[s].toFixed(2) + 'x';
-        if (onlineRole === 'host') broadcastRoomState();
-      });
-    });
+  // 刷新房间设置里的滑块与选中态
+  if (onlinePaddleMulEl) { onlinePaddleMulEl.value = onlinePaddleMul; onlinePaddleMulVal.textContent = onlinePaddleMul.toFixed(2) + 'x'; onlinePaddleMulEl.disabled = !isHost; }
+  if (onlinePaddleSpeedEl) { onlinePaddleSpeedEl.value = onlinePaddleSpeed; onlinePaddleSpeedVal.textContent = onlinePaddleSpeed.toFixed(2) + 'x'; onlinePaddleSpeedEl.disabled = !isHost; }
+  // 比赛模式区块：常规显示比分，计时显示时长
+  const scoreLabel = $('onlineScoreLabel');
+  const scoreBlock = $('onlineScoreBlock');
+  const timeLabel = $('onlineTimeLabel');
+  const timeBlock = $('onlineTimeBlock');
+  if (scoreLabel && scoreBlock && timeLabel && timeBlock) {
+    scoreLabel.style.opacity = onlineMode === 'timer' ? '.4' : '1';
+    scoreBlock.style.opacity = onlineMode === 'timer' ? '.4' : '1';
+    timeLabel.style.opacity = onlineMode === 'normal' ? '.4' : '1';
+    timeBlock.style.opacity = onlineMode === 'normal' ? '.4' : '1';
+    scoreBlock.style.pointerEvents = onlineMode === 'timer' ? 'none' : '';
+    timeBlock.style.pointerEvents = onlineMode === 'normal' ? 'none' : '';
   }
 }
 function kickSlot(slot) {
@@ -3115,7 +3130,9 @@ document.querySelectorAll('[data-start]').forEach(btn => {
               timerSeconds: onlineTimerSeconds,
               ballSpeed: onlineBallSpeed,
               diff: onlineDiff,
-              blessings: roomBlessings
+              blessings: roomBlessings,
+              paddleMul: onlinePaddleMul,
+              paddleSpeed: onlinePaddleSpeed
             }));
           } catch (e) {}
         } else {
@@ -3132,8 +3149,8 @@ document.querySelectorAll('[data-start]').forEach(btn => {
                   formation: teamFormation,
                   squeeze: teamSqueeze,
                   blessings: roomBlessings,
-                  paddleMul: roomPaddleMul,
-                  paddleSpeed: roomPaddleSpeed
+                  paddleMul: onlinePaddleMul,
+                  paddleSpeed: onlinePaddleSpeed
                 }));
               } catch (e) {}
             }
@@ -3288,32 +3305,40 @@ function recomputeSpeeds() {
   let onlineMul = 1.0;
   if (gameMode === 'online') onlineMul = onlineBallSpeed * (playerCount === 4 ? preset.ballSpeedMul : 1);
   gBallBaseSpeed = (W / (d.ballCrossTime * FPS_REF)) * debugParams.ballSpeedMul * BALL_SPEED_BONUS * onlineMul;
-  player.speed = gPaddleSpeed;
-  ai.speed = isAiControlled() ? gPaddleSpeed * d.aiSpeedMul * debugParams.aiSpeedMul : gPaddleSpeed;
-  p2Paddle.speed = gPaddleSpeed;
-  p4Paddle.speed = gPaddleSpeed;
-  const onlinePaddleMul = (gameMode === 'online' && playerCount === 4) ? preset.paddleHeightMul : 1;
-  player.baseHeight = H * d.paddleHeightRatio * debugParams.paddleHeightMul * onlinePaddleMul;
-  ai.baseHeight = H * d.paddleHeightRatio * debugParams.paddleHeightMul * onlinePaddleMul;
-  if (playerBlessing === 'longPaddle' && (gameMode === 'ai' || gameMode === 'online')) player.baseHeight *= 1.3;
-  if (aiBlessing === 'longPaddle' && gameMode === 'online') ai.baseHeight *= 1.3;
-  p2Paddle.baseHeight = H * d.paddleHeightRatio * debugParams.paddleHeightMul * onlinePaddleMul;
-  p4Paddle.baseHeight = H * d.paddleHeightRatio * debugParams.paddleHeightMul * onlinePaddleMul;
 
-  // 联机四人模式：按槽位应用拍长/拍速
-  if (gameMode === 'online' && playerCount === 4) {
-    player.baseHeight *= (roomPaddleMul[1] || 1.0);
-    p2Paddle.baseHeight *= (roomPaddleMul[2] || 1.0);
-    ai.baseHeight *= (roomPaddleMul[3] || 1.0);
-    p4Paddle.baseHeight *= (roomPaddleMul[4] || 1.0);
-    player.speed = gPaddleSpeed * (roomPaddleSpeed[1] || 1.0);
-    p2Paddle.speed = gPaddleSpeed * (roomPaddleSpeed[2] || 1.0);
-    ai.speed = gPaddleSpeed * (roomPaddleSpeed[3] || 1.0);
-    p4Paddle.speed = gPaddleSpeed * (roomPaddleSpeed[4] || 1.0);
-    if ((roomBlessings[2] || 'none') === 'longPaddle') p2Paddle.baseHeight *= 1.3;
-    if ((roomBlessings[4] || 'none') === 'longPaddle') p4Paddle.baseHeight *= 1.3;
+  // 联机模式下应用全局拍长/拍速倍率
+  let globalPaddleMul = 1.0, globalPaddleSpeed = 1.0;
+  if (gameMode === 'online') {
+    globalPaddleMul = onlinePaddleMul;
+    globalPaddleSpeed = onlinePaddleSpeed;
+  }
+
+  player.speed = gPaddleSpeed * globalPaddleSpeed;
+  ai.speed = isAiControlled() ? gPaddleSpeed * d.aiSpeedMul * debugParams.aiSpeedMul * globalPaddleSpeed : gPaddleSpeed * globalPaddleSpeed;
+  p2Paddle.speed = gPaddleSpeed * globalPaddleSpeed;
+  p4Paddle.speed = gPaddleSpeed * globalPaddleSpeed;
+
+  const onlinePaddleHeightMul = (gameMode === 'online' && playerCount === 4) ? preset.paddleHeightMul : 1;
+  const baseHeightFactor = H * d.paddleHeightRatio * debugParams.paddleHeightMul * onlinePaddleHeightMul * globalPaddleMul;
+
+  player.baseHeight = baseHeightFactor;
+  ai.baseHeight = baseHeightFactor;
+  p2Paddle.baseHeight = baseHeightFactor;
+  p4Paddle.baseHeight = baseHeightFactor;
+
+  // 长拍加护：单人模式 +30%，四人模式 +20%
+  const longMul = isFourPlayerOnline() ? FOUR_NERF.longPaddleMul : 1.3;
+  if (gameMode === 'ai') {
+    if (playerBlessing === 'longPaddle') player.baseHeight *= 1.3;
+    if (aiBlessing === 'longPaddle') ai.baseHeight *= 1.3;
+  } else if (gameMode === 'online' && playerCount === 4) {
+    if (getBlessingBySlot(1) === 'longPaddle') player.baseHeight *= FOUR_NERF.longPaddleMul;
+    if (getBlessingBySlot(2) === 'longPaddle') p2Paddle.baseHeight *= FOUR_NERF.longPaddleMul;
+    if (getBlessingBySlot(3) === 'longPaddle') ai.baseHeight *= FOUR_NERF.longPaddleMul;
+    if (getBlessingBySlot(4) === 'longPaddle') p4Paddle.baseHeight *= FOUR_NERF.longPaddleMul;
   } else if (gameMode === 'online' && playerCount === 2) {
-    if ((roomBlessings[2] || 'none') === 'longPaddle') ai.baseHeight *= 1.3;
+    if (getBlessingBySlot(1) === 'longPaddle') player.baseHeight *= 1.3;
+    if (getBlessingBySlot(2) === 'longPaddle') ai.baseHeight *= 1.3;
   }
 
   if (!cheatActive) player.height = player.baseHeight;
@@ -3343,21 +3368,40 @@ function updateShields() {
 }
 function updateRoundDisplay() { if (roundNumEl) roundNumEl.textContent = Math.max(1, roundNumber); }
 function updateBlessingDisplay() {
-  const showBlessings = (gameMode === 'ai' && gameStartedOnce);
+  const showBlessings = gameStartedOnce && (gameMode === 'ai' || gameMode === 'online');
   topInfo.classList.toggle('show', showBlessings);
   if (!showBlessings) return;
-  const p1B = BLESSINGS[playerBlessing] || BLESSINGS.none;
-  const p2B = BLESSINGS[aiBlessing] || BLESSINGS.none;
-  blP1.querySelector('.bl-dot').style.background = p1B.color;
-  blP1.querySelector('.bl-dot').style.color = p1B.color;
-  blP1.querySelector('.bl-txt').textContent = '你 · ' + p1B.label;
-  blP1.querySelector('.bl-txt').style.color = p1B.color;
-  blP1.querySelector('.bl-shield').textContent = p1ShieldCount > 0 ? ('🛡×' + p1ShieldCount) : '';
-  blP2.querySelector('.bl-dot').style.background = p2B.color;
-  blP2.querySelector('.bl-dot').style.color = p2B.color;
-  blP2.querySelector('.bl-txt').textContent = p2B.label + ' · 电脑';
-  blP2.querySelector('.bl-txt').style.color = p2B.color;
-  blP2.querySelector('.bl-shield').textContent = p2ShieldCount > 0 ? ('🛡×' + p2ShieldCount) : '';
+  if (gameMode === 'ai') {
+    const p1B = BLESSINGS[playerBlessing] || BLESSINGS.none;
+    const p2B = BLESSINGS[aiBlessing] || BLESSINGS.none;
+    blP1.querySelector('.bl-dot').style.background = p1B.color;
+    blP1.querySelector('.bl-dot').style.color = p1B.color;
+    blP1.querySelector('.bl-txt').textContent = '你 · ' + p1B.label;
+    blP1.querySelector('.bl-txt').style.color = p1B.color;
+    blP1.querySelector('.bl-shield').textContent = p1ShieldCount > 0 ? ('🛡×' + p1ShieldCount) : '';
+    blP2.querySelector('.bl-dot').style.background = p2B.color;
+    blP2.querySelector('.bl-dot').style.color = p2B.color;
+    blP2.querySelector('.bl-txt').textContent = p2B.label + ' · 电脑';
+    blP2.querySelector('.bl-txt').style.color = p2B.color;
+    blP2.querySelector('.bl-shield').textContent = p2ShieldCount > 0 ? ('🛡×' + p2ShieldCount) : '';
+  } else {
+    const isLeftTeam = (mySlot === 1 || mySlot === 2);
+    const myB = BLESSINGS[getBlessingBySlot(mySlot)] || BLESSINGS.none;
+    const oppSlot = isLeftTeam ? 3 : 1;
+    const oppB = BLESSINGS[getBlessingBySlot(oppSlot)] || BLESSINGS.none;
+    const myShield = isLeftTeam ? p1ShieldCount : p2ShieldCount;
+    const oppShield = isLeftTeam ? p2ShieldCount : p1ShieldCount;
+    blP1.querySelector('.bl-dot').style.background = myB.color;
+    blP1.querySelector('.bl-dot').style.color = myB.color;
+    blP1.querySelector('.bl-txt').textContent = '你 · ' + myB.label;
+    blP1.querySelector('.bl-txt').style.color = myB.color;
+    blP1.querySelector('.bl-shield').textContent = myShield > 0 ? ('🛡×' + myShield) : '';
+    blP2.querySelector('.bl-dot').style.background = oppB.color;
+    blP2.querySelector('.bl-dot').style.color = oppB.color;
+    blP2.querySelector('.bl-txt').textContent = oppB.label + ' · 敌方';
+    blP2.querySelector('.bl-txt').style.color = oppB.color;
+    blP2.querySelector('.bl-shield').textContent = oppShield > 0 ? ('🛡×' + oppShield) : '';
+  }
 }
 function formatTime(sec) {
   const s = Math.max(0, Math.ceil(sec));
@@ -3457,11 +3501,18 @@ function onRoundStart() {
   updateRoundDisplay();
   playerControlledByAI = false;
   if (gameMode === 'ai' && playerBlessing === 'firstStrike' && (roundNumber % 10 === 1)) playerControlledByAI = true;
-  frenzyActiveP1 = ((gameMode === 'ai' || gameMode === 'online') && playerBlessing === 'frenzy' && (roundNumber % 8 === 0));
-  frenzyActiveP2 = ((gameMode === 'ai' || gameMode === 'online') && aiBlessing === 'frenzy' && (roundNumber % 8 === 0));
+  frenzyActiveP1 = ((gameMode === 'ai' || gameMode === 'online') && getBlessingBySlot(1) === 'frenzy' && (roundNumber % 8 === 0));
+  frenzyActiveP2 = ((gameMode === 'ai' || gameMode === 'online') && getBlessingBySlot(3) === 'frenzy' && (roundNumber % 8 === 0));
   if (gameMode === 'ai' || gameMode === 'online') {
-    if (playerBlessing === 'shield' && Math.random() < 0.10 && p1ShieldCount < 3) p1ShieldCount++;
-    if (aiBlessing === 'shield' && Math.random() < 0.10 && p2ShieldCount < 3) p2ShieldCount++;
+    const nerf = isFourPlayerOnline();
+    const shieldChance = nerf ? FOUR_NERF.shieldChance : 0.10;
+    const shieldMax = nerf ? FOUR_NERF.shieldMax : 3;
+    const b1 = gameMode === 'ai' ? playerBlessing : getBlessingBySlot(1);
+    const b2 = gameMode === 'ai' ? aiBlessing : getBlessingBySlot(2);
+    const b3 = gameMode === 'ai' ? aiBlessing : getBlessingBySlot(3);
+    const b4 = gameMode === 'ai' ? aiBlessing : getBlessingBySlot(4);
+    if (b1 === 'shield' && Math.random() < shieldChance && p1ShieldCount < shieldMax) p1ShieldCount++;
+    if (b3 === 'shield' && Math.random() < shieldChance && p2ShieldCount < shieldMax) p2ShieldCount++;
   }
   updateShields();
   updateBlessingDisplay();
@@ -3493,7 +3544,8 @@ function applyPowerupEffect(pu) {
     case 'big': ball.size = Math.min(ball.baseSize * 2, ball.maxSize); break;
     case 'small': ball.size = ball.baseSize * 0.5; break;
     case 'long': {
-      const p1HasLongBlessing = (playerBlessing === 'longPaddle' && (gameMode === 'ai' || gameMode === 'online'));
+      const b1 = gameMode === 'ai' ? playerBlessing : getBlessingBySlot(1);
+      const p1HasLongBlessing = (b1 === 'longPaddle' && (gameMode === 'ai' || gameMode === 'online'));
       if (!p1HasLongBlessing && Math.random() < 0.5) {
         player.height = Math.min(player.baseHeight * 1.5, LOGICAL_H);
         player.y = clamp(player.y, 0, LOGICAL_H - player.height);
@@ -3542,9 +3594,10 @@ function updateStatusChips() {
   } else {
     chipP1Powerup.classList.add('hidden');
   }
-  if (berserkStack > 0 && (gameMode === 'ai' || gameMode === 'online') && playerBlessing === 'berserk') {
+  if (berserkStack > 0 && (gameMode === 'ai' || gameMode === 'online') && getBlessingBySlot(1) === 'berserk') {
     chipBerserk.classList.remove('hidden');
-    chipBerserkBar.style.width = (berserkStack / BERSERK_MAX * 100) + '%';
+    const maxBerserk = BERSERK_MAX;
+    chipBerserkBar.style.width = (berserkStack / maxBerserk * 100) + '%';
     anyVisible = true;
   } else {
     chipBerserk.classList.add('hidden');
@@ -3577,8 +3630,15 @@ function checkPaddle(paddle, isPlayer, slot) {
   ball.baseSpeed = Math.min(ball.baseSpeed + ball.initialSpeed * 0.05, ball.maxSpeed);
   const dir = isLeft ? 1 : -1;
   const spinIntensity = Math.abs(hitPos);
+
+  // 旋转加护：单人 /1.4，四人 /1.25
+  const slotBlessing = slot !== undefined ? getBlessingBySlot(slot) : (isLeft ? playerBlessing : aiBlessing);
   let spinThreshold = 0.4;
-  if (isLeft && (gameMode === 'ai' || gameMode === 'online') && playerBlessing === 'spin') spinThreshold = 0.4 / 1.4;
+  if (isLeft && (gameMode === 'ai' || gameMode === 'online') && slotBlessing === 'spin') {
+    const div = isFourPlayerOnline() ? FOUR_NERF.spinDiv : 1.4;
+    spinThreshold = 0.4 / div;
+  }
+
   let newSpeedX = Math.cos(angle) * ball.baseSpeed * dir;
   let newSpeedY = Math.sin(angle) * ball.baseSpeed;
   let newSpin = 0;
@@ -3592,9 +3652,12 @@ function checkPaddle(paddle, isPlayer, slot) {
       newSpeedY = Math.sin(angle) * ball.baseSpeed;
     }
   } else { newSpin = hitPos * 0.5 * spinIntensity; }
-  if (isLeft && (gameMode === 'ai' || gameMode === 'online') && playerBlessing === 'berserk') {
+
+  // 狂暴加护：单人 +7%/层，四人 +5%/层
+  if (isLeft && (gameMode === 'ai' || gameMode === 'online') && slotBlessing === 'berserk') {
+    const per = isFourPlayerOnline() ? FOUR_NERF.berserkPer : 0.07;
     if (berserkStack < BERSERK_MAX) { berserkStack++; AudioEngine.berserk(); }
-    const baseFromBerserk = Math.min(ball.initialSpeed * (1 + BERSERK_PER * berserkStack), ball.maxSpeed);
+    const baseFromBerserk = Math.min(ball.initialSpeed * (1 + per * berserkStack), ball.maxSpeed);
     if (baseFromBerserk > ball.baseSpeed) ball.baseSpeed = baseFromBerserk;
     newSpeedX = Math.cos(angle) * ball.baseSpeed * dir;
     newSpeedY = Math.sin(angle) * ball.baseSpeed;
@@ -3614,8 +3677,9 @@ function triggerCurveBall(fromLeft) {
   let prob = d.curveProb * debugParams.curveProbMul;
   if (gameMode === 'online' && playerCount === 4) prob *= preset.curveProbMul;
   if (gameMode !== 'ai') prob *= 1.15;
-  if (fromLeft && frenzyActiveP1) prob *= 1.5;
-  if (!fromLeft && frenzyActiveP2) prob *= 1.5;
+  const frenzyMul = isFourPlayerOnline() ? FOUR_NERF.frenzyCurveMul : 1.5;
+  if (fromLeft && frenzyActiveP1) prob *= frenzyMul;
+  if (!fromLeft && frenzyActiveP2) prob *= frenzyMul;
   if (Math.random() < prob) {
     isCurvedBall = true;
     curveMaxTimer = (200 + Math.floor(Math.random() * 200)) * 0.5;
@@ -3629,7 +3693,8 @@ function handleOutOfBounds() {
   if (ball.x < 0) {
     berserkStack = 0;
     const wasCurved = isCurvedBall;
-    if (wasCurved && gameMode === 'ai' && playerBlessing === 'frenzy' && Math.random() < 0.15) {
+    const frenzySave = isFourPlayerOnline() ? FOUR_NERF.frenzySaveChance : 0.15;
+    if (wasCurved && gameMode === 'ai' && playerBlessing === 'frenzy' && Math.random() < frenzySave) {
       ballRespawnDelay = SERVE_DELAY_FRAMES; nextBallDirection = 1; return;
     }
     if (p1ShieldCount > 0) {
@@ -3637,36 +3702,42 @@ function handleOutOfBounds() {
       ballRespawnDelay = SERVE_DELAY_FRAMES; nextBallDirection = 1; return;
     }
     let scoreAmount = 1;
-    if (gameMode === 'ai' && aiBlessing === 'spear' && Math.random() < 0.06) scoreAmount = 2;
+    const spearDouble = isFourPlayerOnline() ? FOUR_NERF.spearDouble : 0.06;
+    if ((gameMode === 'ai' || gameMode === 'online') && getBlessingBySlot(3) === 'spear' && Math.random() < spearDouble) scoreAmount = 2;
     aiScore += scoreAmount;
     updateScore();
     Integrity.score(false);
     if (gameMode === 'ai') AudioEngine.lose(); else AudioEngine.score();
-    if (gameMode === 'ai' && aiBlessing === 'gambler' && Math.random() < 0.00008) {
-      endGame('赌神加护触发！电脑直接获胜', false); return;
+    const gamblerChance = isFourPlayerOnline() ? FOUR_NERF.gamblerChance : 0.00008;
+    if ((gameMode === 'ai' || gameMode === 'online') && getBlessingBySlot(3) === 'gambler' && Math.random() < gamblerChance) {
+      endGame('赌神加护触发！对手直接获胜', false); return;
     }
     if (checkWin()) return;
     ballRespawnDelay = SERVE_DELAY_FRAMES; nextBallDirection = 1;
   } else if (ball.x > LOGICAL_W) {
     berserkStack = 0;
     const wasCurved = isCurvedBall;
-    if (wasCurved && gameMode === 'ai' && aiBlessing === 'frenzy' && Math.random() < 0.15) {
+    const frenzySave = isFourPlayerOnline() ? FOUR_NERF.frenzySaveChance : 0.15;
+    if (wasCurved && gameMode === 'ai' && aiBlessing === 'frenzy' && Math.random() < frenzySave) {
       ballRespawnDelay = SERVE_DELAY_FRAMES; nextBallDirection = -1; return;
     }
     if (p2ShieldCount > 0) {
       let ignoreShield = false;
-      if (gameMode === 'ai' && playerBlessing === 'spear' && Math.random() < 0.5) ignoreShield = true;
+      const spearPierce = isFourPlayerOnline() ? FOUR_NERF.spearPierce : 0.5;
+      if ((gameMode === 'ai' || gameMode === 'online') && getBlessingBySlot(1) === 'spear' && Math.random() < spearPierce) ignoreShield = true;
       if (!ignoreShield) {
         p2ShieldCount--; updateShields(); updateBlessingDisplay(); AudioEngine.shieldBreak();
         ballRespawnDelay = SERVE_DELAY_FRAMES; nextBallDirection = -1; return;
       }
     }
     let scoreAmount = 1;
-    if (gameMode === 'ai' && playerBlessing === 'spear' && Math.random() < 0.06) scoreAmount = 2;
+    const spearDouble = isFourPlayerOnline() ? FOUR_NERF.spearDouble : 0.06;
+    if ((gameMode === 'ai' || gameMode === 'online') && getBlessingBySlot(1) === 'spear' && Math.random() < spearDouble) scoreAmount = 2;
     playerScore += scoreAmount;
     updateScore(); AudioEngine.score();
     Integrity.score(true);
-    if (gameMode === 'ai' && playerBlessing === 'gambler' && Math.random() < 0.00008) {
+    const gamblerChance = isFourPlayerOnline() ? FOUR_NERF.gamblerChance : 0.00008;
+    if ((gameMode === 'ai' || gameMode === 'online') && getBlessingBySlot(1) === 'gambler' && Math.random() < gamblerChance) {
       endGame('赌神加护触发！直接获胜', true); return;
     }
     if (checkWin()) return;
@@ -4121,14 +4192,18 @@ function draw() {
   }
   ctx.setLineDash([]);
   if (!shouldDrawEntities) return;
-  const p1IsLong = ((gameMode === 'ai' || gameMode === 'online') && playerBlessing === 'longPaddle');
-  const p2IsLong = ((gameMode === 'ai' || gameMode === 'online') && aiBlessing === 'longPaddle');
-  const p1IsBerserk = ((gameMode === 'ai' || gameMode === 'online') && playerBlessing === 'berserk' && berserkStack > 0);
+
+  const b1 = gameMode === 'ai' ? playerBlessing : getBlessingBySlot(1);
+  const b3 = gameMode === 'ai' ? aiBlessing : getBlessingBySlot(3);
+  const p1IsLong = ((gameMode === 'ai' || gameMode === 'online') && b1 === 'longPaddle');
+  const p2IsLong = ((gameMode === 'ai' || gameMode === 'online') && b3 === 'longPaddle');
+  const p1IsBerserk = ((gameMode === 'ai' || gameMode === 'online') && b1 === 'berserk' && berserkStack > 0);
+
   if (playerCount === 4) {
     drawPaddle(player, t, { side:'left', shields: p1ShieldCount, firstStrike: playerControlledByAI, frenzy: frenzyActiveP1, color:'#ff8080', longPaddle: p1IsLong });
-    drawPaddle(p2Paddle, t, { side:'left', color:'#ff5050' });
+    drawPaddle(p2Paddle, t, { side:'left', color:'#ff5050', longPaddle: getBlessingBySlot(2) === 'longPaddle' });
     drawPaddle(ai, t, { side:'right', shields: p2ShieldCount, frenzy: frenzyActiveP2, color:'#88aaff', longPaddle: p2IsLong });
-    drawPaddle(p4Paddle, t, { side:'right', color:'#5599ff' });
+    drawPaddle(p4Paddle, t, { side:'right', color:'#5599ff', longPaddle: getBlessingBySlot(4) === 'longPaddle' });
   } else {
     drawPaddle(player, t, { side:'left', shields: p1ShieldCount, firstStrike: playerControlledByAI, frenzy: frenzyActiveP1, longPaddle: p1IsLong, berserk: p1IsBerserk });
     drawPaddle(ai, t, { side:'right', shields: p2ShieldCount, frenzy: frenzyActiveP2, longPaddle: p2IsLong });
@@ -4148,7 +4223,7 @@ function draw() {
     }
     let ballColor = t.color, glowColor = t.glow, glowBlur = 20;
     if (isCurvedBall) { ballColor = '#ffaa33'; glowColor = 'rgba(255, 170, 51, 0.8)'; glowBlur = 35; }
-    else if ((gameMode === 'ai' || gameMode === 'online') && playerBlessing === 'berserk' && berserkStack > 0) {
+    else if ((gameMode === 'ai' || gameMode === 'online') && b1 === 'berserk' && berserkStack > 0) {
       ballColor = '#ff6622'; glowColor = 'rgba(255, 102, 34, 0.9)'; glowBlur = 28 + berserkStack * 4;
     }
     else if (activePowerups.length > 0) {
@@ -4173,7 +4248,6 @@ function draw() {
   if (!simple) drawFloatTexts();
 }
 
-/* 关键修复：固定步长物理更新，与帧率解耦 */
 let lastRenderTime = 0;
 let physAccumulator = 0;
 const PHYS_STEP_MS = 1000 / 60;
@@ -4181,17 +4255,16 @@ const PHYS_STEP_MS = 1000 / 60;
 function gameLoop(ts) {
   if (!gameRunning || paused) { animId = null; physAccumulator = 0; return; }
   if (typeof ts !== 'number') ts = performance.now();
-  let deltaMs = ts - lastFrameTime;
-  lastFrameTime = ts;
-  if (!isFinite(deltaMs) || deltaMs < 0) deltaMs = PHYS_STEP_MS;
-  if (deltaMs > 250) deltaMs = 250;
-
   const frameInterval = 1000 / targetFps;
   if (targetFps === 30 && ts - lastRenderTime < frameInterval - 2) {
     if (gameRunning && !paused) animId = requestAnimationFrame(gameLoop);
     return;
   }
+  let deltaMs = ts - lastFrameTime;
+  lastFrameTime = ts;
   lastRenderTime = ts;
+  if (!isFinite(deltaMs) || deltaMs < 0) deltaMs = PHYS_STEP_MS;
+  if (deltaMs > 250) deltaMs = 250;
 
   stats.frameTimes.push(deltaMs);
   if (stats.frameTimes.length > STATS_WINDOW) stats.frameTimes.shift();
@@ -4254,10 +4327,6 @@ function startGame() {
   Integrity.start();
   if (gameMode === 'ai') {
     aiBlessing = (aiBlessingMode === 'random') ? BLESSING_KEYS[Math.floor(Math.random() * BLESSING_KEYS.length)] : 'none';
-    playerBlessing = playerBlessing || 'none';
-  } else if (gameMode === 'online') {
-    playerBlessing = roomBlessings[1] || 'none';
-    aiBlessing = roomBlessings[3] || 'none';
   } else {
     aiBlessing = 'none';
   }
