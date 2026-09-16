@@ -880,7 +880,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <h3>发球</h3>
           <p>每次得分后 1.5 秒发球，最后 0.5 秒会在球场中央显示发球方向箭头。</p>
           <h3>AI 行为</h3>
-          <p>AI 会像人一样预估球的落点，而不是持续追逐球的位置；当球远离时会回到自己的半场中心待机。难度越高反应越快、预测越准。</p>
+          <p>AI 会分两步判断：先粗略预判落点范围，再微调球拍让球打在自己想要的位置（进攻时瞄拍边制造角度，防守时打在拍心）。AI 球拍速度设有上限，最高为基础速度的 1.3 倍。</p>
           <h3>帧率与物理</h3>
           <p>游戏物理使用固定步长更新，与屏幕刷新率解耦。无论显示器是 60Hz、90Hz 还是 144Hz，比赛节奏完全一致。</p>
         </div>
@@ -1272,16 +1272,24 @@ function resizeCanvas() {
 }
 function layoutAll() { layoutGame(); resizeCanvas(); }
 
+/* ============================================================
+   AI 难度参数
+   predictAcc1 / predictAcc2：一段（范围）与二段（微操）预判精确率
+   attackChance：AI 主动打进攻球（瞄拍边）的概率
+   ============================================================ */
 const DIFFICULTY = {
-  easy:   { aiSpeedMul:0.253, aiReaction:0.28, paddleHeightRatio:0.26,  ballCrossTime:1.65, curveProb:0.015,  mistakeRate:0.30, mistakeDuration:[20,50], label:'简单' },
-  normal: { aiSpeedMul:0.627, aiReaction:0.56, paddleHeightRatio:0.22,  ballCrossTime:1.65, curveProb:0.0275, mistakeRate:0.15, mistakeDuration:[15,35], label:'普通' },
-  hard:   { aiSpeedMul:0.946, aiReaction:0.72, paddleHeightRatio:0.185, ballCrossTime:1.32, curveProb:0.04,   mistakeRate:0.07, mistakeDuration:[10,25], label:'困难' },
-  hell:   { aiSpeedMul:1.06,  aiReaction:0.80, paddleHeightRatio:0.15,  ballCrossTime:1.32, curveProb:0.055,  mistakeRate:0.02, mistakeDuration:[5,15],  label:'地狱' }
+  easy:   { aiSpeedMul:0.253, aiReaction:0.28, paddleHeightRatio:0.26,  ballCrossTime:1.65, curveProb:0.015,  mistakeRate:0.30, mistakeDuration:[20,50], predictAcc1:0.80, predictAcc2:0.50, attackChance:0.10, label:'简单' },
+  normal: { aiSpeedMul:0.627, aiReaction:0.56, paddleHeightRatio:0.22,  ballCrossTime:1.65, curveProb:0.0275, mistakeRate:0.15, mistakeDuration:[15,35], predictAcc1:0.80, predictAcc2:0.75, attackChance:0.20, label:'普通' },
+  hard:   { aiSpeedMul:0.946, aiReaction:0.72, paddleHeightRatio:0.185, ballCrossTime:1.32, curveProb:0.04,   mistakeRate:0.07, mistakeDuration:[10,25], predictAcc1:0.92, predictAcc2:0.85, attackChance:0.30, label:'困难' },
+  hell:   { aiSpeedMul:1.06,  aiReaction:0.80, paddleHeightRatio:0.15,  ballCrossTime:1.32, curveProb:0.055,  mistakeRate:0.02, mistakeDuration:[5,15],  predictAcc1:0.92, predictAcc2:0.86, attackChance:0.50, label:'地狱' }
 };
 DIFFICULTY.easy.curveProb   *= 0.66;
 DIFFICULTY.normal.curveProb *= 0.66;
 DIFFICULTY.hard.curveProb   *= 0.66;
 DIFFICULTY.hell.curveProb   *= 0.66;
+
+/* AI 球拍速度硬上限：最高为基础拍速的 1.3 倍 */
+const AI_SPEED_CAP = 1.3;
 
 const ONLINE_DIFF_PRESETS = {
   easy:   { label:'简单', paddleHeightMul: 1.20, powerupRate: 1.35, curveProbMul: 0.55, ballSpeedMul: 0.85, desc:'球拍偏长 · 道具率高 · 变轨少 · 球速慢' },
@@ -1412,13 +1420,22 @@ function predictBallLanding(targetX) {
   return clamp(py, 0, H);
 }
 
-/* 智能 AI：预估落点 + 半场约束 + 待机复位 */
+/* ============================================================
+   智能 AI：二段预判（先范围后微操）+ 半场约束 + 待机复位
+   ------------------------------------------------------------
+   一段（粗判）：估算球的落点范围，按 predictAcc1 决定是否押中。
+   二段（微操）：在范围内选定自己要击球的位置 ——
+                 进攻球（attackChance）瞄球拍边缘制造角度/旋转；
+                 防守球尽量打在拍面中央。
+                 按 predictAcc2 决定微调是否到位。
+   ============================================================ */
 function updateAISmart(pad, dt, opts) {
   opts = opts || {};
   const d = getAIDiff();
+  const H = LOGICAL_H;
 
   if (typeof pad._aiTargetY === 'undefined') {
-    pad._aiTargetY = LOGICAL_H / 2;
+    pad._aiTargetY = H / 2;
     pad._aiTargetAt = 0;
   }
 
@@ -1426,22 +1443,55 @@ function updateAISmart(pad, dt, opts) {
   const now = performance.now();
   const ballComing = isLeft ? (ball.speedX < 0) : (ball.speedX > 0);
 
-  let halfMid = LOGICAL_H / 2;
+  let halfMid = H / 2;
   if (opts.halfMin !== undefined && opts.halfMax !== undefined) {
     halfMid = (opts.halfMin + opts.halfMax) / 2;
   }
 
-  const refreshMs = 220 - d.aiReaction * 200;
+  const refreshMs = 300 - d.aiReaction * 220;
 
   if (ballComing && now - pad._aiTargetAt > refreshMs) {
     pad._aiTargetAt = now;
-    let pred = predictBallLanding(pad.x);
-    if (opts.halfMin !== undefined && (pred < opts.halfMin || pred > opts.halfMax)) {
-      pad._aiTargetY = halfMid;
+
+    /* ── 第一阶段：粗略预判，只锁定大致范围 ── */
+    const trueY = predictBallLanding(pad.x);
+    let coarseY;
+    if (Math.random() < d.predictAcc1) {
+      // 预判命中范围：保留一点小的范围误差
+      coarseY = trueY + (Math.random() - 0.5) * H * 0.10;
     } else {
-      const noise = (1 - d.aiReaction) * 120;
-      pad._aiTargetY = pred + (Math.random() - 0.5) * noise;
+      // 预判偏离：只拿到一个粗略范围
+      const mag = (0.16 + Math.random() * 0.24) * H;
+      coarseY = trueY + (Math.random() < 0.5 ? -mag : mag);
     }
+    coarseY = clamp(coarseY, 0, H);
+
+    /* ── 第二阶段：精准微操，把球打到自己想要的位置 ── */
+    const ph = pad.height;
+    const wantAttack = Math.random() < d.attackChance;
+    let hitRatio;
+    if (wantAttack) {
+      // 进攻球：球打在拍边，制造大角度 / 旋转
+      hitRatio = (Math.random() < 0.5 ? -1 : 1) * (0.60 + Math.random() * 0.25);
+    } else {
+      // 防守球：尽量打在拍面中央
+      hitRatio = (Math.random() - 0.5) * 0.30;
+    }
+    // 想让球落在拍面 hitRatio 处 → 拍心需要反向偏移 hitRatio * ph/2
+    let aim = coarseY - hitRatio * (ph / 2);
+
+    if (Math.random() < d.predictAcc2) {
+      // 微操到位
+      aim += (Math.random() - 0.5) * ph * 0.5;
+    } else {
+      // 微操偏差
+      aim += (Math.random() - 0.5) * ph * (2.2 + Math.random() * 1.6);
+    }
+
+    if (opts.halfMin !== undefined && opts.halfMax !== undefined) {
+      aim = clamp(aim, opts.halfMin, opts.halfMax);
+    }
+    pad._aiTargetY = clamp(aim, 0, H);
   } else if (!ballComing && now - pad._aiTargetAt > 600) {
     pad._aiTargetAt = now;
     pad._aiTargetY = halfMid + (Math.random() - 0.5) * 30;
@@ -1462,9 +1512,10 @@ function updateAISmart(pad, dt, opts) {
 
   const center = pad.y + pad.height / 2;
   const diff = targetY - center;
-  const step = Math.min(Math.abs(diff), pad.speed * d.aiReaction * dt * 1.3);
-  if (diff > 3) pad.y += step;
-  else if (diff < -3) pad.y -= step;
+  // 拍速已由 pad.speed 限制（见 recomputeSpeeds，硬上限 1.3 倍基础拍速）
+  const step = Math.min(Math.abs(diff), pad.speed * dt);
+  if (diff > 2) pad.y += step;
+  else if (diff < -2) pad.y -= step;
 
   if (aiMistakeTimer <= 0 && Math.random() < d.mistakeRate * dt * 0.5) {
     const types = ['freeze', 'wrong', 'slow', 'overshoot'];
@@ -1472,7 +1523,7 @@ function updateAISmart(pad, dt, opts) {
     aiMistakeTimer = d.mistakeDuration[0] + Math.random() * (d.mistakeDuration[1] - d.mistakeDuration[0]);
   }
 
-  let minY = 0, maxY = LOGICAL_H - pad.height;
+  let minY = 0, maxY = H - pad.height;
   if (opts.halfMin !== undefined) minY = Math.max(minY, opts.halfMin);
   if (opts.halfMax !== undefined) maxY = Math.min(maxY, opts.halfMax - pad.height);
   pad.y = clamp(pad.y, minY, maxY);
@@ -2648,7 +2699,8 @@ const COUNTDOWN_TIPS = [
   '球拍速度可在设置里调节，不影响计分',
   '同一种道具不会连续出现',
   '球速上限为初始速度的 1.8 倍',
-  'AI 会预估落点，不会一直追着球',
+  'AI 会分两段预判落点，再微调击球位置',
+  'AI 球拍速度上限为基础拍速的 1.3 倍',
   '发球前 0.5 秒提示方向',
   '物理帧率与屏幕刷新率已解耦',
   '四人模式每位玩家可选独立加护'
@@ -3465,12 +3517,13 @@ function recomputeSpeeds() {
   p2Paddle.speed = gPaddleSpeed * globalPaddleSpeed;
   p4Paddle.speed = gPaddleSpeed * globalPaddleSpeed;
 
-  // AI 拍速：单人 / 联机 AI 补位按 AI 难度倍率
+  // AI 拍速：单人 / 联机 AI 补位按 AI 难度倍率，并受 1.3 倍硬上限约束
   const aiDiff = getAIDiff();
   let aiSpeedMul = 1.0;
   if (gameMode === 'ai') aiSpeedMul = aiDiff.aiSpeedMul;
   else if (gameMode === 'online' && playerCount === 4) aiSpeedMul = aiDiff.aiSpeedMul;
-  ai.speed = gPaddleSpeed * aiSpeedMul * debugParams.aiSpeedMul * globalPaddleSpeed;
+  const aiRawSpeed = gPaddleSpeed * aiSpeedMul * globalPaddleSpeed;
+  ai.speed = Math.min(aiRawSpeed, gPaddleSpeed * AI_SPEED_CAP) * debugParams.aiSpeedMul;
 
   const onlinePaddleHeightMul = (gameMode === 'online' && playerCount === 4) ? preset.paddleHeightMul : 1;
   const baseHeightFactor = H * d.paddleHeightRatio * debugParams.paddleHeightMul * onlinePaddleHeightMul * globalPaddleMul;
