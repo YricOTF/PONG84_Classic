@@ -584,23 +584,11 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
       <div class="tab-content" id="roomTab-settings">
         <div class="side-layout">
           <div class="side-menu" id="roomSideMenu">
-            <button class="side-item active" data-rset="diff">难度预设</button>
-            <button class="side-item" data-rset="mode">比赛模式</button>
-            <button class="side-item" data-rset="feel">球速与手感</button>
-            <button class="side-item" data-rset="team">队伍形态</button>
+            <button class="side-item active" data-rset="match">对局参数</button>
+            <button class="side-item" data-rset="feel">拍子/球速</button>
           </div>
           <div class="side-body">
-            <div class="rset-pane active" data-rsetpane="diff">
-              <div class="setting-label">难度预设</div>
-              <div class="opt-grid">
-                <button class="opt-btn" data-opt-odiff="easy">简单</button>
-                <button class="opt-btn" data-opt-odiff="normal">普通</button>
-                <button class="opt-btn" data-opt-odiff="hard">困难</button>
-                <button class="opt-btn" data-opt-odiff="hell">地狱</button>
-              </div>
-              <p class="room-hint" style="text-align:left;margin-top:8px;" id="diffDesc">困难：球拍偏短 · 道具率标准 · 变轨率标准</p>
-            </div>
-            <div class="rset-pane" data-rsetpane="mode">
+            <div class="rset-pane active" data-rsetpane="match">
               <div class="setting-label">比赛模式</div>
               <div class="opt-grid">
                 <button class="opt-btn selected" data-opt-omode="normal">常规</button>
@@ -620,7 +608,25 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
                 <button class="opt-btn selected" data-opt-otime="60">1 分钟</button>
                 <button class="opt-btn" data-opt-otime="120">2 分钟</button>
               </div>
-              <p class="room-hint" style="text-align:left;margin-top:8px;">常规：先达到比分且领先 2 分获胜<br>计时赛：时间结束分高者胜</p>
+              <div class="setting-label" style="margin-top:10px;">AI 强度</div>
+              <div class="opt-grid">
+                <button class="opt-btn" data-opt-oailevel="easy">简单</button>
+                <button class="opt-btn" data-opt-oailevel="normal">普通</button>
+                <button class="opt-btn selected" data-opt-oailevel="hard">困难</button>
+                <button class="opt-btn" data-opt-oailevel="hell">地狱</button>
+              </div>
+              <div class="setting-label" style="margin-top:10px;">特殊球几率</div>
+              <div class="debug-row" style="padding:4px 0;">
+                <label style="flex:0 0 40px;font-size:9px;">倍率</label>
+                <input type="range" id="onlineCurveMul" min="0" max="2" step="0.05" value="1">
+                <span class="debug-val" id="onlineCurveMulVal" style="flex:0 0 44px;">1.00x</span>
+              </div>
+              <div class="setting-label" style="margin-top:8px;">道具几率</div>
+              <div class="debug-row" style="padding:4px 0;">
+                <label style="flex:0 0 40px;font-size:9px;">倍率</label>
+                <input type="range" id="onlinePowerupMul" min="0" max="2" step="0.05" value="1">
+                <span class="debug-val" id="onlinePowerupMulVal" style="flex:0 0 44px;">1.00x</span>
+              </div>
             </div>
             <div class="rset-pane" data-rsetpane="feel">
               <div class="setting-label">球速倍率</div>
@@ -643,10 +649,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
                 <input type="range" id="onlinePaddleSpeed" min="0.5" max="1.8" step="0.05" value="1.0">
                 <span class="debug-val" id="onlinePaddleSpeedVal" style="flex:0 0 44px;">1.00x</span>
               </div>
-              <p class="room-hint" style="text-align:left;margin-top:8px;">所有玩家的球拍长度与速度统一使用以上倍率</p>
-            </div>
-            <div class="rset-pane" data-rsetpane="team">
-              <div class="setting-label">队伍形态（两队统一）</div>
+              <div class="setting-label" style="margin-top:10px;">队伍形态（两队统一）</div>
               <div class="opt-grid">
                 <button class="opt-btn selected" data-opt-form="column">同列</button>
                 <button class="opt-btn" data-opt-form="stagger">异列</button>
@@ -873,11 +876,11 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <h3>四人模式</h3>
           <p>每队两人，分列球场左右两侧。球出左边界右队得分，出右边界左队得分。</p>
           <p>两队统一采用「同列」或「异列」形态。同列下可开启互挤（两拍互相推挤）或关闭（各占半场）；异列下两拍都可自由走满全场。</p>
-          <p>四人模式下主机一人也可开始，其余空位由 AI 补齐。客户端加入房间时无需预先选择人数，系统会自动匹配主机模式。</p>
+          <p>四人模式下 AI 只守自己那半边，主机一人也可开始，其余空位由 AI 补齐。客户端加入房间时无需预先选择人数，系统会自动匹配主机模式。</p>
           <h3>发球</h3>
           <p>每次得分后 1.5 秒发球，最后 0.5 秒会在球场中央显示发球方向箭头。</p>
-          <h3>AI 攻击性</h3>
-          <p>AI 会主动打出角度，难度越高越倾向于攻击边角。</p>
+          <h3>AI 行为</h3>
+          <p>AI 会像人一样预估球的落点，而不是持续追逐球的位置；当球远离时会回到自己的半场中心待机。难度越高反应越快、预测越准。</p>
           <h3>帧率与物理</h3>
           <p>游戏物理使用固定步长更新，与屏幕刷新率解耦。无论显示器是 60Hz、90Hz 还是 144Hz，比赛节奏完全一致。</p>
         </div>
@@ -962,20 +965,18 @@ const LOGICAL_W = 960, LOGICAL_H = 540, FPS_REF = 60;
 const BALL_SPEED_BONUS = 1.1;
 const clamp = (v, a, b) => (v < a ? a : (v > b ? b : v));
 
-/* 四人模式加护削弱系数 */
 const FOUR_NERF = {
-  spinDiv: 1.25,        // 旋转判定：0.4 / 1.25（单人 /1.4）
-  longPaddleMul: 1.20,  // 长拍：+20%（单人 +30%）
-  frenzyCurveMul: 1.35, // 狂乱特殊球几率倍数（单人 1.5）
-  frenzySaveChance: 0.10, // 狂乱不丢分概率（单人 0.15）
-  berserkPer: 0.05,     // 狂暴每层加成（单人 0.07）
-  shieldChance: 0.07,   // 盾牌概率（单人 0.10）
-  shieldMax: 2,         // 盾牌上限（单人 3）
-  spearDouble: 0.04,    // 长矛双倍概率（单人 0.06）
-  spearPierce: 0.35,    // 长矛穿透概率（单人 0.50）
-  gamblerChance: 0.00005 // 赌神概率（单人 0.00008）
+  spinDiv: 1.25,
+  longPaddleMul: 1.20,
+  frenzyCurveMul: 1.35,
+  frenzySaveChance: 0.10,
+  berserkPer: 0.05,
+  shieldChance: 0.07,
+  shieldMax: 2,
+  spearDouble: 0.04,
+  spearPierce: 0.35,
+  gamblerChance: 0.00005
 };
-
 function isFourPlayerOnline() { return gameMode === 'online' && playerCount === 4; }
 
 function hexToRgb(hex) {
@@ -1003,7 +1004,7 @@ let blurAutoPause = true;
 let paddleSpeedSetting = 1.0;
 const getTheme = () => CRT_THEMES[crtTheme];
 
-const SETTINGS_KEY = 'pong84.settings.v15';
+const SETTINGS_KEY = 'pong84.settings.v16';
 function loadSettings() {
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
@@ -1194,6 +1195,10 @@ const onlinePaddleMulEl = $('onlinePaddleMul');
 const onlinePaddleMulVal = $('onlinePaddleMulVal');
 const onlinePaddleSpeedEl = $('onlinePaddleSpeed');
 const onlinePaddleSpeedVal = $('onlinePaddleSpeedVal');
+const onlineCurveMulEl = $('onlineCurveMul');
+const onlineCurveMulVal = $('onlineCurveMulVal');
+const onlinePowerupMulEl = $('onlinePowerupMul');
+const onlinePowerupMulVal = $('onlinePowerupMulVal');
 const roomPlayerList = $('roomPlayerList');
 const slotPickerWrap = $('slotPickerWrap');
 const slotPicker = $('slotPicker');
@@ -1377,6 +1382,102 @@ function isAiControlled() {
   return false;
 }
 
+/* ============================================================
+   AI 预测与难度
+   ============================================================ */
+function getAIDiff() {
+  if (gameMode === 'online' && onlineAILevel && DIFFICULTY[onlineAILevel]) {
+    return DIFFICULTY[onlineAILevel];
+  }
+  return DIFFICULTY[currentDiff];
+}
+
+/* 预测球到达 targetX 时的 Y 位置（考虑墙壁反弹） */
+function predictBallLanding(targetX) {
+  const r = ball.size / 2;
+  const H = LOGICAL_H;
+  const x = ball.x, y = ball.y;
+  const sx = ball.speedX, sy = ball.speedY;
+  if (Math.abs(sx) < 0.1) return y;
+  const t = (targetX - x) / sx;
+  if (t <= 0 || t > 500) return y;
+  let py = y + sy * t;
+  const minY = r, maxY = H - r;
+  let iter = 0;
+  while ((py < minY || py > maxY) && iter < 15) {
+    if (py < minY) py = minY + (minY - py);
+    else if (py > maxY) py = maxY - (py - maxY);
+    iter++;
+  }
+  return clamp(py, 0, H);
+}
+
+/* 智能 AI：预估落点 + 半场约束 + 待机复位 */
+function updateAISmart(pad, dt, opts) {
+  opts = opts || {};
+  const d = getAIDiff();
+
+  if (typeof pad._aiTargetY === 'undefined') {
+    pad._aiTargetY = LOGICAL_H / 2;
+    pad._aiTargetAt = 0;
+  }
+
+  const isLeft = !!opts.isLeft;
+  const now = performance.now();
+  const ballComing = isLeft ? (ball.speedX < 0) : (ball.speedX > 0);
+
+  let halfMid = LOGICAL_H / 2;
+  if (opts.halfMin !== undefined && opts.halfMax !== undefined) {
+    halfMid = (opts.halfMin + opts.halfMax) / 2;
+  }
+
+  const refreshMs = 220 - d.aiReaction * 200;
+
+  if (ballComing && now - pad._aiTargetAt > refreshMs) {
+    pad._aiTargetAt = now;
+    let pred = predictBallLanding(pad.x);
+    if (opts.halfMin !== undefined && (pred < opts.halfMin || pred > opts.halfMax)) {
+      pad._aiTargetY = halfMid;
+    } else {
+      const noise = (1 - d.aiReaction) * 120;
+      pad._aiTargetY = pred + (Math.random() - 0.5) * noise;
+    }
+  } else if (!ballComing && now - pad._aiTargetAt > 600) {
+    pad._aiTargetAt = now;
+    pad._aiTargetY = halfMid + (Math.random() - 0.5) * 30;
+  }
+
+  let targetY = pad._aiTargetY;
+  if (aiMistakeTimer > 0) {
+    aiMistakeTimer -= dt;
+    switch (aiMistakeType) {
+      case 'freeze': return;
+      case 'wrong': targetY = halfMid - (targetY - halfMid); break;
+      case 'slow':
+        targetY = (pad.y + pad.height / 2) * 0.7 + targetY * 0.3;
+        break;
+      case 'overshoot': targetY += (Math.random() - 0.5) * 80; break;
+    }
+  }
+
+  const center = pad.y + pad.height / 2;
+  const diff = targetY - center;
+  const step = Math.min(Math.abs(diff), pad.speed * d.aiReaction * dt * 1.3);
+  if (diff > 3) pad.y += step;
+  else if (diff < -3) pad.y -= step;
+
+  if (aiMistakeTimer <= 0 && Math.random() < d.mistakeRate * dt * 0.5) {
+    const types = ['freeze', 'wrong', 'slow', 'overshoot'];
+    aiMistakeType = types[Math.floor(Math.random() * types.length)];
+    aiMistakeTimer = d.mistakeDuration[0] + Math.random() * (d.mistakeDuration[1] - d.mistakeDuration[0]);
+  }
+
+  let minY = 0, maxY = LOGICAL_H - pad.height;
+  if (opts.halfMin !== undefined) minY = Math.max(minY, opts.halfMin);
+  if (opts.halfMax !== undefined) maxY = Math.min(maxY, opts.halfMax - pad.height);
+  pad.y = clamp(pad.y, minY, maxY);
+}
+
 const Integrity = {
   active: false, hash: '', sessionNonce: '', startTime: 0, hits: 0, p1Hits: 0,
   scoreEvents: [], sampleCounter: 0, frameCount: 0,
@@ -1469,7 +1570,7 @@ function startPingLoop() {
 function stopPingLoop() { if (pingInterval) { clearInterval(pingInterval); pingInterval = null; } stats.ping = -1; }
 
 const MQTT_BROKER = 'wss://broker.emqx.io:8084/mqtt';
-const TOPIC_PREFIX = 'pong84/v26/';
+const TOPIC_PREFIX = 'pong84/v27/';
 let onlineTransport = 'mqtt';
 let mqttClient = null;
 let localId = Math.random().toString(36).slice(2, 10);
@@ -1478,8 +1579,11 @@ let remotePaddleY = null, netAccum = 0, pendingCandidates = [];
 let hostBusy = false, connectTimeout = null, helloInterval = null;
 let onlineBallSpeed = 1.0, onlineMode = 'normal', onlineTimerSeconds = 60;
 let onlineDiff = 'hard';
+let onlineAILevel = 'hard';
 let onlinePaddleMul = 1.0;
 let onlinePaddleSpeed = 1.0;
+let onlineCurveMul = 1.0;
+let onlinePowerupMul = 1.0;
 let clientReady = false, remoteName = '对手';
 
 let fourPeers = {};
@@ -1652,7 +1756,10 @@ function broadcastRoomState() {
     ballSpeed: onlineBallSpeed, winScore: winScore,
     blessings: roomBlessings,
     paddleMul: onlinePaddleMul,
-    paddleSpeed: onlinePaddleSpeed
+    paddleSpeed: onlinePaddleSpeed,
+    aiLevel: onlineAILevel,
+    curveMul: onlineCurveMul,
+    powerupMul: onlinePowerupMul
   };
   for (const cid in fourPeers) {
     const p = fourPeers[cid];
@@ -1707,6 +1814,9 @@ function setupDataChannel(channel) {
         if (msg.blessings) roomBlessings = msg.blessings;
         if (typeof msg.paddleMul === 'number') onlinePaddleMul = msg.paddleMul;
         if (typeof msg.paddleSpeed === 'number') onlinePaddleSpeed = msg.paddleSpeed;
+        if (typeof msg.aiLevel === 'string') onlineAILevel = msg.aiLevel;
+        if (typeof msg.curveMul === 'number') onlineCurveMul = msg.curveMul;
+        if (typeof msg.powerupMul === 'number') onlinePowerupMul = msg.powerupMul;
         updateControlsHint();
         startGame();
       }
@@ -1965,6 +2075,9 @@ function setupFourClientChannel(channel) {
       }
       if (typeof msg.paddleMul === 'number') onlinePaddleMul = msg.paddleMul;
       if (typeof msg.paddleSpeed === 'number') onlinePaddleSpeed = msg.paddleSpeed;
+      if (typeof msg.aiLevel === 'string') onlineAILevel = msg.aiLevel;
+      if (typeof msg.curveMul === 'number') onlineCurveMul = msg.curveMul;
+      if (typeof msg.powerupMul === 'number') onlinePowerupMul = msg.powerupMul;
       syncUI();
     } else if (msg.t === 'start4') {
       winScore = msg.winScore || winScore;
@@ -1977,6 +2090,9 @@ function setupFourClientChannel(channel) {
       if (msg.blessings) roomBlessings = msg.blessings;
       if (typeof msg.paddleMul === 'number') onlinePaddleMul = msg.paddleMul;
       if (typeof msg.paddleSpeed === 'number') onlinePaddleSpeed = msg.paddleSpeed;
+      if (typeof msg.aiLevel === 'string') onlineAILevel = msg.aiLevel;
+      if (typeof msg.curveMul === 'number') onlineCurveMul = msg.curveMul;
+      if (typeof msg.powerupMul === 'number') onlinePowerupMul = msg.powerupMul;
       playerCount = 4;
       startGame();
     } else if (msg.t === 'state4') { applyRemoteState4(msg); }
@@ -2532,7 +2648,7 @@ const COUNTDOWN_TIPS = [
   '球拍速度可在设置里调节，不影响计分',
   '同一种道具不会连续出现',
   '球速上限为初始速度的 1.8 倍',
-  'AI 会主动打出角度',
+  'AI 会预估落点，不会一直追着球',
   '发球前 0.5 秒提示方向',
   '物理帧率与屏幕刷新率已解耦',
   '四人模式每位玩家可选独立加护'
@@ -2861,12 +2977,39 @@ if (onlinePaddleSpeedEl) {
     if (onlineRole === 'host') broadcastRoomState();
   });
 }
+if (onlineCurveMulEl) {
+  onlineCurveMulEl.value = onlineCurveMul;
+  onlineCurveMulVal.textContent = onlineCurveMul.toFixed(2) + 'x';
+  onlineCurveMulEl.addEventListener('input', () => {
+    onlineCurveMul = parseFloat(onlineCurveMulEl.value);
+    onlineCurveMulVal.textContent = onlineCurveMul.toFixed(2) + 'x';
+    if (onlineRole === 'host') broadcastRoomState();
+  });
+}
+if (onlinePowerupMulEl) {
+  onlinePowerupMulEl.value = onlinePowerupMul;
+  onlinePowerupMulVal.textContent = onlinePowerupMul.toFixed(2) + 'x';
+  onlinePowerupMulEl.addEventListener('input', () => {
+    onlinePowerupMul = parseFloat(onlinePowerupMulEl.value);
+    onlinePowerupMulVal.textContent = onlinePowerupMul.toFixed(2) + 'x';
+    if (onlineRole === 'host') broadcastRoomState();
+  });
+}
+document.querySelectorAll('[data-opt-oailevel]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-opt-oailevel]').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    onlineAILevel = btn.dataset.optOailevel;
+    if (onlineRole === 'host') broadcastRoomState();
+  });
+});
 document.querySelectorAll('[data-opt-omode]').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('[data-opt-omode]').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     onlineMode = btn.dataset.optOmode;
     syncUI();
+    updateRoomUI();
     if (onlineRole === 'host') broadcastRoomState();
   });
 });
@@ -3054,7 +3197,6 @@ function updateRoomUI() {
     $('roomTab-settings').classList.remove('active');
     document.querySelectorAll('#roomTabs .tab').forEach(t => t.classList.toggle('active', t.dataset.roomtab === 'info'));
   }
-  // 加护选择器
   const bw = $('roomBlessingWrap');
   const bp = $('roomBlessingPicker');
   if (bw && bp) {
@@ -3077,10 +3219,10 @@ function updateRoomUI() {
       });
     });
   }
-  // 刷新房间设置里的滑块与选中态
   if (onlinePaddleMulEl) { onlinePaddleMulEl.value = onlinePaddleMul; onlinePaddleMulVal.textContent = onlinePaddleMul.toFixed(2) + 'x'; onlinePaddleMulEl.disabled = !isHost; }
   if (onlinePaddleSpeedEl) { onlinePaddleSpeedEl.value = onlinePaddleSpeed; onlinePaddleSpeedVal.textContent = onlinePaddleSpeed.toFixed(2) + 'x'; onlinePaddleSpeedEl.disabled = !isHost; }
-  // 比赛模式区块：常规显示比分，计时显示时长
+  if (onlineCurveMulEl) { onlineCurveMulEl.value = onlineCurveMul; onlineCurveMulVal.textContent = onlineCurveMul.toFixed(2) + 'x'; onlineCurveMulEl.disabled = !isHost; }
+  if (onlinePowerupMulEl) { onlinePowerupMulEl.value = onlinePowerupMul; onlinePowerupMulVal.textContent = onlinePowerupMul.toFixed(2) + 'x'; onlinePowerupMulEl.disabled = !isHost; }
   const scoreLabel = $('onlineScoreLabel');
   const scoreBlock = $('onlineScoreBlock');
   const timeLabel = $('onlineTimeLabel');
@@ -3132,7 +3274,10 @@ document.querySelectorAll('[data-start]').forEach(btn => {
               diff: onlineDiff,
               blessings: roomBlessings,
               paddleMul: onlinePaddleMul,
-              paddleSpeed: onlinePaddleSpeed
+              paddleSpeed: onlinePaddleSpeed,
+              aiLevel: onlineAILevel,
+              curveMul: onlineCurveMul,
+              powerupMul: onlinePowerupMul
             }));
           } catch (e) {}
         } else {
@@ -3150,7 +3295,10 @@ document.querySelectorAll('[data-start]').forEach(btn => {
                   squeeze: teamSqueeze,
                   blessings: roomBlessings,
                   paddleMul: onlinePaddleMul,
-                  paddleSpeed: onlinePaddleSpeed
+                  paddleSpeed: onlinePaddleSpeed,
+                  aiLevel: onlineAILevel,
+                  curveMul: onlineCurveMul,
+                  powerupMul: onlinePowerupMul
                 }));
               } catch (e) {}
             }
@@ -3282,6 +3430,7 @@ function syncUI() {
   document.querySelectorAll('[data-opt-omode]').forEach(b => b.classList.toggle('selected', b.dataset.optOmode === onlineMode));
   document.querySelectorAll('[data-opt-otime]').forEach(b => b.classList.toggle('selected', parseInt(b.dataset.optOtime, 10) === onlineTimerSeconds));
   document.querySelectorAll('[data-opt-odiff]').forEach(b => b.classList.toggle('selected', b.dataset.optOdiff === onlineDiff));
+  document.querySelectorAll('[data-opt-oailevel]').forEach(b => b.classList.toggle('selected', b.dataset.optOailevel === onlineAILevel));
   document.querySelectorAll('[data-opt-aimode]').forEach(b => b.classList.toggle('selected', (b.dataset.optAimode === 'timer') === timerMode));
   document.querySelectorAll('[data-opt-sfx]').forEach(b => b.classList.toggle('selected', (b.dataset.optSfx === 'on') === sfxEnabled));
   document.querySelectorAll('[data-opt-gpu]').forEach(b => b.classList.toggle('selected', (b.dataset.optGpu === 'on') === gpuAccel));
@@ -3306,7 +3455,6 @@ function recomputeSpeeds() {
   if (gameMode === 'online') onlineMul = onlineBallSpeed * (playerCount === 4 ? preset.ballSpeedMul : 1);
   gBallBaseSpeed = (W / (d.ballCrossTime * FPS_REF)) * debugParams.ballSpeedMul * BALL_SPEED_BONUS * onlineMul;
 
-  // 联机模式下应用全局拍长/拍速倍率
   let globalPaddleMul = 1.0, globalPaddleSpeed = 1.0;
   if (gameMode === 'online') {
     globalPaddleMul = onlinePaddleMul;
@@ -3314,9 +3462,15 @@ function recomputeSpeeds() {
   }
 
   player.speed = gPaddleSpeed * globalPaddleSpeed;
-  ai.speed = isAiControlled() ? gPaddleSpeed * d.aiSpeedMul * debugParams.aiSpeedMul * globalPaddleSpeed : gPaddleSpeed * globalPaddleSpeed;
   p2Paddle.speed = gPaddleSpeed * globalPaddleSpeed;
   p4Paddle.speed = gPaddleSpeed * globalPaddleSpeed;
+
+  // AI 拍速：单人 / 联机 AI 补位按 AI 难度倍率
+  const aiDiff = getAIDiff();
+  let aiSpeedMul = 1.0;
+  if (gameMode === 'ai') aiSpeedMul = aiDiff.aiSpeedMul;
+  else if (gameMode === 'online' && playerCount === 4) aiSpeedMul = aiDiff.aiSpeedMul;
+  ai.speed = gPaddleSpeed * aiSpeedMul * debugParams.aiSpeedMul * globalPaddleSpeed;
 
   const onlinePaddleHeightMul = (gameMode === 'online' && playerCount === 4) ? preset.paddleHeightMul : 1;
   const baseHeightFactor = H * d.paddleHeightRatio * debugParams.paddleHeightMul * onlinePaddleHeightMul * globalPaddleMul;
@@ -3326,8 +3480,6 @@ function recomputeSpeeds() {
   p2Paddle.baseHeight = baseHeightFactor;
   p4Paddle.baseHeight = baseHeightFactor;
 
-  // 长拍加护：单人模式 +30%，四人模式 +20%
-  const longMul = isFourPlayerOnline() ? FOUR_NERF.longPaddleMul : 1.3;
   if (gameMode === 'ai') {
     if (playerBlessing === 'longPaddle') player.baseHeight *= 1.3;
     if (aiBlessing === 'longPaddle') ai.baseHeight *= 1.3;
@@ -3464,6 +3616,9 @@ function resetBall(direction) {
   const angle = (Math.random() * 0.6 - 0.3) * Math.PI;
   ball.speedX = Math.cos(angle) * ball.baseSpeed * (direction || 1);
   ball.speedY = Math.sin(angle) * ball.baseSpeed;
+  // 重置 AI 缓存
+  player._aiTargetY = undefined; p2Paddle._aiTargetY = undefined;
+  ai._aiTargetY = undefined; p4Paddle._aiTargetY = undefined;
   updateStatusChips();
 }
 function placePaddlesFour() {
@@ -3508,9 +3663,7 @@ function onRoundStart() {
     const shieldChance = nerf ? FOUR_NERF.shieldChance : 0.10;
     const shieldMax = nerf ? FOUR_NERF.shieldMax : 3;
     const b1 = gameMode === 'ai' ? playerBlessing : getBlessingBySlot(1);
-    const b2 = gameMode === 'ai' ? aiBlessing : getBlessingBySlot(2);
     const b3 = gameMode === 'ai' ? aiBlessing : getBlessingBySlot(3);
-    const b4 = gameMode === 'ai' ? aiBlessing : getBlessingBySlot(4);
     if (b1 === 'shield' && Math.random() < shieldChance && p1ShieldCount < shieldMax) p1ShieldCount++;
     if (b3 === 'shield' && Math.random() < shieldChance && p2ShieldCount < shieldMax) p2ShieldCount++;
   }
@@ -3630,15 +3783,12 @@ function checkPaddle(paddle, isPlayer, slot) {
   ball.baseSpeed = Math.min(ball.baseSpeed + ball.initialSpeed * 0.05, ball.maxSpeed);
   const dir = isLeft ? 1 : -1;
   const spinIntensity = Math.abs(hitPos);
-
-  // 旋转加护：单人 /1.4，四人 /1.25
   const slotBlessing = slot !== undefined ? getBlessingBySlot(slot) : (isLeft ? playerBlessing : aiBlessing);
   let spinThreshold = 0.4;
   if (isLeft && (gameMode === 'ai' || gameMode === 'online') && slotBlessing === 'spin') {
     const div = isFourPlayerOnline() ? FOUR_NERF.spinDiv : 1.4;
     spinThreshold = 0.4 / div;
   }
-
   let newSpeedX = Math.cos(angle) * ball.baseSpeed * dir;
   let newSpeedY = Math.sin(angle) * ball.baseSpeed;
   let newSpin = 0;
@@ -3652,8 +3802,6 @@ function checkPaddle(paddle, isPlayer, slot) {
       newSpeedY = Math.sin(angle) * ball.baseSpeed;
     }
   } else { newSpin = hitPos * 0.5 * spinIntensity; }
-
-  // 狂暴加护：单人 +7%/层，四人 +5%/层
   if (isLeft && (gameMode === 'ai' || gameMode === 'online') && slotBlessing === 'berserk') {
     const per = isFourPlayerOnline() ? FOUR_NERF.berserkPer : 0.07;
     if (berserkStack < BERSERK_MAX) { berserkStack++; AudioEngine.berserk(); }
@@ -3676,6 +3824,7 @@ function triggerCurveBall(fromLeft) {
   const preset = ONLINE_DIFF_PRESETS[onlineDiff] || ONLINE_DIFF_PRESETS.hard;
   let prob = d.curveProb * debugParams.curveProbMul;
   if (gameMode === 'online' && playerCount === 4) prob *= preset.curveProbMul;
+  if (gameMode === 'online') prob *= onlineCurveMul;
   if (gameMode !== 'ai') prob *= 1.15;
   const frenzyMul = isFourPlayerOnline() ? FOUR_NERF.frenzyCurveMul : 1.5;
   if (fromLeft && frenzyActiveP1) prob *= frenzyMul;
@@ -3820,32 +3969,6 @@ function startTimer() {
     if (timerRemaining <= 0) { timerRemaining = 0; updateTimerDisplay(); endTimerGame(); }
   }, 100);
 }
-function updateAI(dt) {
-  const d = DIFFICULTY[currentDiff];
-  const aiCenter = ai.y + ai.height / 2;
-  const diff = ball.y - aiCenter;
-  if (aiMistakeTimer > 0) {
-    aiMistakeTimer -= dt;
-    switch (aiMistakeType) {
-      case 'freeze': break;
-      case 'overshoot': ai.y += (diff > 0 ? 1 : -1) * ai.speed * 1.4 * dt; break;
-      case 'slow':
-        if (diff > 8) ai.y += ai.speed * 0.2 * dt; else if (diff < -8) ai.y -= ai.speed * 0.2 * dt;
-        break;
-      case 'wrong': ai.y += (diff > 0 ? -1 : 1) * ai.speed * 0.5 * dt; break;
-    }
-  } else {
-    const reaction = Math.min(Math.abs(diff), ai.speed * d.aiReaction * dt);
-    if (diff > 8) ai.y += reaction;
-    else if (diff < -8) ai.y -= reaction;
-    if (Math.random() < d.mistakeRate * dt) {
-      const types = ['freeze','overshoot','slow','wrong'];
-      aiMistakeType = types[Math.floor(Math.random() * types.length)];
-      aiMistakeTimer = d.mistakeDuration[0] + Math.random() * (d.mistakeDuration[1] - d.mistakeDuration[0]);
-    }
-  }
-  ai.y = clamp(ai.y, 0, LOGICAL_H - ai.height);
-}
 function updatePlayerAsHellAI(dt) {
   const d = DIFFICULTY.hell;
   const playerCenter = player.y + player.height / 2;
@@ -3854,16 +3977,6 @@ function updatePlayerAsHellAI(dt) {
   if (diff > 8) player.y += reaction;
   else if (diff < -8) player.y -= reaction;
   player.y = clamp(player.y, 0, LOGICAL_H - player.height);
-}
-function updateAIFour(pad, dt) {
-  if (!pad) return;
-  const d = DIFFICULTY[currentDiff];
-  const center = pad.y + pad.height / 2;
-  const diff = ball.y - center;
-  const reaction = Math.min(Math.abs(diff), pad.speed * d.aiReaction * 0.85 * dt);
-  if (diff > 8) pad.y += reaction;
-  else if (diff < -8) pad.y -= reaction;
-  pad.y = clamp(pad.y, 0, LOGICAL_H - pad.height);
 }
 function applySqueezeCollision(top, bot) {
   const overlap = (top.y + top.height) - bot.y;
@@ -3943,15 +4056,18 @@ function movePaddles(dt) {
     player.y = clamp(player.y, 0, LOGICAL_H - player.height);
   }
   if (playerCount === 4) {
-    if (slotInfo[2] && slotInfo[2].isAI) updateAIFour(p2Paddle, dt);
+    // Slot 2（左队，下半场）
+    if (slotInfo[2] && slotInfo[2].isAI) updateAISmart(p2Paddle, dt, { slot: 2, isLeft: true, halfMin: LOGICAL_H / 2, halfMax: LOGICAL_H });
     else if (slotInfo[2] && slotInfo[2].clientId && fourPeers[slotInfo[2].clientId]) applyTargetY(p2Paddle, dt);
-    else updateAIFour(p2Paddle, dt);
-    if (slotInfo[3] && slotInfo[3].isAI) updateAIFour(ai, dt);
+    else updateAISmart(p2Paddle, dt, { slot: 2, isLeft: true, halfMin: LOGICAL_H / 2, halfMax: LOGICAL_H });
+    // Slot 3（右队，上半场）
+    if (slotInfo[3] && slotInfo[3].isAI) updateAISmart(ai, dt, { slot: 3, isLeft: false, halfMin: 0, halfMax: LOGICAL_H / 2 });
     else if (slotInfo[3] && slotInfo[3].clientId && fourPeers[slotInfo[3].clientId]) applyTargetY(ai, dt);
-    else updateAIFour(ai, dt);
-    if (slotInfo[4] && slotInfo[4].isAI) updateAIFour(p4Paddle, dt);
+    else updateAISmart(ai, dt, { slot: 3, isLeft: false, halfMin: 0, halfMax: LOGICAL_H / 2 });
+    // Slot 4（右队，下半场）
+    if (slotInfo[4] && slotInfo[4].isAI) updateAISmart(p4Paddle, dt, { slot: 4, isLeft: false, halfMin: LOGICAL_H / 2, halfMax: LOGICAL_H });
     else if (slotInfo[4] && slotInfo[4].clientId && fourPeers[slotInfo[4].clientId]) applyTargetY(p4Paddle, dt);
-    else updateAIFour(p4Paddle, dt);
+    else updateAISmart(p4Paddle, dt, { slot: 4, isLeft: false, halfMin: LOGICAL_H / 2, halfMax: LOGICAL_H });
     constrainFourPaddles();
   } else {
     if (gameMode === 'pvp') {
@@ -3967,7 +4083,7 @@ function movePaddles(dt) {
         ai.y = clamp(ai.y, 0, LOGICAL_H - ai.height);
       }
     } else if (gameMode === 'ai') {
-      updateAI(dt);
+      updateAISmart(ai, dt, { slot: 3, isLeft: false });
     }
   }
 }
@@ -4038,6 +4154,7 @@ function update(dt) {
   const preset = ONLINE_DIFF_PRESETS[onlineDiff] || ONLINE_DIFF_PRESETS.hard;
   let puProb = POWERUP_BASE_PROB * debugParams.powerupRate;
   if (gameMode === 'online' && playerCount === 4) puProb *= preset.powerupRate;
+  if (gameMode === 'online') puProb *= onlinePowerupMul;
   if (gameMode !== 'ai') puProb *= 1.15;
   if (powerupTimer > 100 && activePowerups.length === 0 && Math.random() < puProb * dt) { spawnPowerup(); powerupTimer = 0; }
   for (let i = activePowerups.length - 1; i >= 0; i--) {
@@ -4192,13 +4309,11 @@ function draw() {
   }
   ctx.setLineDash([]);
   if (!shouldDrawEntities) return;
-
   const b1 = gameMode === 'ai' ? playerBlessing : getBlessingBySlot(1);
   const b3 = gameMode === 'ai' ? aiBlessing : getBlessingBySlot(3);
   const p1IsLong = ((gameMode === 'ai' || gameMode === 'online') && b1 === 'longPaddle');
   const p2IsLong = ((gameMode === 'ai' || gameMode === 'online') && b3 === 'longPaddle');
   const p1IsBerserk = ((gameMode === 'ai' || gameMode === 'online') && b1 === 'berserk' && berserkStack > 0);
-
   if (playerCount === 4) {
     drawPaddle(player, t, { side:'left', shields: p1ShieldCount, firstStrike: playerControlledByAI, frenzy: frenzyActiveP1, color:'#ff8080', longPaddle: p1IsLong });
     drawPaddle(p2Paddle, t, { side:'left', color:'#ff5050', longPaddle: getBlessingBySlot(2) === 'longPaddle' });
@@ -4412,6 +4527,8 @@ function quitToMenu() {
   phosphorTrail = [];
   berserkStack = 0;
   physAccumulator = 0;
+  player._aiTargetY = undefined; p2Paddle._aiTargetY = undefined;
+  ai._aiTargetY = undefined; p4Paddle._aiTargetY = undefined;
   countdownOverlay.classList.add('hidden');
   resetCheat(); Integrity.cancel();
   pauseOverlay.classList.remove('show');
