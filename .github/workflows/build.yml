@@ -1,0 +1,28 @@
+name: Build Bun Executable
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Build Windows exe
+        run: bun build --compile --target=bun-windows-x64 ./pong84-host.js --outfile pong84-host.exe
+
+      - name: Upload Windows exe
+        uses: actions/upload-artifact@v4
+        with:
+          name: pong84-host-windows
+          path: pong84-host.exe
+          retention-days: 30
