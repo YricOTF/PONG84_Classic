@@ -11,33 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1
-        with: { bun-version: latest }
+        with:
+          bun-version: latest
       - run: bun build --compile --target=bun-windows-x64 ./pong84-host.js --outfile pong84-host-windows.exe
       - uses: actions/upload-artifact@v4
         with:
           name: pong84-host-windows
           path: pong84-host-windows.exe
-
-  build-android-arm64:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v1
-        with: { bun-version: latest }
-      - run: bun build --compile --target=bun-linux-arm64 ./pong84-host.js --outfile pong84-host-android
-      - uses: actions/upload-artifact@v4
-        with:
-          name: pong84-host-android
-          path: pong84-host-android
-
-  build-android-arm32:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v1
-        with: { bun-version: latest }
-      - run: bun build --compile --target=bun-linux-arm ./pong84-host.js --outfile pong84-host-android-arm32
-      - uses: actions/upload-artifact@v4
-        with:
-          name: pong84-host-android-arm32
-          path: pong84-host-android-arm32
