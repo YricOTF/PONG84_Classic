@@ -1,4 +1,4 @@
-name: Build Bun Executable
+name: Build Bun Executables
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-windows:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -17,12 +17,54 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Build Windows exe
-        run: bun build --compile --target=bun-windows-x64 ./pong84-host.js --outfile pong84-host.exe
+      - name: Build Windows x64
+        run: bun build --compile --target=bun-windows-x64 ./pong84-host.js --outfile pong84-host-windows.exe
 
-      - name: Upload Windows exe
+      - name: Upload Windows
         uses: actions/upload-artifact@v4
         with:
           name: pong84-host-windows
-          path: pong84-host.exe
+          path: pong84-host-windows.exe
+          retention-days: 30
+
+  build-android-arm64:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Build Linux ARM64 (for Android Termux)
+        run: bun build --compile --target=bun-linux-arm64 ./pong84-host.js --outfile pong84-host-android
+
+      - name: Upload Android ARM64
+        uses: actions/upload-artifact@v4
+        with:
+          name: pong84-host-android
+          path: pong84-host-android
+          retention-days: 30
+
+  build-android-arm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Build Linux ARM (32-bit, for old Android)
+        run: bun build --compile --target=bun-linux-arm ./pong84-host.js --outfile pong84-host-android-arm32
+
+      - name: Upload Android ARM32
+        uses: actions/upload-artifact@v4
+        with:
+          name: pong84-host-android-arm32
+          path: pong84-host-android-arm32
           retention-days: 30
