@@ -8,6 +8,7 @@
 <meta name="theme-color" content="#051005">
 <title>PONG-84</title>
 <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
   --crt-color:#33ff33;--crt-glow:rgba(51,255,51,0.5);--crt-bg:#051005;--crt-dim:rgba(51,255,51,0.2);
@@ -2923,6 +2924,15 @@ function resetCheat() { cheatActive = false; cheatBallSpeedMul = 1; cheatSequenc
    传输层变量
    ============================================================ */
 const MQTT_BROKER = 'wss://broker.emqx.io:8084/mqtt';
+/* ============ Supabase 配置 ============ */
+const SUPABASE_URL = 'https://grfhbtszcrwdbrphaiaw.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_1FoCHLurAbMImr14Vnruaw_xMPoUTa6';
+let supabaseClient = null;
+try {
+  if (window.supabase && window.supabase.createClient) {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+} catch (e) { console.warn('[PONG-84] Supabase 初始化失败', e); }
 const TOPIC_PREFIX = 'pong84/v29/';
 let onlineTransport = 'mqtt';
 let mqttClient = null;
@@ -4207,66 +4217,91 @@ function lbRenderAll() {
     }
   }
 }
-function lbConnect() {
-  if (typeof mqtt === 'undefined') { leaderboardStatus = 'offline'; lbScheduleRender(); return; }
-  if (leaderboardClient) return;
+async function lbConnect() {
+  if (!supabaseClient) { leaderboardStatus = 'offline'; lbScheduleRender(); return; }
   leaderboardStatus = 'connecting';
   lbScheduleRender();
   try {
-    leaderboardClient = mqtt.connect(MQTT_BROKER, { clean: true, connectTimeout: 8000, reconnectPeriod: 5000, clientId: 'pong84_lb_' + Math.random().toString(16).slice(2, 10) });
-  } catch (e) { leaderboardStatus = 'offline'; lbScheduleRender(); return; }
-  leaderboardClient.on('connect', () => {
+    const { data, error } = await supabaseClient
+      .from('leaderboard')
+      .select('*')
+      .order('hell21_wins', { ascending: false })
+      .limit(200);
+    if (error) throw error;
+    allEntries = {};
+    for (const row of data) {
+      allEntries[row.player_id] = {
+        v: 2, id: row.player_id, name: row.name, ts: new Date(row.updated_at).getTime(),
+        deviceId: row.device_id,
+        hell21Wins: row.hell21_wins, hard21Wins: row.hard21_wins, playMs: row.play_ms,
+        lastIntegrity: row.last_integrity || '',
+        hellTimer: {
+          30: { wins: row.timer_30_wins, totalScore: row.timer_30_score },
+          60: { wins: row.timer_60_wins, totalScore: row.timer_60_score },
+          120:{ wins: row.timer_120_wins, totalScore: row.timer_120_score }
+        }
+      };
+    }
     leaderboardStatus = 'connected';
     lbScheduleRender();
-    leaderboardClient.subscribe(LB_TOPIC_PREFIX + '+', { qos: 1 });
-    leaderboardClient.subscribe(LB_BAN_PREFIX + DEVICE_ID, { qos: 1 });
-    lbPublishMine();
-  });
-  leaderboardClient.on('message', (topic, payload) => {
-    if (topic.indexOf(LB_BAN_PREFIX) === 0) {
-      const devId = topic.slice(LB_BAN_PREFIX.length);
-      if (devId === DEVICE_ID) {
-        const s = payload.toString();
-        if (!s || s === 'null' || s === '0' || s === '') {
-          deviceBanned = false; deviceBanReason = '';
-        } else {
-          deviceBanned = true;
-          try { const o = JSON.parse(s); deviceBanReason = (o && o.reason) ? o.reason : '违规行为'; }
-          catch (e) { deviceBanReason = String(s).slice(0, 60); }
-        }
-        updateBanBanner();
-      }
-      return;
-    }
-    if (topic.indexOf(LB_TOPIC_PREFIX) !== 0) return;
-    const id = topic.slice(LB_TOPIC_PREFIX.length);
-    if (!id || id.indexOf('/') >= 0 || id.length > 32) return;
-    const payloadStr = payload.toString();
-    if (payloadStr === '' || payloadStr === 'null') {
-      if (id !== PLAYER_ID) { delete allEntries[id]; lbScheduleRender(); }
-      return;
-    }
-    if (id === PLAYER_ID) return;
-    let entry; try { entry = JSON.parse(payloadStr); } catch (e) { return; }
-    if (!lbValidateEntry(entry, id)) return;
-    const existing = allEntries[id];
-    if (existing && existing.ts >= entry.ts) return;
-    allEntries[id] = entry;
+    await lbCheckBan();
+  } catch (e) {
+    console.warn('[PONG-84] Supabase 读取失败', e);
+    leaderboardStatus = 'offline';
     lbScheduleRender();
-  });
-  leaderboardClient.on('error', () => { leaderboardStatus = 'offline'; lbScheduleRender(); });
-  leaderboardClient.on('close', () => { if (leaderboardStatus === 'connected') { leaderboardStatus = 'connecting'; lbScheduleRender(); } });
+  }
 }
-function lbPublishMine() {
-  if (deviceBanned) return;
-  if (!leaderboardClient || !leaderboardClient.connected) return;
-  const entry = lbEntryFromMyStats();
-  entry.sig = computeSig(entry);
+
+async function lbCheckBan() {
+  if (!supabaseClient || !DEVICE_ID) return;
   try {
-    leaderboardClient.publish(LB_TOPIC_PREFIX + PLAYER_ID, JSON.stringify(entry), { qos: 1, retain: true });
-    allEntries[PLAYER_ID] = entry;
-    lbScheduleRender();
+    const { data, error } = await supabaseClient
+      .from('bans').select('*').eq('device_id', DEVICE_ID).maybeSingle();
+    if (error) return;
+    if (data) { deviceBanned = true; deviceBanReason = data.reason || '违规行为'; }
+    else { deviceBanned = false; deviceBanReason = ''; }
+    updateBanBanner();
   } catch (e) {}
+}async function lbPublishMine() {
+  if (!supabaseClient || deviceBanned) return;
+  const tempEntry = {
+    v: 2, id: PLAYER_ID, name: playerName, ts: Date.now(),
+    deviceId: DEVICE_ID,
+    hell21Wins: myStats.hell21Wins, hard21Wins: myStats.hard21Wins, playMs: myStats.playMs,
+    lastIntegrity: lastPublishedIntegrity || '',
+    hellTimer: {
+      30: { wins: myStats.hellTimer[30].wins, totalScore: myStats.hellTimer[30].totalScore },
+      60: { wins: myStats.hellTimer[60].wins, totalScore: myStats.hellTimer[60].totalScore },
+      120:{ wins: myStats.hellTimer[120].wins, totalScore: myStats.hellTimer[120].totalScore }
+    }
+  };
+  const row = {
+    player_id: PLAYER_ID,
+    name: playerName,
+    device_id: DEVICE_ID,
+    hell21_wins: myStats.hell21Wins,
+    hard21_wins: myStats.hard21Wins,
+    play_ms: myStats.playMs,
+    timer_30_score: myStats.hellTimer[30].totalScore,
+    timer_60_score: myStats.hellTimer[60].totalScore,
+    timer_120_score: myStats.hellTimer[120].totalScore,
+    timer_30_wins: myStats.hellTimer[30].wins,
+    timer_60_wins: myStats.hellTimer[60].wins,
+    timer_120_wins: myStats.hellTimer[120].wins,
+    last_integrity: lastPublishedIntegrity || '',
+    sig: computeSig(tempEntry),
+    updated_at: new Date().toISOString()
+  };
+  try {
+    const { error } = await supabaseClient
+      .from('leaderboard')
+      .upsert(row, { onConflict: 'player_id' });
+    if (error) throw error;
+    allEntries[PLAYER_ID] = lbEntryFromMyStats();
+    lbScheduleRender();
+  } catch (e) {
+    console.warn('[PONG-84] 上传排行榜失败', e);
+  }
 }
 function lbScoreValidForReport() {
   if (onlineRole !== null || lanRole !== null) return false;
