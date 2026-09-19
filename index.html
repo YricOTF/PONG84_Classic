@@ -21,15 +21,8 @@
 button,input,textarea,select{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}
 img,svg,canvas{user-select:none;-webkit-user-select:none;pointer-events:none;}
 svg *{pointer-events:none;}
-html,body{
-  font-family:'SF Mono','Courier New','PingFang SC','Microsoft YaHei','Noto Sans SC',monospace;
-  background:#0a0a0a;background-image:radial-gradient(ellipse at center,#161616 0%,#080808 100%);
-  color:var(--crt-color);height:100%;width:100%;overflow:hidden;touch-action:none;overscroll-behavior:none;
-  -webkit-text-size-adjust:100%;-webkit-touch-callout:none;
-}
+html,body{font-family:'SF Mono','Courier New','PingFang SC','Microsoft YaHei','Noto Sans SC',monospace;background:#0a0a0a;background-image:radial-gradient(ellipse at center,#161616 0%,#080808 100%);color:var(--crt-color);height:100%;width:100%;overflow:hidden;touch-action:none;overscroll-behavior:none;-webkit-text-size-adjust:100%;-webkit-touch-callout:none;}
 #app{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;}
-
-/* 顶部栏 */
 .header{position:fixed;top:0;left:0;right:0;height:44px;z-index:60;pointer-events:none;}
 .header h1{position:absolute;top:7px;left:50%;transform:translateX(-50%);font-size:13px;font-weight:700;letter-spacing:7px;color:var(--crt-color);text-transform:uppercase;text-shadow:0 0 8px var(--crt-glow),0 0 18px var(--crt-glow);}
 .hdr-btn{pointer-events:auto;position:absolute;top:6px;width:36px;height:36px;padding:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.72);border:1.5px solid var(--crt-dim);color:var(--crt-mid);border-radius:8px;cursor:pointer;touch-action:manipulation;transition:all .15s ease;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);}
@@ -39,8 +32,6 @@ html,body{
 .hdr-btn.disabled{opacity:.35;pointer-events:none;}
 #pauseBtn{right:52px;}
 #fsBtn{right:10px;}
-
-/* 顶部状态条 */
 .inline-status{position:fixed;top:48px;left:50%;transform:translateX(-50%);display:none;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;max-width:76%;pointer-events:none;z-index:55;}
 .inline-status.show{display:flex;}
 .status-chip{display:flex;align-items:center;gap:5px;font-size:9px;letter-spacing:.4px;padding:3px 9px;border-radius:3px;background:rgba(0,0,0,.72);border:1px solid var(--crt-dim);}
@@ -48,24 +39,18 @@ html,body{
 .status-chip.hidden{display:none;}
 .mini-bar{display:block;width:30px;height:3px;background:rgba(255,255,255,.16);border-radius:1.5px;overflow:hidden;flex-shrink:0;}
 .mini-bar-fill{display:block;height:100%;width:100%;background:#fff;border-radius:1.5px;transition:width .1s linear;}
-
-/* 右下角加护信息 */
 .top-info{position:fixed;right:10px;bottom:10px;display:none;flex-direction:column;align-items:flex-end;gap:3px;z-index:41;pointer-events:none;max-width:260px;}
 .top-info.show{display:flex;}
 .blessing-chip{display:flex;align-items:center;gap:5px;font-size:9.5px;letter-spacing:.4px;padding:3px 8px;border-radius:4px;background:rgba(0,0,0,.75);border:1px solid var(--crt-dim);white-space:nowrap;max-width:100%;}
 .blessing-chip .bl-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;box-shadow:0 0 6px currentColor;}
 .blessing-chip .bl-txt{color:var(--crt-mid);text-overflow:ellipsis;overflow:hidden;}
 .blessing-chip .bl-shield{color:#88aaff;font-weight:700;margin-left:2px;font-size:9px;}
-
-/* 左上角性能面板 */
 .stats-panel{position:fixed;top:76px;left:10px;font-size:9px;line-height:1.45;color:var(--crt-mid);letter-spacing:.4px;z-index:41;pointer-events:none;text-shadow:0 0 4px rgba(0,0,0,.9);display:flex;flex-direction:column;gap:1px;font-variant-numeric:tabular-nums;background:rgba(0,0,0,.5);padding:4px 7px;border-radius:4px;border:1px solid rgba(255,255,255,.05);}
 .stats-panel .stat-row{display:flex;gap:5px;align-items:center;}
 .stats-panel .stat-label{color:var(--crt-mid);}
 .stats-panel .stat-value{color:var(--crt-color);}
 .stats-panel .stat-value.warn{color:#ffaa33;}
 .stats-panel .stat-value.bad{color:#ff4444;}
-
-/* 游戏区 */
 .hud-layer{position:absolute;inset:0;pointer-events:none;z-index:22;}
 .scoreboard{position:absolute;top:6px;left:50%;transform:translateX(-50%);display:none;gap:22px;font-size:22px;font-weight:700;color:var(--crt-mid);align-items:center;text-shadow:0 0 5px var(--crt-glow);}
 .scoreboard.show{display:flex;}
@@ -116,8 +101,6 @@ body.simple-mode .mc-btn{box-shadow:none;}
 .crt-label{display:flex;justify-content:space-between;align-items:center;padding:5px 12px 0;font-size:9px;color:#666;letter-spacing:2px;text-transform:uppercase;}
 .crt-power-led{width:6px;height:6px;border-radius:50%;background:var(--crt-color);box-shadow:0 0 6px var(--crt-glow);animation:ledPulse 3s ease-in-out infinite;}
 @keyframes ledPulse{0%,100%{opacity:1;}50%{opacity:.35;}}
-
-/* Overlay 菜单 */
 .overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;background:radial-gradient(ellipse at center,#0b110b 0%,#040604 100%);z-index:50;transition:opacity .22s ease;overflow-y:auto;overflow-x:hidden;padding:56px 14px 22px;scrollbar-width:thin;-webkit-overflow-scrolling:touch;}
 .overlay::-webkit-scrollbar{width:5px;}
 .overlay::-webkit-scrollbar-thumb{background:var(--crt-dim);border-radius:3px;}
@@ -336,8 +319,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
   .status-chip{font-size:8px;padding:2px 6px;}
   .stats-panel{font-size:8px;left:6px;top:70px;}
 }
-</style>
-</head><body>
+</style></head><body>
 
 <div class="rotate-hint" id="rotateHint">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="18" r="1.5" fill="currentColor"/></svg>
@@ -656,6 +638,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <div class="room-hint" id="roomBlessingHint">部分加护在四人模式下会削弱</div>
         </div>
         <button class="mc-btn start" id="onlineStartBtn" data-start style="display:none;">开始游戏（主机）</button>
+	<button class="mc-btn start hidden-section" id="clientReadyBtn">准备</button>
         <button class="mc-btn warn" id="btnCloseRoom" style="margin-top:8px;">关闭房间 / 离开房间</button>
       </div>
       <div class="tab-content" id="roomTab-settings">
@@ -793,7 +776,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
         </div>
         <div class="lb-list" id="lbTimeList"></div>
       </div>
-      <div class="room-hint" style="margin-top:6px;">只统计通过完整性校验的人机对局 · 困难胜利按 25% 权重参与排序</div>
+      <div class="room-hint" style="margin-top:6px;">只统计通过完整性校验 · 按键模式完成的人机对局 · 地狱胜 3 分 · 困难胜 2 分</div>
     </div>
 
     <div class="menu-panel hidden-section" id="panel-account">
@@ -1060,13 +1043,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
       </div>
     </div>
   </div>
-</div>
-
-<script>"use strict";
-
-/* ============================================================
-   PONG-84 · v30
-   ============================================================ */
+</div><script>"use strict";
 
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
   || (navigator.maxTouchPoints > 0 && 'ontouchstart' in window);
@@ -1108,13 +1085,13 @@ const getTheme = () => CRT_THEMES[crtTheme];
 
 const BLESSINGS = {
   none:        { label:'无加护', color:'#888888', icon:'○', tag:'基础', desc:'没有任何特殊效果，纯粹的公平对决。' },
-  firstStrike: { label:'首发',   color:'#33ff99', icon:'★', tag:'回合', desc:'在第 1、11、21……回合，你的球拍会由地狱级 AI 代打一回合。AI 会使用最新的二段预判逻辑，瞄拍边打进攻球。' },
+  firstStrike: { label:'首发',   color:'#33ff99', icon:'★', tag:'回合', desc:'在第 1、11、21……回合，你的球拍会由地狱级 AI 代打一回合。' },
   spin:        { label:'旋转',   color:'#44ddff', icon:'↻', tag:'击球', desc:'击球位置更容易打出旋转球，判定范围比正常大 40%。' },
-  longPaddle:  { label:'长拍',   color:'#ffaa44', icon:'▬', tag:'体型', desc:'球拍永久加长 30%。因为已经自带长拍，所以不会再被道具长拍强化。' },
+  longPaddle:  { label:'长拍',   color:'#ffaa44', icon:'▬', tag:'体型', desc:'球拍永久加长 30%。' },
   frenzy:      { label:'狂乱',   color:'#ff44aa', icon:'✦', tag:'回合', desc:'在第 8、16、24……回合，特殊球触发率提升 50%。特殊球即将让你丢分时，有 15% 概率被挡下。' },
-  berserk:     { label:'狂暴',   color:'#ff6622', icon:'⚡', tag:'进攻', desc:'每次击球使球速提升 7%，最多叠加 4 层（总加成 +28%）。丢分后层数重置。' },
-  shield:      { label:'盾牌',   color:'#88aaff', icon:'⛨', tag:'防御', desc:'每回合开始时 10% 概率获得一个护盾（最多 3 个）。护盾可以抵消一次失分。四人模式下会削弱。' },
-  spear:       { label:'长矛',   color:'#ffdd44', icon:'↑', tag:'进攻', desc:'进球时有 6% 概率一次得两分。并且有 50% 概率无视对方护盾。四人模式下会削弱。' },
+  berserk:     { label:'狂暴',   color:'#ff6622', icon:'⚡', tag:'进攻', desc:'每次击球使球速提升 7%，最多叠加 4 层。丢分后层数重置。' },
+  shield:      { label:'盾牌',   color:'#88aaff', icon:'⛨', tag:'防御', desc:'每回合开始时 10% 概率获得一个护盾（最多 3 个）。四人模式下会削弱。' },
+  spear:       { label:'长矛',   color:'#ffdd44', icon:'↑', tag:'进攻', desc:'进球时有 6% 概率一次得两分。有 50% 概率无视对方护盾。四人模式下会削弱。' },
   gambler:     { label:'赌神',   color:'#ff4444', icon:'♠', tag:'概率', desc:'进球时有 0.008% 概率直接获得整局胜利。' }
 };
 const BLESSING_ORDER = ['none','firstStrike','spin','longPaddle','frenzy','berserk','shield','spear','gambler'];
@@ -1140,10 +1117,10 @@ DIFFICULTY.hell.curveProb   *= 0.66;
 const AI_SPEED_CAP = 1.3;
 
 const ONLINE_DIFF_PRESETS = {
-  easy:   { label:'简单', paddleHeightMul: 1.20, powerupRate: 1.35, curveProbMul: 0.55, ballSpeedMul: 0.85, desc:'球拍偏长 · 道具率高 · 变轨少 · 球速慢' },
-  normal: { label:'普通', paddleHeightMul: 1.00, powerupRate: 1.00, curveProbMul: 1.00, ballSpeedMul: 1.00, desc:'标准参数' },
-  hard:   { label:'困难', paddleHeightMul: 0.82, powerupRate: 0.75, curveProbMul: 1.35, ballSpeedMul: 1.15, desc:'球拍偏短 · 道具率低 · 变轨多 · 球速快' },
-  hell:   { label:'地狱', paddleHeightMul: 0.68, powerupRate: 0.55, curveProbMul: 1.75, ballSpeedMul: 1.30, desc:'球拍极短 · 道具少 · 变轨频繁 · 球速极快' }
+  easy:   { label:'简单', paddleHeightMul: 1.20, powerupRate: 1.35, curveProbMul: 0.55, ballSpeedMul: 0.85 },
+  normal: { label:'普通', paddleHeightMul: 1.00, powerupRate: 1.00, curveProbMul: 1.00, ballSpeedMul: 1.00 },
+  hard:   { label:'困难', paddleHeightMul: 0.82, powerupRate: 0.75, curveProbMul: 1.35, ballSpeedMul: 1.15 },
+  hell:   { label:'地狱', paddleHeightMul: 0.68, powerupRate: 0.55, curveProbMul: 1.75, ballSpeedMul: 1.30 }
 };
 
 const PADDLE_CROSS_TIME = 0.6;
@@ -1212,7 +1189,8 @@ let followTouchTargetY = null;
 let floatTexts = [];
 let playTimeAccum = 0;
 
-/* ============ 浮动文本 ============ */
+let lastGameControlMode = 'buttons';
+
 function spawnFloatText(x, y, text, color, size) {
   floatTexts.push({ x, y, text, color: color || '#ffffff', life: 1, vy: -0.7, size: size || 22 });
   if (floatTexts.length > 24) floatTexts.shift();
@@ -1241,19 +1219,16 @@ function drawFloatTexts() {
   ctx.shadowBlur = 0;
   ctx.globalAlpha = 1;
 }
-
 function isAiControlled() {
   if (onlineRole !== null || lanRole !== null) return false;
   if (gameMode === 'ai') return true;
   return false;
 }
-
 function getAIDiff() {
   if (gameMode === 'online' && onlineAILevel && DIFFICULTY[onlineAILevel]) return DIFFICULTY[onlineAILevel];
   return DIFFICULTY[currentDiff];
 }
 
-/* ============ AI 二段预判 ============ */
 function predictBallLanding(targetX) {
   const r = ball.size / 2;
   const H = LOGICAL_H;
@@ -1329,7 +1304,6 @@ function updateAISmart(pad, dt, opts) {
 }
 function updatePlayerAsAI(dt) { updateAISmart(player, dt, { slot: 1, isLeft: true }); }
 
-/* ============ 完整性校验 ============ */
 const Integrity = {
   active: false, hash: '', sessionNonce: '', startTime: 0, hits: 0, p1Hits: 0,
   scoreEvents: [], sampleCounter: 0, frameCount: 0,
@@ -1385,7 +1359,6 @@ const Integrity = {
 };
 let lastIntegrityResult = null;
 
-/* ============ 统计 ============ */
 const stats = { frameTimes: [], lastSampleTime: 0, fps: 0, avgFrameMs: 0, ping: -1 };
 const STATS_SAMPLE_MS = 400, STATS_WINDOW = 90;
 let pingInterval = null;
@@ -1440,14 +1413,12 @@ function startPingLoop() {
 }
 function stopPingLoop() { if (pingInterval) { clearInterval(pingInterval); pingInterval = null; } stats.ping = -1; }
 
-/* ============ DOM 引用 ============ */
 const $ = id => document.getElementById(id);
 const canvas = $('gameCanvas');
 const ctx = canvas.getContext('2d', { alpha: false, desynchronized: true });
 canvas.width = LOGICAL_W;
 canvas.height = LOGICAL_H;
 
-/* ============ 音频引擎 ============ */
 const AudioEngine = {
   ctx: null,
   init() {
@@ -1486,7 +1457,6 @@ const AudioEngine = {
   timerTick()  { this.init(); this.playTone(440,0.05,'sine',0.04); }
 };
 
-/* ============ 全屏 ============ */
 const isFullscreen = () => !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
 function lockLandscape() { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {}); }
 function requestFullscreen() {
@@ -1510,7 +1480,6 @@ function updateFsIcon() {
   }
 }
 
-/* ============ 布局 ============ */
 function checkOrientation() {
   const portrait = window.innerWidth < window.innerHeight;
   const rotateHint = $('rotateHint');
@@ -1546,7 +1515,6 @@ function resizeCanvas() {
 }
 function layoutAll() { layoutGame(); resizeCanvas(); }
 
-/* ============ 速度计算 ============ */
 function recomputeSpeeds() {
   const W = LOGICAL_W, H = LOGICAL_H;
   const d = DIFFICULTY[currentDiff];
@@ -1607,7 +1575,6 @@ function recomputeSpeeds() {
   ball.maxSize = ball.baseSize * 2;
 }
 
-/* ============ 分数 / 盾 / 回合 / 加护显示 ============ */
 function updateScore() {
   const sp = $('scorePlayer'), sa = $('scoreAI');
   if (sp) { sp.textContent = playerScore; sp.classList.toggle('active', playerScore > aiScore); }
@@ -1658,14 +1625,8 @@ function updateBlessingDisplay() {
   } else if (gameMode === 'ai') {
     const p1B = BLESSINGS[playerBlessing] || BLESSINGS.none;
     const p2B = BLESSINGS[aiBlessing] || BLESSINGS.none;
-    html += '<div class="blessing-chip">' +
-      '<span class="bl-dot" style="background:' + p1B.color + ';color:' + p1B.color + ';"></span>' +
-      '<span class="bl-txt" style="color:' + p1B.color + ';">你 · ' + p1B.label + '</span>' +
-      (p1ShieldCount > 0 ? '<span class="bl-shield">🛡×' + p1ShieldCount + '</span>' : '') + '</div>';
-    html += '<div class="blessing-chip">' +
-      '<span class="bl-dot" style="background:' + p2B.color + ';color:' + p2B.color + ';"></span>' +
-      '<span class="bl-txt" style="color:' + p2B.color + ';">电脑 · ' + p2B.label + '</span>' +
-      (p2ShieldCount > 0 ? '<span class="bl-shield">🛡×' + p2ShieldCount + '</span>' : '') + '</div>';
+    html += '<div class="blessing-chip"><span class="bl-dot" style="background:' + p1B.color + ';color:' + p1B.color + ';"></span><span class="bl-txt" style="color:' + p1B.color + ';">你 · ' + p1B.label + '</span>' + (p1ShieldCount > 0 ? '<span class="bl-shield">🛡×' + p1ShieldCount + '</span>' : '') + '</div>';
+    html += '<div class="blessing-chip"><span class="bl-dot" style="background:' + p2B.color + ';color:' + p2B.color + ';"></span><span class="bl-txt" style="color:' + p2B.color + ';">电脑 · ' + p2B.label + '</span>' + (p2ShieldCount > 0 ? '<span class="bl-shield">🛡×' + p2ShieldCount + '</span>' : '') + '</div>';
   } else if (gameMode === 'online') {
     const isLeftTeam = (mySlot === 1 || mySlot === 2);
     const myB = BLESSINGS[getBlessingBySlot(mySlot)] || BLESSINGS.none;
@@ -1673,19 +1634,12 @@ function updateBlessingDisplay() {
     const oppB = BLESSINGS[getBlessingBySlot(oppSlot)] || BLESSINGS.none;
     const myShield = isLeftTeam ? p1ShieldCount : p2ShieldCount;
     const oppShield = isLeftTeam ? p2ShieldCount : p1ShieldCount;
-    html += '<div class="blessing-chip">' +
-      '<span class="bl-dot" style="background:' + myB.color + ';color:' + myB.color + ';"></span>' +
-      '<span class="bl-txt" style="color:' + myB.color + ';">你 · ' + myB.label + '</span>' +
-      (myShield > 0 ? '<span class="bl-shield">🛡×' + myShield + '</span>' : '') + '</div>';
-    html += '<div class="blessing-chip">' +
-      '<span class="bl-dot" style="background:' + oppB.color + ';color:' + oppB.color + ';"></span>' +
-      '<span class="bl-txt" style="color:' + oppB.color + ';">敌方 · ' + oppB.label + '</span>' +
-      (oppShield > 0 ? '<span class="bl-shield">🛡×' + oppShield + '</span>' : '') + '</div>';
+    html += '<div class="blessing-chip"><span class="bl-dot" style="background:' + myB.color + ';color:' + myB.color + ';"></span><span class="bl-txt" style="color:' + myB.color + ';">你 · ' + myB.label + '</span>' + (myShield > 0 ? '<span class="bl-shield">🛡×' + myShield + '</span>' : '') + '</div>';
+    html += '<div class="blessing-chip"><span class="bl-dot" style="background:' + oppB.color + ';color:' + oppB.color + ';"></span><span class="bl-txt" style="color:' + oppB.color + ';">敌方 · ' + oppB.label + '</span>' + (oppShield > 0 ? '<span class="bl-shield">🛡×' + oppShield + '</span>' : '') + '</div>';
   }
   topInfo.innerHTML = html;
 }
 
-/* ============ 工具函数 ============ */
 function formatTime(sec) {
   const s = Math.max(0, Math.ceil(sec));
   const m = Math.floor(s / 60);
@@ -1732,7 +1686,6 @@ function getPaddleBySlot(slot) {
 function slotLabel(slot) { return ['—','左上','左下','右上','右下'][slot] || '—'; }
 function slotTeam(slot) { return (slot === 1 || slot === 2) ? 'L' : 'R'; }
 
-/* ============ 游戏逻辑 ============ */
 function checkWin() {
   if (timerMode) return false;
   const cap = winScore + 4;
@@ -1814,7 +1767,6 @@ function onRoundStart() {
   updateBlessingDisplay();
 }
 
-/* ============ 道具 ============ */
 function spawnPowerup() {
   const types = Object.keys(POWERUPS);
   let weights = types.map(t => { let w = POWERUP_WEIGHTS[t] || 1; if (t === lastPowerupType) w = 0; return w; });
@@ -1894,7 +1846,6 @@ function updateStatusChips() {
   if (sb) sb.classList.toggle('show', anyVisible);
 }
 
-/* ============ 碰撞检测 ============ */
 function checkPaddle(paddle, isPlayer, slot) {
   const r = ball.size / 2;
   if (ball.x + r < paddle.x || ball.x - r > paddle.x + paddle.width) return false;
@@ -1964,7 +1915,9 @@ function triggerCurveBall(fromLeft) {
     updateStatusChips();
   }
 }
+/* ★ 回合结束：立即交还控制权，避免首发加护延迟一球 */
 function handleOutOfBounds() {
+  playerControlledByAI = false;
   if (ball.x < 0) {
     berserkStack = 0;
     const wasCurved = isCurvedBall;
@@ -2047,6 +2000,7 @@ function endGame(msg, isWin) {
     if (debugDirty && couldReport) rs.textContent += ' · 调试模式已开启，本局不计入排行榜';
     else if (couldReport && deviceBanned) rs.textContent += ' · 本设备已被限制参与排行榜';
     else if (couldReport && !lastIntegrityResult.ok) rs.textContent += ' · 数据未通过校验，不计入排行榜';
+    else if (couldReport && lastGameControlMode !== 'buttons') rs.textContent += ' · 触屏跟随模式，本局不计入排行榜';
   }
   if (gameMode === 'online' && onlineRole === 'client') {
     if (rsb) rsb.style.display = 'none';
@@ -2069,7 +2023,6 @@ function endGame(msg, isWin) {
   if (onlineRole === 'host' || lanRole === 'host') { const m = JSON.stringify({ t:'end', msg, isWin }); transportSend(m); }
 }
 
-/* ============ 计时 ============ */
 function startTimer() {
   timerRemaining = timerSeconds;
   lastTimerSecond = Math.ceil(timerRemaining);
@@ -2087,7 +2040,6 @@ function startTimer() {
   }, 100);
 }
 
-/* ============ 球拍移动 ============ */
 function applySqueezeCollision(top, bot) {
   const overlap = (top.y + top.height) - bot.y;
   if (overlap > 0) {
@@ -2291,7 +2243,6 @@ function update(dt) {
   }
 }
 
-/* ============ 绘制 ============ */
 const NOISE_TILE_COUNT = 8, NOISE_TILE_SIZE = 128;
 let noiseTiles = [], noiseIdx = 0, noiseOffsetX = 0, noiseOffsetY = 0, noiseSwitchCounter = 0;
 let noisePattern = null, noisePatternIdx = -1;
@@ -2404,7 +2355,7 @@ function draw() {
   const simple = renderMode === 'simple';
   ctx.fillStyle = t.bg;
   ctx.fillRect(0, 0, W, H);
-  const shouldDrawEntities = gameRunning || countdownActive;
+  const shouldDrawEntities = gameRunning || countdownActive || paused;
   if (shouldDrawEntities && !simple) {
     const cinematic = renderMode === 'cinematic';
     if (cinematic) {
@@ -2507,12 +2458,18 @@ function draw() {
   if (!simple) drawFloatTexts();
 }
 
-/* ============ 主循环 ============ */
 let lastRenderTime = 0, physAccumulator = 0;
 const PHYS_STEP_MS = 1000 / 60;
+/* ★ 暂停时继续渲染，让球保持在画面上 */
 function gameLoop(ts) {
-  if (!gameRunning || paused) { animId = null; physAccumulator = 0; return; }
+  if (!gameRunning) { animId = null; physAccumulator = 0; return; }
   if (typeof ts !== 'number') ts = performance.now();
+  if (paused) {
+    lastFrameTime = ts;
+    draw();
+    animId = requestAnimationFrame(gameLoop);
+    return;
+  }
   const frameInterval = 1000 / targetFps;
   if (targetFps === 30 && ts - lastRenderTime < frameInterval - 2) {
     if (gameRunning && !paused) animId = requestAnimationFrame(gameLoop);
@@ -2549,8 +2506,8 @@ function gameLoop(ts) {
   if (gameRunning && !paused) animId = requestAnimationFrame(gameLoop);
 }
 
-/* ============ 开始 / 倒计时 / 暂停 / 退出 ============ */
 function startGame() {
+  lastGameControlMode = touchControlMode;
   paused = false; lastFrameTime = 0; netAccum = 0; lastRenderTime = 0;
   physAccumulator = 0;
   stats.frameTimes = []; stats.lastSampleTime = 0;
@@ -2742,22 +2699,77 @@ function quitToMenu() {
   updateStatsDisplay();
   draw();
 }
-function resetCheat() { cheatActive = false; cheatBallSpeedMul = 1; cheatSequence = []; updateStatsDisplay(); }
-/* ============================================================
-   PONG-84 · 传输层（多渠道信令 · WebRTC · 手动 P2P）
+function resetCheat() { cheatActive = false; cheatBallSpeedMul = 1; cheatSequence = []; updateStatsDisplay(); }/* ============================================================
+   PONG-84 · 传输层（多服务器自动探测 · WebRTC · 手动 P2P）
    ============================================================ */
 
-/* ---------- 多渠道信令服务器 ---------- */
+/* ---------- 多路信令服务器 ---------- */
 const SIGNALING_SERVERS = [
   { name: 'EMQX 主站',   url: 'wss://broker.emqx.io:8084/mqtt' },
   { name: 'HiveMQ 公共', url: 'wss://broker.hivemq.com:8884/mqtt' },
   { name: 'Mosquitto',   url: 'wss://test.mosquitto.org:8081/mqtt' },
   { name: 'EMQX 备用',   url: 'wss://broker.emqx.io:8083/mqtt' }
 ];
-const SERVER_COUNT = SIGNALING_SERVERS.length;
-let currentServerIndex = 0;
-let probeResults = null;
+let serverRank = [];
 let probing = false;
+
+function probeServer(server, timeoutMs) {
+  timeoutMs = timeoutMs || 2500;
+  return new Promise((resolve) => {
+    const start = Date.now();
+    let done = false, c = null;
+    const finish = (ok) => {
+      if (done) return;
+      done = true;
+      try { if (c) c.end(true); } catch (e) {}
+      resolve(ok ? { latency: Date.now() - start } : null);
+    };
+    const timer = setTimeout(() => finish(false), timeoutMs + 500);
+    try {
+      c = mqtt.connect(server.url, {
+        clean: true, connectTimeout: timeoutMs, reconnectPeriod: 0,
+        clientId: 'pong84_probe_' + Math.random().toString(16).slice(2, 10)
+      });
+    } catch (e) { clearTimeout(timer); finish(false); return; }
+    c.on('connect', () => { clearTimeout(timer); finish(true); });
+    c.on('error', () => { clearTimeout(timer); finish(false); });
+  });
+}
+async function probeAllServers() {
+  if (probing) return serverRank;
+  probing = true;
+  updateSignalingBadge('探测中…');
+  const results = await Promise.all(SIGNALING_SERVERS.map((s, i) =>
+    probeServer(s).then(r => r ? { index: i, name: s.name, url: s.url, latency: r.latency } : null)
+  ));
+  const ok = results.filter(Boolean).sort((a, b) => a.latency - b.latency);
+  serverRank = ok.length ? ok : [{ index: 0, name: SIGNALING_SERVERS[0].name, url: SIGNALING_SERVERS[0].url, latency: -1 }];
+  probing = false;
+  updateSignalingBadge();
+  return serverRank;
+}
+function getPrimaryServer() {
+  return serverRank.length ? serverRank[0]
+    : { index: 0, name: SIGNALING_SERVERS[0].name, url: SIGNALING_SERVERS[0].url, latency: -1 };
+}
+function getServerByIndex(idx) {
+  if (idx >= 0 && idx < SIGNALING_SERVERS.length) {
+    const s = SIGNALING_SERVERS[idx];
+    const r = serverRank.find(x => x.index === idx);
+    return { index: idx, name: s.name, url: s.url, latency: r ? r.latency : -1 };
+  }
+  return getPrimaryServer();
+}
+function updateSignalingBadge(text) {
+  const el = document.getElementById('signalingName');
+  if (!el) return;
+  if (text) { el.textContent = text; return; }
+  if (!serverRank.length) { el.textContent = '探测中…'; return; }
+  const p = serverRank[0];
+  const lat = p.latency >= 0 ? (' · ' + p.latency + 'ms') : '';
+  el.textContent = p.name + lat;
+  if (serverRank.length > 1) el.textContent += ' (+' + (serverRank.length - 1) + ' 备用)';
+}
 
 /* ---------- Supabase ---------- */
 const SUPABASE_URL = 'https://grfhbtszcrwdbrphaiaw.supabase.co';
@@ -2771,7 +2783,7 @@ try {
 
 /* ---------- 传输层状态 ---------- */
 let onlineTransport = 'mqtt';
-const TOPIC_PREFIX = 'pong84/v30/';
+const TOPIC_PREFIX = 'pong84/v35/';
 let mqttClient = null;
 let localId = Math.random().toString(36).slice(2, 10);
 let rtcPc = null, rtcDc = null, onlineRole = null, currentRoom = null;
@@ -2790,40 +2802,33 @@ let lanWs = null, lanConnected = false, lanRole = null, transportMode = 'mqtt';
 const LAN_HEARTBEAT_MS = 5000;
 let lanHeartbeatTimer = null;
 
-/* ---------- 手动 P2P 状态 ---------- */
-let manualPc = null, manualDc = null, manualRole = null;
 let manualPendingCand = [];
 
 /* ---------- 房间号 / Topic ---------- */
 function generateRoomCode() {
-  const idx = currentServerIndex % SERVER_COUNT;
+  const p = getPrimaryServer();
+  const idx = p.index % SIGNALING_SERVERS.length;
   const num = String(Math.floor(Math.random() * 100000)).padStart(5, '0');
   return String(idx) + num;
 }
-function parseRoomCode(code) {
-  if (!/^[0-9]{6}$/.test(code)) return null;
+function parseRoomCodeServer(code) {
+  if (!/^[0-9]{6}$/.test(code)) return -1;
   const idx = parseInt(code[0], 10);
-  if (idx >= SERVER_COUNT) return null;
-  return { serverIndex: idx, roomNum: code.slice(1) };
+  if (idx < 0 || idx >= SIGNALING_SERVERS.length) return -1;
+  return idx;
 }
 function roomTopic(room, side) { return TOPIC_PREFIX + room + '/' + side; }
 function clientTopic(room, cid) { return TOPIC_PREFIX + room + '/c/' + cid; }
 
-/* ---------- WebRTC 配置 ---------- */
+/* ---------- WebRTC 配置（只 STUN） ---------- */
 const RTC_CONFIG_WEB = {
   iceServers: [
     { urls: 'stun:stun.l.google.com:19302' },
-    { urls: 'stun:stun1.l.google.com:19302' },
-    { urls: 'stun:stun.cloudflare.com:3478' },
-    { urls: 'turn:openrelay.metered.ca:80',  username: 'openrelayproject', credential: 'openrelayproject' },
-    { urls: 'turn:openrelay.metered.ca:443', username: 'openrelayproject', credential: 'openrelayproject' },
-    { urls: 'turn:openrelay.metered.ca:443?transport=tcp', username: 'openrelayproject', credential: 'openrelayproject' }
-  ],
-  iceCandidatePoolSize: 10
+    { urls: 'stun:stun1.l.google.com:19302' }
+  ]
 };
 const RTC_CONFIG_LAN = { iceServers: [], iceCandidatePoolSize: 0 };
 function rtcConfig() { return onlineTransport === 'lan' ? RTC_CONFIG_LAN : RTC_CONFIG_WEB; }
-function isLanMode() { return transportMode === 'lan'; }
 
 /* ---------- 顶部状态 ---------- */
 function setTopStatus(text, cls) {
@@ -2833,256 +2838,17 @@ function setTopStatus(text, cls) {
   el.style.color = cls === 'ok' ? '#33ff99' : cls === 'warn' ? '#ffaa33' : 'var(--crt-mid)';
 }
 
-/* ---------- 信令服务器探测 ---------- */
-function probeSignalingServers() {
-  if (probing) return Promise.resolve(probeResults);
-  probing = true;
-  const sn = $('signalingName');
-  if (sn) sn.textContent = '探测中…';
-  return Promise.all(SIGNALING_SERVERS.map((server, i) => new Promise((resolve) => {
-    const start = Date.now();
-    let finished = false;
-    const finish = (latency) => {
-      if (finished) return;
-      finished = true;
-      resolve({ index: i, name: server.name, latency: latency, ok: latency != null });
-    };
-    const timeout = setTimeout(() => finish(null), 4500);
-    try {
-      const c = mqtt.connect(server.url, {
-        clean: true, connectTimeout: 4000, reconnectPeriod: 0,
-        clientId: 'pong84_probe_' + Math.random().toString(16).slice(2, 10)
-      });
-      c.on('connect', () => {
-        const lat = Date.now() - start;
-        clearTimeout(timeout);
-        setTimeout(() => { try { c.end(true); } catch (e) {} finish(lat); }, 40);
-      });
-      c.on('error', () => { clearTimeout(timeout); try { c.end(true); } catch (e) {} finish(null); });
-    } catch (e) { clearTimeout(timeout); finish(null); }
-  }))).then(results => {
-    probing = false;
-    probeResults = results;
-    const ok = results.filter(r => r.ok).sort((a, b) => a.latency - b.latency);
-    currentServerIndex = ok.length ? ok[0].index : 0;
-    if (sn) {
-      const best = ok[0];
-      sn.textContent = best
-        ? best.name + ' · ' + best.latency + 'ms'
-        : '无可用（将使用默认）';
-    }
-    return results;
-  });
-}
-
 /* ---------- 传输抽象 ---------- */
 function transportSend(msg) {
   if (typeof msg !== 'string') msg = JSON.stringify(msg);
-  if (isLanMode()) {
-    if (!lanWs || lanWs.readyState !== WebSocket.OPEN) return;
-    try { lanWs.send(msg); } catch (e) {}
-    return;
-  }
   if (onlineRole === 'host') {
-    if (playerCount === 2 && rtcDc && rtcDc.readyState === 'open') {
-      try { rtcDc.send(msg); } catch (e) {}
-    }
+    if (playerCount === 2 && rtcDc && rtcDc.readyState === 'open') { try { rtcDc.send(msg); } catch (e) {} }
     for (const cid in fourPeers) {
       const p = fourPeers[cid];
       if (p.dc && p.dc.readyState === 'open') { try { p.dc.send(msg); } catch (e) {} }
     }
   } else if (onlineRole === 'client' && rtcDc && rtcDc.readyState === 'open') {
     try { rtcDc.send(msg); } catch (e) {}
-  }
-}
-
-/* ---------- 局域网 WebSocket ---------- */
-function lanConnect(hostPort, role, id, name) {
-  return new Promise((resolve, reject) => {
-    let url = hostPort.trim();
-    if (!url.startsWith('ws://') && !url.startsWith('wss://')) url = 'ws://' + url;
-    let ws;
-    try { ws = new WebSocket(url); } catch (e) { reject(new Error('地址无效')); return; }
-    const timeout = setTimeout(() => {
-      try { ws.close(); } catch (e) {}
-      reject(new Error('连接超时（10 秒无响应）'));
-    }, 10000);
-    ws.onopen = () => {
-      clearTimeout(timeout);
-      lanWs = ws; lanConnected = true; lanRole = role;
-      try { ws.send(JSON.stringify({ t: 'register', role, id, name: name || playerName })); } catch (e) {}
-      resolve();
-    };
-    ws.onerror = () => { clearTimeout(timeout); reject(new Error('无法连接到房主（检查 QteaSier 组网）')); };
-    ws.onclose = () => {
-      lanConnected = false;
-      if (lanHeartbeatTimer) { clearInterval(lanHeartbeatTimer); lanHeartbeatTimer = null; }
-      if (gameRunning) endGame('连接断开', false);
-    };
-    ws.onmessage = (e) => {
-      let msg; try { msg = JSON.parse(e.data); } catch (err) { return; }
-      handleLanMessage(msg);
-    };
-  });
-}
-function startLanHeartbeat() {
-  if (lanHeartbeatTimer) clearInterval(lanHeartbeatTimer);
-  lanHeartbeatTimer = setInterval(() => {
-    if (lanWs && lanWs.readyState === WebSocket.OPEN) {
-      try { lanWs.send(JSON.stringify({ t: 'ping', ts: Date.now() })); } catch (e) {}
-    }
-  }, LAN_HEARTBEAT_MS);
-}
-function handleLanMessage(msg) {
-  if (!msg || typeof msg !== 'object') return;
-  if (msg.t === 'registered') {
-    if (msg.role === 'host') {
-      setTopStatus('房间已创建，等待玩家加入', 'ok');
-      lanRole = 'host'; mySlot = 1; startLanHeartbeat(); updateRoomUI();
-    } else {
-      setTopStatus('已连接到房主，等待房间信息', 'ok');
-      lanRole = 'client'; startLanHeartbeat(); updateRoomUI();
-    }
-    return;
-  }
-  if (msg.t === 'peerJoin') {
-    if (lanRole === 'host') {
-      if (playerCount === 2) {
-        slotInfo[2] = { name: msg.name || '对手', ready: false, isAI: false, clientId: msg.id, connected: true };
-      } else {
-        let slot = 0;
-        for (let i = 2; i <= 4; i++) if (slotInfo[i] === null) { slot = i; break; }
-        if (slot) slotInfo[slot] = { name: msg.name || '玩家', ready: false, isAI: false, clientId: msg.id, connected: true };
-      }
-      broadcastRoomState(); updateRoomUI();
-    }
-    return;
-  }
-  if (msg.t === 'peerLeave') {
-    if (lanRole === 'host') {
-      for (let s = 1; s <= 4; s++) {
-        if (slotInfo[s] && slotInfo[s].clientId === msg.id) { slotInfo[s] = null; slotAiControl[s] = true; }
-      }
-      broadcastRoomState(); updateRoomUI();
-    }
-    return;
-  }
-  if (lanRole === 'host' && msg.from) { handleClientMessage(msg, msg.from); return; }
-  if (lanRole === 'client') handleHostMessage(msg);
-}
-
-/* ---------- 房主处理客户端消息 ---------- */
-function handleClientMessage(msg, clientId) {
-  let slot = 0;
-  for (let s = 1; s <= 4; s++) if (slotInfo[s] && slotInfo[s].clientId === clientId) { slot = s; break; }
-  if (!slot) return;
-  if (msg.t === 'input') {
-    if (typeof msg.y === 'number') {
-      const pad = getPaddleBySlot(slot);
-      if (pad) pad.targetY = msg.y;
-    }
-  } else if (msg.t === 'name') {
-    if (slotInfo[slot]) slotInfo[slot].name = String(msg.name || '玩家').slice(0, 16);
-    broadcastRoomState(); updateRoomUI();
-  } else if (msg.t === 'ready') {
-    if (slotInfo[slot]) slotInfo[slot].ready = true;
-    if (playerCount === 2) clientReady = true;
-    broadcastRoomState(); updateRoomUI();
-  } else if (msg.t === 'myBlessing') {
-    roomBlessings[slot] = String(msg.value || 'none');
-    broadcastRoomState();
-  } else if (msg.t === 'requestSlot') {
-    const want = msg.slot;
-    if (want >= 1 && want <= 4 && (slotInfo[want] === null || want === slot)) {
-      const cur = slotInfo[slot]; slotInfo[slot] = null; slotInfo[want] = cur;
-      if (cur) cur.slot = want;
-      broadcastRoomState(); updateRoomUI();
-    }
-  } else if (msg.t === 'pauseRequest') {
-    if ((lanRole === 'host' || onlineRole === 'host') && !paused && gameRunning && !countdownActive) togglePause();
-  } else if (msg.t === 'leave') {
-    if (slotInfo[slot]) {
-        slotInfo[slot] = null;
-        slotAiControl[slot] = false;
-        broadcastRoomState();
-        updateRoomUI();
-    }
-}
-}
-
-/* ---------- 客户端处理房主消息 ---------- */
-function handleHostMessage(msg) {
-  if (msg.t === 'room') {
-    if (msg.slotInfo) {
-      slotInfo = msg.slotInfo;
-      if (playerCount === 2 && lanRole === 'client') mySlot = 2;
-      for (let s = 1; s <= 4; s++) {
-        if (slotInfo[s] && slotInfo[s].clientId === localId) { mySlot = s; break; }
-      }
-      updateRoomUI();
-    }
-    if (msg.formation) teamFormation = msg.formation;
-    if (typeof msg.squeeze === 'boolean') teamSqueeze = msg.squeeze;
-    if (typeof msg.diff === 'string') onlineDiff = msg.diff;
-    if (typeof msg.mode === 'string') onlineMode = msg.mode;
-    if (typeof msg.timerSeconds === 'number') onlineTimerSeconds = msg.timerSeconds;
-    if (typeof msg.ballSpeed === 'number') onlineBallSpeed = msg.ballSpeed;
-    if (typeof msg.winScore === 'number') winScore = msg.winScore;
-    if (msg.blessings) {
-      roomBlessings = msg.blessings;
-      if (roomBlessings[mySlot]) myBlessing = roomBlessings[mySlot];
-      updateRoomUI();
-    }
-    if (typeof msg.paddleMul === 'number') onlinePaddleMul = msg.paddleMul;
-    if (typeof msg.paddleSpeed === 'number') onlinePaddleSpeed = msg.paddleSpeed;
-    if (typeof msg.aiLevel === 'string') onlineAILevel = msg.aiLevel;
-    if (typeof msg.curveMul === 'number') onlineCurveMul = msg.curveMul;
-    if (typeof msg.powerupMul === 'number') onlinePowerupMul = msg.powerupMul;
-    if (msg.aiControl) slotAiControl = msg.aiControl;
-    syncUI();
-  } else if (msg.t === 'start' || msg.t === 'start4') {
-    winScore = msg.winScore || winScore;
-    timerMode = !!msg.timerMode;
-    timerSeconds = msg.timerSeconds || 60;
-    if (typeof msg.ballSpeed === 'number') onlineBallSpeed = msg.ballSpeed;
-    if (typeof msg.diff === 'string') currentDiff = msg.diff;
-    if (msg.formation) teamFormation = msg.formation;
-    if (typeof msg.squeeze === 'boolean') teamSqueeze = msg.squeeze;
-    if (msg.blessings) roomBlessings = msg.blessings;
-    if (typeof msg.paddleMul === 'number') onlinePaddleMul = msg.paddleMul;
-    if (typeof msg.paddleSpeed === 'number') onlinePaddleSpeed = msg.paddleSpeed;
-    if (typeof msg.aiLevel === 'string') onlineAILevel = msg.aiLevel;
-    if (typeof msg.curveMul === 'number') onlineCurveMul = msg.curveMul;
-    if (typeof msg.powerupMul === 'number') onlinePowerupMul = msg.powerupMul;
-    if (msg.t === 'start4') playerCount = 4;
-    startGame();
-  } else if (msg.t === 'state' || msg.t === 'state4') {
-    if (msg.t === 'state') applyRemoteState(msg); else applyRemoteState4(msg);
-  } else if (msg.t === 'end') {
-    endGame(msg.msg, msg.isWin);
-  } else if (msg.t === 'pauseState') {
-    onlinePausedByHost = !!msg.paused;
-    if (onlinePausedByHost) {
-      paused = true;
-      const po = $('pauseOverlay'); if (po) po.classList.add('show');
-      const pt = $('pauseTitle'), ps = $('pauseSub'), qrb = $('quitRoomBtn');
-      if (pt) pt.textContent = '主机已暂停';
-      if (ps) ps.textContent = '等待主机继续…';
-      if (qrb) qrb.style.display = 'none';
-      if (animId) cancelAnimationFrame(animId); animId = null;
-    } else {
-      paused = false;
-      const po = $('pauseOverlay'); if (po) po.classList.remove('show');
-      lastFrameTime = performance.now(); lastRenderTime = 0; physAccumulator = 0;
-      if (!animId && gameRunning) animId = requestAnimationFrame(gameLoop);
-    }
-  } else if (msg.t === 'resumeCountdown') {
-    if (gameRunning) runCountdown(msg.sec || 3);
-  } else if (msg.t === 'backToRoom') {
-    if (gameRunning) quitToRoom();
-  } else if (msg.t === 'pong') {
-    const rtt = Date.now() - msg.ts;
-    if (rtt >= 0 && rtt < 5000) stats.ping = rtt;
   }
 }
 
@@ -3095,7 +2861,6 @@ function signalSendToClient(cid, msg) {
   if (!mqttClient || !mqttClient.connected) return;
   try { mqttClient.publish(clientTopic(currentRoom, cid), JSON.stringify(msg), { qos: 1 }); } catch (e) {}
 }
-
 function handleSignalMessage(msg) {
   if (!msg || typeof msg !== 'object') return;
   if (msg.type === 'hello') {
@@ -3103,13 +2868,12 @@ function handleSignalMessage(msg) {
       hostBusy = true;
       const oi = $('onlineInstruction');
       if (oi) oi.textContent = '对方已连接，正在协商…';
-      hostStartOffer().catch(() => {
-        if (oi) oi.textContent = '协商失败，请重试';
-        hostBusy = false; showRetry();
-      });
+      hostStartOffer().catch(() => { if (oi) oi.textContent = '协商失败，请点「重新连接」'; showRetry(); });
     }
   } else if (msg.type === 'offer') {
-    if (onlineRole !== 'client' || !rtcPc || rtcPc.remoteDescription) return;
+    if (onlineRole !== 'client' || !rtcPc) return;
+    if (rtcPc.signalingState !== 'stable' && rtcPc.signalingState !== 'new') return;
+    if (rtcPc.remoteDescription) return;
     rtcPc.setRemoteDescription(msg.sdp)
       .then(() => flushPendingCandidates())
       .then(() => rtcPc.createAnswer())
@@ -3156,11 +2920,10 @@ function handleFourSignal(msg, fromClientId) {
   } else if (msg.type === 'answer4') {
     const p = fourPeers[fromClientId];
     if (!p || !p.pc || p.pc.remoteDescription) return;
-    p.pc.setRemoteDescription(msg.sdp)
-      .then(() => {
-        for (const c of (p.pending || [])) p.pc.addIceCandidate(c).catch(() => {});
-        p.pending = [];
-      }).catch(() => {});
+    p.pc.setRemoteDescription(msg.sdp).then(() => {
+      for (const c of (p.pending || [])) p.pc.addIceCandidate(c).catch(() => {});
+      p.pending = [];
+    }).catch(() => {});
   } else if (msg.type === 'ice4') {
     const p = fourPeers[fromClientId];
     if (!p || !p.pc) return;
@@ -3179,9 +2942,7 @@ async function hostStartOffer() {
   signalSend('client', { type: 'offer', sdp: offer });
 }
 async function hostStartOfferFor(clientId, slot) {
-  if (fourPeers[clientId]) {
-    try { fourPeers[clientId].pc && fourPeers[clientId].pc.close(); } catch (e) {}
-  }
+  if (fourPeers[clientId]) { try { fourPeers[clientId].pc && fourPeers[clientId].pc.close(); } catch (e) {} }
   const pc = new RTCPeerConnection(rtcConfig());
   const entry = { pc, dc: null, slot, name: slotInfo[slot] ? slotInfo[slot].name : '玩家', ready: false, pending: [] };
   fourPeers[clientId] = entry;
@@ -3199,22 +2960,8 @@ async function hostStartOfferFor(clientId, slot) {
   await pc.setLocalDescription(offer);
   signalSendToClient(clientId, { type: 'offer4', sdp: offer });
 }
-function setupFourDataChannel(dc, clientId, slot) {
-  dc.onopen = () => {
-    if (slotInfo[slot]) { slotInfo[slot].connected = true; slotAiControl[slot] = false; }
-    broadcastRoomState(); updateRoomUI();
-  };
-  dc.onmessage = (e) => {
-    let msg; try { msg = JSON.parse(e.data); } catch (err) { return; }
-    if (!msg || typeof msg !== 'object') return;
-    handleClientMessage(msg, clientId);
-  };
-  dc.onclose = () => {
-    if (slotInfo[slot]) { slotInfo[slot].connected = false; slotAiControl[slot] = true; }
-    delete fourPeers[clientId];
-    broadcastRoomState(); updateRoomUI();
-  };
-}
+
+/* ---------- RTCPeerConnection / DataChannel ---------- */
 function createRtc() {
   rtcPc = new RTCPeerConnection(rtcConfig());
   rtcPc.onicecandidate = (e) => {
@@ -3241,19 +2988,24 @@ function setupDataChannel(channel) {
     if (helloInterval) { clearInterval(helloInterval); helloInterval = null; }
     try { channel.send(JSON.stringify({ t: 'name', name: playerName })); } catch (e) {}
     const oi = $('onlineInstruction');
+    const pb = $('pauseBtn');
     if (onlineRole === 'host') {
       if (playerCount === 2) {
         slotInfo[2] = { name: remoteName || '对手', ready: false, isAI: false, clientId: 'peer', connected: true };
         broadcastRoomState();
       }
-      if (oi) oi.textContent = '对手已加入，可开始游戏';
-      const osb = $('onlineStartBtn'); if (osb) osb.style.display = 'block';
+      if (oi) oi.textContent = '对手已加入，等待准备';
+      const osb = $('onlineStartBtn'); if (osb) osb.style.display = 'none';
       const crb = $('clientReadyBtn'); if (crb) crb.classList.add('hidden-section');
+      /* ★ 房主启用暂停按钮 */
+      if (pb && gameRunning) pb.classList.remove('disabled');
     } else {
       if (playerCount === 2) mySlot = 2;
-      if (oi) oi.textContent = '等待主机开始游戏...';
+      if (oi) oi.textContent = '已连接，请点击「准备」';
       const osb = $('onlineStartBtn'); if (osb) osb.style.display = 'none';
       const crb = $('clientReadyBtn'); if (crb) crb.classList.remove('hidden-section');
+      /* ★ 客户端禁用暂停按钮 */
+      if (pb) pb.classList.add('disabled');
     }
     updateRoomUI();
     netAccum = 0; stats.ping = -1;
@@ -3323,9 +3075,7 @@ function setupDataChannel(channel) {
         broadcastRoomState();
       }
     }
-    else if (msg.t === 'pauseRequest') {
-      if (onlineRole === 'host' && !paused && gameRunning && !countdownActive) togglePause();
-    }
+    else if (msg.t === 'pauseRequest') { /* ★ 已禁用，不处理 */ }
     else if (msg.t === 'end') { if (onlineRole === 'client') endGame(msg.msg, msg.isWin); }
     else if (msg.t === 'pauseState') {
       onlinePausedByHost = !!msg.paused;
@@ -3346,14 +3096,12 @@ function setupDataChannel(channel) {
     }
     else if (msg.t === 'resumeCountdown') { if (gameRunning) runCountdown(msg.sec || 3); }
     else if (msg.t === 'backToRoom') { if (gameRunning) quitToRoom(); }
-else if (msg.t === 'roomClosed') {
-    try { onlineCleanup(); } catch (e) {}
-    navStack = [];
-    applyPanel('main');
-    updateControlsHint();
-    updateStatsDisplay();
-    alert('房主已关闭房间');
-}
+    else if (msg.t === 'roomClosed') {
+      try { onlineCleanup(); } catch (e) {}
+      navStack = []; applyPanel('main');
+      updateControlsHint(); updateStatsDisplay();
+      alert('房主已关闭房间');
+    }
     else if (msg.t === 'ping') { try { rtcDc.send(JSON.stringify({ t: 'pong', ts: msg.ts })); } catch (e) {} }
     else if (msg.t === 'pong') { const rtt = Date.now() - msg.ts; if (rtt >= 0 && rtt < 5000) stats.ping = rtt; }
   };
@@ -3362,6 +3110,41 @@ else if (msg.t === 'roomClosed') {
     if (gameRunning && playerCount === 2) endGame('连接断开', false);
   };
   channel.onerror = (e) => console.error('DataChannel error', e);
+}
+function setupFourDataChannel(dc, clientId, slot) {
+  dc.onopen = () => {
+    if (slotInfo[slot]) { slotInfo[slot].connected = true; slotAiControl[slot] = false; }
+    broadcastRoomState(); updateRoomUI();
+  };
+  dc.onmessage = (e) => {
+    let msg; try { msg = JSON.parse(e.data); } catch (err) { return; }
+    if (!msg || typeof msg !== 'object') return;
+    handleClientMessage(msg, clientId);
+  };
+  dc.onclose = () => {
+    if (slotInfo[slot]) { slotInfo[slot].connected = false; slotAiControl[slot] = true; }
+    delete fourPeers[clientId];
+    broadcastRoomState(); updateRoomUI();
+  };
+}
+function handleClientMessage(msg, clientId) {
+  let slot = 0;
+  for (let s = 1; s <= 4; s++) if (slotInfo[s] && slotInfo[s].clientId === clientId) { slot = s; break; }
+  if (!slot) return;
+  if (msg.t === 'input') { if (typeof msg.y === 'number') { const pad = getPaddleBySlot(slot); if (pad) pad.targetY = msg.y; } }
+  else if (msg.t === 'name') { if (slotInfo[slot]) slotInfo[slot].name = String(msg.name || '玩家').slice(0, 16); broadcastRoomState(); updateRoomUI(); }
+  else if (msg.t === 'ready') { if (slotInfo[slot]) slotInfo[slot].ready = true; if (playerCount === 2) clientReady = true; broadcastRoomState(); updateRoomUI(); }
+  else if (msg.t === 'myBlessing') { roomBlessings[slot] = String(msg.value || 'none'); broadcastRoomState(); }
+  else if (msg.t === 'requestSlot') {
+    const want = msg.slot;
+    if (want >= 1 && want <= 4 && (slotInfo[want] === null || want === slot)) {
+      const cur = slotInfo[slot]; slotInfo[slot] = null; slotInfo[want] = cur;
+      if (cur) cur.slot = want;
+      broadcastRoomState(); updateRoomUI();
+    }
+  }
+  else if (msg.t === 'pauseRequest') { /* ★ 客户端无暂停权限 */ }
+  else if (msg.t === 'leave') { if (slotInfo[slot]) { slotInfo[slot] = null; slotAiControl[slot] = false; broadcastRoomState(); updateRoomUI(); } }
 }
 
 /* ---------- 清理 / 重试 ---------- */
@@ -3394,10 +3177,7 @@ function onlineCleanup() {
 }
 function showRetry() { const r = $('onlineRetry'); if (r) r.classList.remove('hidden-section'); }
 function hideRetry() { const r = $('onlineRetry'); if (r) r.classList.add('hidden-section'); }
-function resetOnlinePanel() {
-  const os = $('onlineStep'); if (os) os.classList.add('hidden-section');
-  hideRetry();
-}
+function resetOnlinePanel() { const os = $('onlineStep'); if (os) os.classList.add('hidden-section'); hideRetry(); }
 
 /* ---------- 创建房间 ---------- */
 async function createRoom(mode) {
@@ -3410,95 +3190,49 @@ async function createRoom(mode) {
   roomBlessings = { 1: myBlessing, 2: 'none', 3: 'none', 4: 'none' };
   slotAiControl = { 1: false, 2: false, 3: false, 4: false };
 
-  if (isLanMode()) {
-    onlineRole = 'host'; lanRole = 'host';
-    const lanAddr = prompt('请输入本机在虚拟局域网内的地址（IP:端口）\n默认 10.126.126.1:8080', '10.126.126.1:8080');
-    if (!lanAddr) { setTopStatus('已取消', 'warn'); return; }
-    currentRoom = lanAddr.trim();
-    setTopStatus('正在连接本地转发服务…', 'warn');
-    try {
-      await lanConnect(lanAddr, 'host', localId, playerName);
-      setTopStatus('房间已创建，等待玩家加入', 'ok');
-    } catch (e) {
-      setTopStatus('连接失败：' + e.message, 'warn');
-      showRetry(); return;
-    }
-    updateRoomUI(); return;
-  }
-
-  /* 公共服务器模式：先探测，再建房 */
   const oi = $('onlineInstruction');
-  if (oi) oi.textContent = '正在探测信令服务器…';
-  const os = $('onlineStep'); if (os) os.classList.remove('hidden-section');
-
-  await probeSignalingServers();
-  const server = SIGNALING_SERVERS[currentServerIndex];
   const code = generateRoomCode();
   onlineRole = 'host'; currentRoom = code; hostBusy = false;
-
-  if (oi) oi.textContent = '正在连接 ' + server.name + ' …';
   hideRetry();
   if (mqttClient) { try { mqttClient.end(true); } catch (e) {} mqttClient = null; }
   stats.ping = -1; updateStatsDisplay();
   updateRoomUI();
+  const os = $('onlineStep'); if (os) os.classList.remove('hidden-section');
+  const roomCodeTextEl = $('roomCodeText'); if (roomCodeTextEl) roomCodeTextEl.textContent = code;
+
+  const srv = getPrimaryServer();
+  const bar = $('roomStatusBar');
+  if (bar) { bar.className = 'room-status-bar wait'; bar.textContent = '⏳ 正在连接 ' + srv.name + ' …'; }
 
   return new Promise((resolve) => {
-    if (typeof mqtt === 'undefined') {
-      if (oi) oi.textContent = 'MQTT 库未加载';
-      showRetry(); resolve(); return;
-    }
+    if (typeof mqtt === 'undefined') { if (oi) oi.textContent = 'MQTT 库未加载'; showRetry(); resolve(); return; }
     try {
-      mqttClient = mqtt.connect(server.url, {
+      mqttClient = mqtt.connect(srv.url, {
         clean: true, connectTimeout: 10000, reconnectPeriod: 0,
         clientId: 'pong84_h_' + code + '_' + Math.random().toString(16).slice(2, 10)
       });
-    } catch (e) {
-      if (oi) oi.textContent = '创建失败：' + e.message;
-      showRetry(); resolve(); return;
-    }
-        mqttClient.on('connect', () => {
+    } catch (e) { if (oi) oi.textContent = '创建失败：' + e.message; showRetry(); resolve(); return; }
+    mqttClient.on('connect', () => {
       hideRetry();
       mqttClient.subscribe(roomTopic(code, 'host'), { qos: 1 }, (err) => {
         if (err) { if (oi) oi.textContent = '订阅失败'; showRetry(); resolve(); return; }
-        // ★ 房主心跳：让客户端检索时能立刻收到响应
-        const beat = () => {
-          try {
-            mqttClient.publish(roomTopic(code, 'host'),
-              JSON.stringify({ type: 'host_online' }), { qos: 1, retain: true });
-          } catch (e) {}
-        };
-        beat();
-        if (window._pongHostBeacon) clearInterval(window._pongHostBeacon);
-        window._pongHostBeacon = setInterval(beat, 3000);
-        if (oi) oi.textContent = '房间已创建 · ' + server.name + ' · 把房间号发给对方';
+        if (oi) oi.textContent = '房间已创建 · ' + srv.name + ' · 把房间号发给对方';
         updateRoomUI();
         resolve();
       });
     });
-    
     mqttClient.on('message', (topic, payload) => {
       let msg; try { msg = JSON.parse(payload.toString()); } catch (e) { return; }
       if (playerCount === 4) {
-        if (msg.from && (msg.type === 'hello4' || msg.type === 'answer4' || msg.type === 'ice4')) {
-          handleFourSignal(msg, msg.from);
-        }
+        if (msg.from && (msg.type === 'hello4' || msg.type === 'answer4' || msg.type === 'ice4')) handleFourSignal(msg, msg.from);
       } else {
-        if (!msg.from && (msg.type === 'hello' || msg.type === 'offer' || msg.type === 'answer' || msg.type === 'ice')) {
-          handleSignalMessage(msg);
-        }
+        if (!msg.from && (msg.type === 'hello' || msg.type === 'offer' || msg.type === 'answer' || msg.type === 'ice')) handleSignalMessage(msg);
       }
     });
-    mqttClient.on('error', () => {
-      if (oi) oi.textContent = '信令服务器连接失败，可点「重新连接」切换服务器';
-      showRetry();
-    });
-    mqttClient.on('close', () => {
-      if (oi && onlineRole) oi.textContent = '信令连接已断开';
-    });
+    mqttClient.on('error', () => { if (oi) oi.textContent = '信令服务器连接失败，可点「重新连接」切换服务器'; showRetry(); });
+    mqttClient.on('close', () => { if (oi && onlineRole) oi.textContent = '信令连接已断开'; });
     connectTimeout = setTimeout(() => {
-      if (playerCount === 2 && (!rtcDc || rtcDc.readyState !== 'open')) {
-        if (oi) oi.textContent = '等待连接超时，可尝试重新连接';
-      }
+      if (playerCount === 2 && (!rtcDc || rtcDc.readyState !== 'open')) { if (oi) oi.textContent = '等待连接超时，可尝试重新连接'; }
     }, 60000);
   });
 }
@@ -3506,31 +3240,10 @@ async function createRoom(mode) {
 /* ---------- 加入房间 ---------- */
 async function joinRoom(rawCode) {
   const code = (rawCode || '').trim();
-  if (!code) { setTopStatus('请输入房间号', 'warn'); return false; }
-
-  if (isLanMode()) {
-    if (!/^[^\s]+:\d+$/.test(code)) { setTopStatus('请输入 IP:端口 格式', 'warn'); return false; }
-    onlineRole = 'client'; lanRole = 'client'; currentRoom = code;
-    try {
-      await lanConnect(code, 'client', localId, playerName);
-      setTopStatus('已连接到房主', 'ok');
-    } catch (e) {
-      setTopStatus('连接失败：' + e.message, 'warn');
-      showRetry(); return false;
-    }
-    updateRoomUI(); return true;
-  }
-
-  const parsed = parseRoomCode(code);
-  if (!parsed) { setTopStatus('请输入 6 位数字房间号（第一位为服务器编号）', 'warn'); return false; }
-  const server = SIGNALING_SERVERS[parsed.serverIndex];
-  currentServerIndex = parsed.serverIndex;
+  if (!/^[0-9]{6}$/.test(code)) { setTopStatus('请输入 6 位数字房间号', 'warn'); return false; }
   onlineRole = 'client'; currentRoom = code;
 
   const oi = $('onlineInstruction');
-  const sn = $('signalingName');
-  if (sn) sn.textContent = server.name;
-  if (oi) oi.textContent = '正在连接 ' + server.name + ' …';
   const os = $('onlineStep'); if (os) os.classList.remove('hidden-section');
   hideRetry();
   pendingCandidates = []; hostBusy = false;
@@ -3548,10 +3261,7 @@ async function joinRoom(rawCode) {
       } catch (err) {}
     }
   };
-  rtcPc.ondatachannel = (e) => {
-    if (playerCount === 4) setupFourClientChannel(e.channel);
-    else setupDataChannel(e.channel);
-  };
+  rtcPc.ondatachannel = (e) => { if (playerCount === 4) setupFourClientChannel(e.channel); else setupDataChannel(e.channel); };
   rtcPc.onconnectionstatechange = () => {
     if (!rtcPc) return;
     const st = rtcPc.connectionState;
@@ -3564,15 +3274,17 @@ async function joinRoom(rawCode) {
   updateRoomUI();
 
   if (typeof mqtt === 'undefined') { if (oi) oi.textContent = 'MQTT 库未加载'; showRetry(); return true; }
+  const srvIdx = parseRoomCodeServer(code);
+  const srv = srvIdx >= 0 ? getServerByIndex(srvIdx) : getPrimaryServer();
+  if (oi) oi.textContent = '正在连接 ' + srv.name + ' …';
+  const bar = $('roomStatusBar');
+  if (bar) { bar.className = 'room-status-bar wait'; bar.textContent = '⏳ 正在连接 ' + srv.name + ' …'; }
   try {
-    mqttClient = mqtt.connect(server.url, {
+    mqttClient = mqtt.connect(srv.url, {
       clean: true, connectTimeout: 10000, reconnectPeriod: 0,
       clientId: 'pong84_c_' + code + '_' + Math.random().toString(16).slice(2, 10)
     });
-  } catch (e) {
-    if (oi) oi.textContent = '加入失败：' + e.message;
-    showRetry(); return true;
-  }
+  } catch (e) { if (oi) oi.textContent = '加入失败：' + e.message; showRetry(); return true; }
   mqttClient.on('connect', () => {
     hideRetry();
     mqttClient.subscribe([clientTopic(code, localId), roomTopic(code, 'client')], { qos: 1 }, (err) => {
@@ -3582,9 +3294,7 @@ async function joinRoom(rawCode) {
   });
   mqttClient.on('message', (topic, payload) => {
     let msg; try { msg = JSON.parse(payload.toString()); } catch (e) { return; }
-    if (helloInterval && (msg.type === 'welcome4' || msg.type === 'offer' || msg.type === 'offer4')) {
-      clearInterval(helloInterval); helloInterval = null;
-    }
+    if (helloInterval && (msg.type === 'welcome4' || msg.type === 'offer' || msg.type === 'offer4')) { clearInterval(helloInterval); helloInterval = null; }
     if (msg.type === 'welcome4') {
       if (playerCount !== 4) { playerCount = 4; rtcPc.ondatachannel = (e) => setupFourClientChannel(e.channel); }
       handleFourClientSignal(msg);
@@ -3597,15 +3307,10 @@ async function joinRoom(rawCode) {
     } else if (msg.type === 'answer' || msg.type === 'ice') handleSignalMessage(msg);
     else if (msg.type === 'answer4' || msg.type === 'ice4') handleFourClientSignal(msg);
     else if (msg.type === 'full') { if (oi) oi.textContent = '房间已满，无法加入'; showRetry(); }
-    else if (msg.type === 'kicked') {
-      if (oi) oi.textContent = '你已被主机移出房间';
-      onlineCleanup(); resetOnlinePanel(); navStack = []; applyPanel('main');
-    }
+    else if (msg.type === 'kicked') { if (oi) oi.textContent = '你已被主机移出房间'; onlineCleanup(); resetOnlinePanel(); navStack = []; applyPanel('main'); }
   });
   mqttClient.on('error', () => { if (oi) oi.textContent = '信令服务器连接失败'; showRetry(); });
-  connectTimeout = setTimeout(() => {
-    if (!rtcDc) { if (oi) oi.textContent = '连接超时'; showRetry(); }
-  }, 60000);
+  connectTimeout = setTimeout(() => { if (!rtcDc) { if (oi) oi.textContent = '连接超时'; showRetry(); } }, 60000);
   return true;
 }
 
@@ -3628,17 +3333,10 @@ function startDualModeProbe() {
   const oi = $('onlineInstruction');
   if (oi) oi.textContent = '已发送请求，等待主机响应…';
 }
-
 function handleFourClientSignal(msg) {
   if (!msg || typeof msg !== 'object') return;
-  if (msg.type === 'full') {
-    const oi = $('onlineInstruction'); if (oi) oi.textContent = '房间已满，无法加入';
-    showRetry(); return;
-  }
-  if (msg.type === 'kicked') {
-    const oi = $('onlineInstruction'); if (oi) oi.textContent = '你已被主机移出房间';
-    onlineCleanup(); resetOnlinePanel(); navStack = []; applyPanel('main'); return;
-  }
+  if (msg.type === 'full') { const oi = $('onlineInstruction'); if (oi) oi.textContent = '房间已满，无法加入'; showRetry(); return; }
+  if (msg.type === 'kicked') { const oi = $('onlineInstruction'); if (oi) oi.textContent = '你已被主机移出房间'; onlineCleanup(); resetOnlinePanel(); navStack = []; applyPanel('main'); return; }
   if (msg.type === 'welcome4') {
     mySlot = msg.slot;
     if (helloInterval) { clearInterval(helloInterval); helloInterval = null; }
@@ -3648,11 +3346,7 @@ function handleFourClientSignal(msg) {
   }
   if (msg.type === 'offer4') {
     rtcPc.setRemoteDescription(msg.sdp)
-      .then(() => {
-        for (const c of pendingCandidates) rtcPc.addIceCandidate(c).catch(() => {});
-        pendingCandidates = [];
-        return rtcPc.createAnswer();
-      })
+      .then(() => { for (const c of pendingCandidates) rtcPc.addIceCandidate(c).catch(() => {}); pendingCandidates = []; return rtcPc.createAnswer(); })
       .then(ans => rtcPc.setLocalDescription(ans))
       .then(() => { signalSend('host', { type: 'answer4', from: localId, sdp: rtcPc.localDescription }); })
       .catch(() => {});
@@ -3671,6 +3365,8 @@ function setupFourClientChannel(channel) {
     if (connectTimeout) { clearTimeout(connectTimeout); connectTimeout = null; }
     try { channel.send(JSON.stringify({ t: 'name', name: playerName })); } catch (e) {}
     const oi = $('onlineInstruction'); if (oi) oi.textContent = '已连接，等待主机开始游戏...';
+    /* ★ 客户端禁用暂停按钮 */
+    const pb = $('pauseBtn'); if (pb) pb.classList.add('disabled');
     updateRoomUI();
     netAccum = 0; stats.ping = -1;
     startPingLoop(); updateStatsDisplay();
@@ -3692,11 +3388,7 @@ function setupFourClientChannel(channel) {
       if (typeof msg.timerSeconds === 'number') onlineTimerSeconds = msg.timerSeconds;
       if (typeof msg.ballSpeed === 'number') onlineBallSpeed = msg.ballSpeed;
       if (typeof msg.winScore === 'number') winScore = msg.winScore;
-      if (msg.blessings) {
-        roomBlessings = msg.blessings;
-        if (roomBlessings[mySlot]) myBlessing = roomBlessings[mySlot];
-        updateRoomUI();
-      }
+      if (msg.blessings) { roomBlessings = msg.blessings; if (roomBlessings[mySlot]) myBlessing = roomBlessings[mySlot]; updateRoomUI(); }
       if (typeof msg.paddleMul === 'number') onlinePaddleMul = msg.paddleMul;
       if (typeof msg.paddleSpeed === 'number') onlinePaddleSpeed = msg.paddleSpeed;
       if (typeof msg.aiLevel === 'string') onlineAILevel = msg.aiLevel;
@@ -3741,14 +3433,12 @@ function setupFourClientChannel(channel) {
     }
     else if (msg.t === 'resumeCountdown') { if (gameRunning) runCountdown(msg.sec || 3); }
     else if (msg.t === 'backToRoom') { if (gameRunning) quitToRoom(); }
-else if (msg.t === 'roomClosed') {
-    try { onlineCleanup(); } catch (e) {}
-    navStack = [];
-    applyPanel('main');
-    updateControlsHint();
-    updateStatsDisplay();
-    alert('房主已关闭房间');
-}
+    else if (msg.t === 'roomClosed') {
+      try { onlineCleanup(); } catch (e) {}
+      navStack = []; applyPanel('main');
+      updateControlsHint(); updateStatsDisplay();
+      alert('房主已关闭房间');
+    }
     else if (msg.t === 'ping') { try { channel.send(JSON.stringify({ t: 'pong', ts: msg.ts })); } catch (e) {} }
     else if (msg.t === 'pong') { const rtt = Date.now() - msg.ts; if (rtt >= 0 && rtt < 5000) stats.ping = rtt; }
   };
@@ -3759,7 +3449,7 @@ else if (msg.t === 'roomClosed') {
 }
 
 /* ============================================================
-   手动 P2P 直连（无信令，微信/QQ 交换邀请码）
+   手动 P2P 直连
    ============================================================ */
 function encodeManualCode(obj) {
   try {
@@ -3767,9 +3457,7 @@ function encodeManualCode(obj) {
     const bytes = new TextEncoder().encode(json);
     let bin = '';
     const CHUNK = 0x8000;
-    for (let i = 0; i < bytes.length; i += CHUNK) {
-      bin += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK));
-    }
+    for (let i = 0; i < bytes.length; i += CHUNK) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK));
     return btoa(bin);
   } catch (e) { return ''; }
 }
@@ -3779,8 +3467,7 @@ function decodeManualCode(str) {
     const bin = atob(clean);
     const bytes = new Uint8Array(bin.length);
     for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-    const json = new TextDecoder().decode(bytes);
-    return JSON.parse(json);
+    return JSON.parse(new TextDecoder().decode(bytes));
   } catch (e) { return null; }
 }
 function manualSetStatus(elId, text, cls) {
@@ -3794,36 +3481,41 @@ function manualCopy(targetId, hintId) {
   if (!text) return;
   const done = (ok) => {
     const h = $(hintId);
-    if (h) { h.textContent = ok ? '✓ 已复制到剪贴板' : '复制失败，请长按手动选择'; }
+    if (h) h.textContent = ok ? '✓ 已复制到剪贴板' : '复制失败，请长按手动选择';
     if (h) setTimeout(() => { h.textContent = h.dataset.orig || ''; }, 2000);
   };
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(text).then(() => done(true)).catch(() => done(false));
-  } else {
-    try {
-      el.removeAttribute('readonly');
-      el.select();
-      const ok = document.execCommand('copy');
-      el.setAttribute('readonly', '');
-      done(ok);
-    } catch (e) { done(false); }
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(() => done(true)).catch(() => done(false));
+  else {
+    try { el.removeAttribute('readonly'); el.select(); const ok = document.execCommand('copy'); el.setAttribute('readonly', ''); done(ok); }
+    catch (e) { done(false); }
   }
 }
-
+function p2pResetState() {
+  try { if (rtcDc) rtcDc.close(); } catch (e) {}
+  try { if (rtcPc) rtcPc.close(); } catch (e) {}
+  rtcDc = null;
+  rtcPc = null;
+  pendingCandidates = [];
+  manualPendingCand = [];
+  onlineRole = null;
+}
+function waitForIceGathering(pc, timeoutMs) {
+  return new Promise((resolve) => {
+    if (!pc || pc.iceGatheringState === 'complete') { resolve(); return; }
+    let done = false;
+    const finish = () => { if (done) return; done = true; try { pc.removeEventListener('icegatheringstatechange', onChange); } catch (e) {} resolve(); };
+    const onChange = () => { if (pc.iceGatheringState === 'complete') finish(); };
+    try { pc.addEventListener('icegatheringstatechange', onChange); } catch (e) {}
+    setTimeout(finish, timeoutMs || 2500);
+  });
+}
 async function manualHostGenerateOffer() {
   const codeEl = $('manualOfferCode');
   const statusEl = 'manualHostStatus';
   manualSetStatus(statusEl, '正在生成邀请码…', 'wait');
-
-  onlineTransport = 'mqtt';
-  transportMode = 'mqtt';
-  playerCount = 2;
-
-  if (rtcPc) { try { rtcPc.close(); } catch (e) {} rtcPc = null; }
-  if (rtcDc) { try { rtcDc.close(); } catch (e) {} rtcDc = null; }
-  pendingCandidates = [];
-  manualPendingCand = [];
-
+  onlineTransport = 'mqtt'; transportMode = 'mqtt'; playerCount = 2;
+  gameMode = 'online'; timerMode = false;
+  p2pResetState();
   rtcPc = new RTCPeerConnection(RTC_CONFIG_WEB);
   rtcPc.onicecandidate = (e) => { if (e.candidate) manualPendingCand.push(e.candidate); };
   rtcPc.onconnectionstatechange = () => {
@@ -3831,36 +3523,29 @@ async function manualHostGenerateOffer() {
     if (st === 'failed') manualSetStatus(statusEl, '连接失败，请重新生成', '');
     else if (st === 'connected') manualSetStatus(statusEl, '✓ P2P 通道已连接', 'ok');
   };
-
   try {
     const dc = rtcPc.createDataChannel('game', { ordered: true });
+    onlineRole = 'host'; mySlot = 1;
+    currentRoom = 'P2P-' + localId.slice(0, 4).toUpperCase();
     setupDataChannel(dc);
     const offer = await rtcPc.createOffer();
     await rtcPc.setLocalDescription(offer);
-    /* 等 ICE 收集一小会儿，让邀请码里带上候选地址 */
-    await new Promise(r => setTimeout(r, 1500));
+    await waitForIceGathering(rtcPc, 2500);
     const packed = {
-      v: 1,
-      type: 'offer',
+      v: 1, type: 'offer',
       sdp: { type: rtcPc.localDescription.type, sdp: rtcPc.localDescription.sdp },
-      cand: manualPendingCand,
+      cand: [],
       name: playerName
     };
-    const code = encodeManualCode(packed);
-    if (codeEl) codeEl.value = code;
-    onlineRole = 'host'; manualRole = 'host';
-    mySlot = 1;
+    if (codeEl) codeEl.value = encodeManualCode(packed);
     slotInfo = { 1: { name: playerName, ready: true, isAI: false, clientId: localId, connected: true },
                  2: { name: '对手', ready: false, isAI: false, clientId: 'manual-peer', connected: false },
                  3: null, 4: null };
     roomBlessings = { 1: myBlessing, 2: 'none', 3: 'none', 4: 'none' };
     updateRoomUI();
     manualSetStatus(statusEl, '✓ 邀请码已生成，请复制发给朋友', 'ok');
-  } catch (e) {
-    manualSetStatus(statusEl, '生成失败：' + (e.message || e), '');
-  }
+  } catch (e) { manualSetStatus(statusEl, '生成失败：' + (e.message || e), ''); }
 }
-
 async function manualHostAcceptAnswer() {
   const inputEl = $('manualAnswerInput');
   const statusEl = 'manualHostStatus';
@@ -3869,22 +3554,20 @@ async function manualHostAcceptAnswer() {
   if (!code) { manualSetStatus(statusEl, '请粘贴朋友发回的应答码', ''); return; }
   const data = decodeManualCode(code);
   if (!data || data.type !== 'answer') { manualSetStatus(statusEl, '应答码无效', ''); return; }
+  if (rtcPc.signalingState !== 'have-local-offer') {
+    if (rtcPc.connectionState === 'connected') manualSetStatus(statusEl, '✓ 已连接，无需重复接受', 'ok');
+    else manualSetStatus(statusEl, '房主状态异常（' + rtcPc.signalingState + '）：请重新点「生成邀请码」', '');
+    return;
+  }
   manualSetStatus(statusEl, '正在建立连接…', 'wait');
   try {
     await rtcPc.setRemoteDescription(data.sdp);
     for (const c of (data.cand || [])) { try { await rtcPc.addIceCandidate(c); } catch (e) {} }
     for (const c of manualPendingCand) { try { await rtcPc.addIceCandidate(c); } catch (e) {} }
-    if (data.name) {
-      remoteName = String(data.name).slice(0, 16);
-      if (slotInfo[2]) slotInfo[2].name = remoteName;
-      updateRoomUI();
-    }
+    if (data.name) { remoteName = String(data.name).slice(0, 16); if (slotInfo[2]) slotInfo[2].name = remoteName; updateRoomUI(); }
     manualSetStatus(statusEl, '✓ 应答已接受，等待通道打开…', 'ok');
-  } catch (e) {
-    manualSetStatus(statusEl, '连接失败：' + (e.message || e), '');
-  }
+  } catch (e) { manualSetStatus(statusEl, '连接失败：' + (e.message || e), ''); }
 }
-
 async function manualClientGenerateAnswer() {
   const offerEl = $('manualOfferInput');
   const answerEl = $('manualAnswerCode');
@@ -3894,17 +3577,10 @@ async function manualClientGenerateAnswer() {
   if (!code) { manualSetStatus(statusEl, '请粘贴房主发来的邀请码', ''); return; }
   const data = decodeManualCode(code);
   if (!data || data.type !== 'offer') { manualSetStatus(statusEl, '邀请码无效', ''); return; }
-
   manualSetStatus(statusEl, '正在生成应答码…', 'wait');
-  onlineTransport = 'mqtt';
-  transportMode = 'mqtt';
-  playerCount = 2;
-
-  if (rtcPc) { try { rtcPc.close(); } catch (e) {} rtcPc = null; }
-  if (rtcDc) { try { rtcDc.close(); } catch (e) {} rtcDc = null; }
-  pendingCandidates = [];
-  manualPendingCand = [];
-
+  onlineTransport = 'mqtt'; transportMode = 'mqtt'; playerCount = 2;
+  gameMode = 'online'; timerMode = false;
+  p2pResetState();
   rtcPc = new RTCPeerConnection(RTC_CONFIG_WEB);
   rtcPc.onicecandidate = (e) => { if (e.candidate) manualPendingCand.push(e.candidate); };
   rtcPc.ondatachannel = (e) => { setupDataChannel(e.channel); };
@@ -3913,40 +3589,34 @@ async function manualClientGenerateAnswer() {
     if (st === 'failed') manualSetStatus(statusEl, '连接失败，请重新生成', '');
     else if (st === 'connected') manualSetStatus(statusEl, '✓ P2P 通道已连接', 'ok');
   };
-
   try {
     await rtcPc.setRemoteDescription(data.sdp);
     for (const c of (data.cand || [])) { try { await rtcPc.addIceCandidate(c); } catch (e) {} }
     const answer = await rtcPc.createAnswer();
     await rtcPc.setLocalDescription(answer);
-    await new Promise(r => setTimeout(r, 1500));
+    await waitForIceGathering(rtcPc, 2500);
     const packed = {
-      v: 1,
-      type: 'answer',
+      v: 1, type: 'answer',
       sdp: { type: rtcPc.localDescription.type, sdp: rtcPc.localDescription.sdp },
-      cand: manualPendingCand,
+      cand: [],
       name: playerName
     };
-    const outCode = encodeManualCode(packed);
-    if (answerEl) answerEl.value = outCode;
-    onlineRole = 'client'; manualRole = 'client';
-    mySlot = 2;
+    if (answerEl) answerEl.value = encodeManualCode(packed);
+    onlineRole = 'client'; mySlot = 2; currentRoom = 'P2P-CLIENT';
     slotInfo = { 1: { name: data.name || '房主', ready: true, isAI: false, clientId: 'manual-host', connected: true },
                  2: { name: playerName, ready: false, isAI: false, clientId: localId, connected: true },
                  3: null, 4: null };
     roomBlessings = { 1: 'none', 2: myBlessing, 3: 'none', 4: 'none' };
     updateRoomUI();
     manualSetStatus(statusEl, '✓ 应答码已生成，请复制发回给房主', 'ok');
-  } catch (e) {
-    manualSetStatus(statusEl, '生成失败：' + (e.message || e), '');
-  }
+  } catch (e) { manualSetStatus(statusEl, '生成失败：' + (e.message || e), ''); }
 }
 
 /* ============================================================
    状态同步
    ============================================================ */
 function broadcastRoomState() {
-  if (onlineRole !== 'host' && lanRole !== 'host') return;
+  if (onlineRole !== 'host') return;
   if (playerCount === 2 && slotInfo[2]) slotInfo[2].ready = !!clientReady;
   transportSend({
     t: 'room',
@@ -4091,19 +3761,9 @@ function getOrCreatePlayerId() {
 const PLAYER_ID = getOrCreatePlayerId();
 function getPlayerName() { try { return localStorage.getItem(LB_NAME_KEY) || ''; } catch (e) { return ''; } }
 function setPlayerNameStore(n) { try { localStorage.setItem(LB_NAME_KEY, n); } catch (e) {} }
-function sanitizeName(n) {
-  n = String(n || '').replace(/[\x00-\x1f\x7f]/g, '').trim();
-  return n.slice(0, LB_MAX_NAME_LEN) || '匿名';
-}
+function sanitizeName(n) { n = String(n || '').replace(/[\x00-\x1f\x7f]/g, '').trim(); return n.slice(0, LB_MAX_NAME_LEN) || '匿名'; }
 let playerName = getPlayerName() || '匿名';
-let myStats = {
-  hell21Wins: 0, hard21Wins: 0, playMs: 0,
-  hellTimer: {
-    30: { wins: 0, totalScore: 0 },
-    60: { wins: 0, totalScore: 0 },
-    120: { wins: 0, totalScore: 0 }
-  }
-};
+let myStats = { hell21Wins: 0, hard21Wins: 0, playMs: 0, hellTimer: { 30: { wins: 0, totalScore: 0 }, 60: { wins: 0, totalScore: 0 }, 120: { wins: 0, totalScore: 0 } } };
 function loadMyStats() {
   try {
     const raw = localStorage.getItem(LB_MY_STATS_KEY);
@@ -4167,16 +3827,10 @@ function lbTotalTimer(e) {
   for (const k of [30, 60, 120]) if (t[k] && t[k].totalScore) s += t[k].totalScore;
   return s;
 }
-/* ★ 困难胜利权重：40% → 25% */
-function lbWinScore(e) { return (e.hell21Wins | 0) + (e.hard21Wins | 0) * 0.25; }
-function lbEscapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
-}
-function fmtPlayTime(ms) {
-  const min = Math.floor((ms | 0) / 60000);
-  if (min < 60) return min + ' 分钟';
-  return (min / 60).toFixed(1) + ' 小时';
-}
+/* ★ 地狱 ×3，困难 ×2 */
+function lbWinScore(e) { return (e.hell21Wins | 0) * 3 + (e.hard21Wins | 0) * 2; }
+function lbEscapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]); }
+function fmtPlayTime(ms) { const min = Math.floor((ms | 0) / 60000); if (min < 60) return min + ' 分钟'; return (min / 60).toFixed(1) + ' 小时'; }
 function updateBanBanner() {
   const bb = $('banBanner'); if (!bb) return;
   bb.classList.toggle('hidden-section', !deviceBanned);
@@ -4267,8 +3921,7 @@ async function lbConnect() {
   if (!supabaseClient) { leaderboardStatus = 'offline'; lbScheduleRender(); return; }
   leaderboardStatus = 'connecting'; lbScheduleRender();
   try {
-    const { data, error } = await supabaseClient
-      .from('leaderboard').select('*').order('hell21_wins', { ascending: false }).limit(200);
+    const { data, error } = await supabaseClient.from('leaderboard').select('*').order('hell21_wins', { ascending: false }).limit(200);
     if (error) throw error;
     allEntries = {};
     for (const row of data) {
@@ -4286,10 +3939,7 @@ async function lbConnect() {
     leaderboardStatus = 'connected';
     lbScheduleRender();
     await lbCheckBan();
-  } catch (e) {
-    console.warn('[PONG-84] Supabase 读取失败', e);
-    leaderboardStatus = 'offline'; lbScheduleRender();
-  }
+  } catch (e) { console.warn('[PONG-84] Supabase 读取失败', e); leaderboardStatus = 'offline'; lbScheduleRender(); }
 }
 async function lbCheckBan() {
   if (!supabaseClient || !DEVICE_ID) return;
@@ -4336,6 +3986,8 @@ async function lbPublishMine() {
 function lbScoreValidForReport() {
   if (onlineRole !== null || lanRole !== null) return false;
   if (gameMode !== 'ai') return false;
+  /* ★ 只统计按键模式 */
+  if (lastGameControlMode !== 'buttons') return false;
   if (playerScore <= aiScore) return false;
   if (isDebugDirty()) return false;
   if (deviceBanned) return false;
@@ -4367,11 +4019,7 @@ function lbTryReport() {
   saveMyStats(); lbRenderMyStats(); lbPublishMine();
 }
 function flushPlayTime() {
-  if (playTimeAccum > 0) {
-    myStats.playMs += Math.round(playTimeAccum);
-    playTimeAccum = 0;
-    saveMyStats(); lbRenderMyStats();
-  }
+  if (playTimeAccum > 0) { myStats.playMs += Math.round(playTimeAccum); playTimeAccum = 0; saveMyStats(); lbRenderMyStats(); }
 }
 function updateNicknameDisplay() {
   const el = $('mainNickname');
@@ -4383,7 +4031,7 @@ function updateNicknameDisplay() {
 /* ============================================================
    设置
    ============================================================ */
-const SETTINGS_KEY = 'pong84.settings.v20';
+const SETTINGS_KEY = 'pong84.settings.v23';
 function loadSettings() {
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
@@ -4449,10 +4097,7 @@ const PANEL_IDS = ['main', 'local', 'ai', 'pvp', 'online', 'online-mode', 'onlin
 let currentPanel = 'main';
 let navStack = [];
 function applyPanel(name) {
-  PANEL_IDS.forEach(p => {
-    const el = $('panel-' + p);
-    if (el) el.classList.toggle('hidden-section', p !== name);
-  });
+  PANEL_IDS.forEach(p => { const el = $('panel-' + p); if (el) el.classList.toggle('hidden-section', p !== name); });
   currentPanel = name;
   const bb = $('backBtn');
   if (bb) bb.classList.toggle('hidden-section', navStack.length === 0);
@@ -4462,16 +4107,8 @@ function applyPanel(name) {
   if (name === 'room') updateRoomUI();
   const ov = $('overlay'); if (ov) ov.scrollTop = 0;
 }
-function navigate(name) {
-  if (name === currentPanel) return;
-  navStack.push(currentPanel);
-  applyPanel(name);
-}
-function goBack() {
-  if (!navStack.length) return;
-  const prev = navStack.pop();
-  applyPanel(prev);
-}
+function navigate(name) { if (name === currentPanel) return; navStack.push(currentPanel); applyPanel(name); }
+function goBack() { if (!navStack.length) return; const prev = navStack.pop(); applyPanel(prev); }
 
 /* ============================================================
    加护页面
@@ -4484,10 +4121,7 @@ function getBlessingFor(target) {
 }
 function setBlessingFor(target, key) {
   if (target === 'p1') playerBlessing = key;
-  else if (target === 'p2') {
-    if (gameMode === 'ai') aiBlessingMode = (key === 'none') ? 'none' : 'random';
-    else player2Blessing = key;
-  }
+  else if (target === 'p2') { if (gameMode === 'ai') aiBlessingMode = (key === 'none') ? 'none' : 'random'; else player2Blessing = key; }
   saveSettings();
 }
 function renderBlessingPage() {
@@ -4501,9 +4135,7 @@ function renderBlessingPage() {
     header.innerHTML = '<span class="bh-label">对象</span>' +
       opts.map(o => '<button class="bp-chip' + (o.k === blessingEditTarget ? ' active' : '') + '" data-bp="' + o.k + '">' + o.t + '</button>').join('') +
       '<span class="bh-spacer"></span>';
-    header.querySelectorAll('[data-bp]').forEach(b => b.addEventListener('click', () => {
-      blessingEditTarget = b.dataset.bp; renderBlessingPage();
-    }));
+    header.querySelectorAll('[data-bp]').forEach(b => b.addEventListener('click', () => { blessingEditTarget = b.dataset.bp; renderBlessingPage(); }));
   }
   const cur = getBlessingFor(blessingEditTarget);
   const isRandomAI = (blessingEditTarget === 'p2' && gameMode === 'ai' && aiBlessingMode === 'random');
@@ -4522,9 +4154,7 @@ function renderBlessingPage() {
       renderBlessingPage(); updateBlessingSummary();
     }));
   }
-  const shown = isRandomAI
-    ? { label: '随机加护', color: '#ff88ff', tag: '随机', desc: '每局开始时从所有加护中随机抽取一个。' }
-    : BLESSINGS[cur];
+  const shown = isRandomAI ? { label: '随机加护', color: '#ff88ff', tag: '随机', desc: '每局开始时从所有加护中随机抽取一个。' } : BLESSINGS[cur];
   const bn = $('bdName'), bt = $('bdTag'), bd = $('bdDesc');
   if (bn) { bn.textContent = shown.label; bn.style.color = shown.color; }
   if (bt) { bt.textContent = shown.tag; bt.style.color = shown.color; }
@@ -4533,11 +4163,7 @@ function renderBlessingPage() {
 function updateBlessingSummary() {
   const el1 = $('aiP1Blessing'), el2 = $('aiP2Blessing');
   if (el1) { el1.textContent = BLESSINGS[playerBlessing].label; el1.style.color = BLESSINGS[playerBlessing].color; }
-  if (el2) {
-    const t = aiBlessingMode === 'random' ? '随机' : '无';
-    el2.textContent = t;
-    el2.style.color = aiBlessingMode === 'random' ? '#ff88ff' : '#888888';
-  }
+  if (el2) { const t = aiBlessingMode === 'random' ? '随机' : '无'; el2.textContent = t; el2.style.color = aiBlessingMode === 'random' ? '#ff88ff' : '#888888'; }
   const p1 = $('pvpP1Blessing'), p2 = $('pvpP2Blessing');
   if (p1) { p1.textContent = BLESSINGS[playerBlessing].label; p1.style.color = BLESSINGS[playerBlessing].color; }
   if (p2) { p2.textContent = BLESSINGS[player2Blessing].label; p2.style.color = BLESSINGS[player2Blessing].color; }
@@ -4548,14 +4174,13 @@ function updateBlessingSummary() {
    ============================================================ */
 function updateRoomStatus() {
   const bar = $('roomStatusBar'); if (!bar) return;
-  const isLan = (transportMode === 'lan');
-  const isHost = isLan ? (lanRole === 'host') : (onlineRole === 'host');
-  const connected = isLan ? lanConnected : !!(rtcDc && rtcDc.readyState === 'open');
+  const isHost = onlineRole === 'host';
+  const connected = !!(rtcDc && rtcDc.readyState === 'open');
   if (!currentRoom) { bar.className = 'room-status-bar'; bar.textContent = '—'; return; }
   if (isHost) {
     if (playerCount === 2) {
       const cReady = slotInfo[2] && slotInfo[2].ready;
-      if (!connected) { bar.className = 'room-status-bar wait'; bar.textContent = isLan ? '⏳ 等待玩家连接（房主地址：' + currentRoom + '）' : '⏳ 等待玩家加入…'; }
+      if (!connected) { bar.className = 'room-status-bar wait'; bar.textContent = '⏳ 等待玩家加入…'; }
       else if (!cReady) { bar.className = 'room-status-bar wait'; bar.textContent = '👤 对手已加入，等待准备'; }
       else { bar.className = 'room-status-bar ok'; bar.textContent = '✓ 双方已准备，可以开始'; }
     } else {
@@ -4577,8 +4202,8 @@ function updateRoomStatus() {
 function updateRoomUI() {
   if (!currentRoom) return;
   const roomCodeText = $('roomCodeText'); if (roomCodeText) roomCodeText.textContent = currentRoom;
-  const connected = transportMode === 'lan' ? lanConnected : !!(rtcDc && rtcDc.readyState === 'open');
-  const isHost = transportMode === 'lan' ? (lanRole === 'host') : (onlineRole === 'host');
+  const connected = !!(rtcDc && rtcDc.readyState === 'open');
+  const isHost = onlineRole === 'host';
   const roomPlayerList = $('roomPlayerList'), onlineStartBtn = $('onlineStartBtn'),
         clientReadyBtn = $('clientReadyBtn'), roomSettingsTab = $('roomSettingsTab'),
         slotPickerWrap = $('slotPickerWrap');
@@ -4687,28 +4312,13 @@ function updateRoomUI() {
         myBlessing = btn.dataset.rbless;
         bp.querySelectorAll('[data-rbless]').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
-        if (isLanMode()) {
-          if (lanRole === 'client' && lanWs && lanWs.readyState === WebSocket.OPEN) {
-            try { lanWs.send(JSON.stringify({ t: 'myBlessing', value: myBlessing })); } catch (e) {}
-          } else if (lanRole === 'host') {
-            roomBlessings[mySlot] = myBlessing; broadcastRoomState();
-          }
-        } else {
-          if (onlineRole === 'client' && rtcDc && rtcDc.readyState === 'open') {
-            try { rtcDc.send(JSON.stringify({ t: 'myBlessing', value: myBlessing })); } catch (e) {}
-          } else if (onlineRole === 'host') {
-            roomBlessings[mySlot] = myBlessing; broadcastRoomState();
-          }
-        }
+        if (onlineRole === 'client' && rtcDc && rtcDc.readyState === 'open') { try { rtcDc.send(JSON.stringify({ t: 'myBlessing', value: myBlessing })); } catch (e) {} }
+        else if (onlineRole === 'host') { roomBlessings[mySlot] = myBlessing; broadcastRoomState(); }
       });
     });
     if (!isHost && playerCount === 2) {
       const myReady = slotInfo[2] && slotInfo[2].ready;
-      bp.querySelectorAll('[data-rbless]').forEach(b => {
-        b.disabled = !!myReady;
-        b.style.opacity = myReady ? '0.45' : '';
-        b.style.pointerEvents = myReady ? 'none' : '';
-      });
+      bp.querySelectorAll('[data-rbless]').forEach(b => { b.disabled = !!myReady; b.style.opacity = myReady ? '0.45' : ''; b.style.pointerEvents = myReady ? 'none' : ''; });
     }
   }
 
@@ -4734,21 +4344,20 @@ function updateRoomUI() {
   updateRoomStatus();
 }
 function kickSlot(slot) {
-  const isHost = transportMode === 'lan' ? (lanRole === 'host') : (onlineRole === 'host');
+  const isHost = onlineRole === 'host';
   if (!isHost || !slotInfo[slot]) return;
   const info = slotInfo[slot]; const cid = info.clientId;
-  if (transportMode !== 'lan' && cid && fourPeers[cid]) {
+  if (cid && fourPeers[cid]) {
     try { fourPeers[cid].dc && fourPeers[cid].dc.close(); } catch (e) {}
     try { fourPeers[cid].pc && fourPeers[cid].pc.close(); } catch (e) {}
     delete fourPeers[cid];
   }
-  if (transportMode !== 'lan' && cid) signalSendToClient(cid, { type: 'kicked' });
+  if (cid) signalSendToClient(cid, { type: 'kicked' });
   slotInfo[slot] = null; slotAiControl[slot] = false;
   broadcastRoomState(); updateRoomUI();
 }
 function requestSlotChange(slot) {
-  const isClient = transportMode === 'lan' ? (lanRole === 'client') : (onlineRole === 'client');
-  if (!isClient) return;
+  if (onlineRole !== 'client') return;
   if (slot < 1 || slot > 4) return;
   if (slotInfo[slot] !== null && slot !== mySlot) return;
   transportSend(JSON.stringify({ t: 'requestSlot', slot }));
@@ -4781,17 +4390,9 @@ function syncUI() {
   const scoreBlock = $('aiScoreBlock'), timeBlock = $('aiTimeBlock');
   if (scoreBlock) scoreBlock.classList.toggle('hidden-section', timerMode);
   if (timeBlock) timeBlock.classList.toggle('hidden-section', !timerMode);
-  updateAiPanelBlocks();
-}
-function updateAiPanelBlocks() {
-  const scoreBlock = $('aiScoreBlock'), timeBlock = $('aiTimeBlock');
-  if (scoreBlock) scoreBlock.classList.toggle('hidden-section', timerMode);
-  if (timeBlock) timeBlock.classList.toggle('hidden-section', !timerMode);
 }
 
-/* ============================================================
-   触屏跟随
-   ============================================================ */
+/* 触屏跟随 */
 function setupFollowTouch() {
   const container = $('gameContainer'); if (!container) return;
   const setTargetFromEvent = (e) => {
@@ -4809,68 +4410,19 @@ function setupFollowTouch() {
   container.addEventListener('pointermove', (e) => { if (touchControlMode === 'follow' && e.buttons) setTargetFromEvent(e); });
 }
 
-/* ============================================================
-   检索房间
-   ============================================================ */
+/* 检索房间 */
 async function doSearchRoom() {
   const code = ($('joinCodeInput').value || '').trim();
   const st = $('joinStatus'); if (!st) return;
-  if (!code) { st.className = 'room-status-bar wait'; st.textContent = '请输入房间号'; return; }
-
-  if (transportMode === 'lan') {
-    if (!/^[^\s]+:\d+$/.test(code)) { st.className = 'room-status-bar'; st.textContent = '格式错误：应为 IP:端口（例 10.126.126.1:8080）'; return; }
-    st.className = 'room-status-bar wait'; st.textContent = '正在连接房主…';
-    const ok = await joinRoom(code);
-    if (ok) {
-      st.className = 'room-status-bar ok'; st.textContent = '✓ 已连接';
-      setTimeout(() => { navStack = navStack.filter(x => x !== 'online-join'); navigate('room'); }, 400);
-    } else {
-      st.className = 'room-status-bar'; st.textContent = '连接失败：请检查 QteaSier 组网与房主脚本';
-    }
-    return;
-  }
-
-  const parsed = parseRoomCode(code);
-  if (!parsed) { st.className = 'room-status-bar'; st.textContent = '格式错误：应为 6 位数字（第一位为服务器编号）'; return; }
-  st.className = 'room-status-bar wait';
-  st.textContent = '正在向 ' + SIGNALING_SERVERS[parsed.serverIndex].name + ' 查询…';
-  const exists = await queryRoomExists(code, parsed.serverIndex);
-  if (exists) {
-    st.className = 'room-status-bar ok'; st.textContent = '✓ 房间存在，正在进入…';
-    setTimeout(async () => {
-      const ok = await joinRoom(code);
-      if (ok) { navStack = navStack.filter(x => x !== 'online-join'); navigate('room'); }
-      else { st.className = 'room-status-bar'; st.textContent = '连接失败，请重试'; }
-    }, 400);
+  if (!/^[0-9]{6}$/.test(code)) { st.className = 'room-status-bar'; st.textContent = '请输入 6 位数字房间号'; return; }
+  st.className = 'room-status-bar wait'; st.textContent = '正在连接房间 ' + code + ' …';
+  const ok = await joinRoom(code);
+  if (ok) {
+    st.className = 'room-status-bar ok'; st.textContent = '✓ 已发起连接';
+    setTimeout(() => { navStack = navStack.filter(x => x !== 'online-join'); navigate('room'); }, 400);
   } else {
-    st.className = 'room-status-bar'; st.textContent = '✗ 房间不存在或已关闭';
+    st.className = 'room-status-bar'; st.textContent = '连接失败，请重试';
   }
-}
-function queryRoomExists(code, serverIndex) {
-  return new Promise((resolve) => {
-    if (typeof mqtt === 'undefined') { resolve(false); return; }
-    const server = SIGNALING_SERVERS[serverIndex != null ? serverIndex : currentServerIndex];
-    let probe = null, resolved = false;
-    const done = (v) => {
-      if (resolved) return;
-      resolved = true;
-      try { if (probe) probe.end(true); } catch (e) {}
-      resolve(v);
-    };
-    try {
-      probe = mqtt.connect(server.url, {
-        clean: true, connectTimeout: 5000, reconnectPeriod: 0,
-        clientId: 'pong84_probe_' + Math.random().toString(16).slice(2, 10)
-      });
-    } catch (e) { resolve(false); return; }
-    const topic = roomTopic(code, 'host');
-    const timeout = setTimeout(() => done(false), 5000);
-    probe.on('connect', () => {
-      probe.subscribe(topic, { qos: 1 }, (err) => { if (err) { clearTimeout(timeout); done(false); } });
-    });
-    probe.on('message', () => { clearTimeout(timeout); done(true); });
-    probe.on('error', () => { clearTimeout(timeout); done(false); });
-  });
 }
 function copyRoomCode() {
   const rct = $('roomCodeText'); if (!rct) return;
@@ -4881,9 +4433,8 @@ function copyRoomCode() {
     if (ok) { h.textContent = '✓ 已复制到剪贴板'; setTimeout(() => { h.textContent = '把房间号发给对方'; }, 1800); }
     else h.textContent = '自动复制失败，请手动选择';
   };
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(code).then(() => finish(true)).catch(() => finish(false));
-  } else {
+  if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(code).then(() => finish(true)).catch(() => finish(false)); }
+  else {
     try {
       const ta = document.createElement('textarea');
       ta.value = code; ta.style.position = 'fixed'; ta.style.opacity = '0';
@@ -4989,11 +4540,7 @@ function bindAllEvents() {
       parent.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
       t.classList.add('active');
       const key = t.dataset.roomtab || t.dataset.opttab || t.dataset.mantab || t.dataset.lbtab || t.dataset.manualtab;
-      const cls = t.dataset.roomtab ? 'roomTab-' :
-                  t.dataset.opttab ? 'optTab-' :
-                  t.dataset.mantab ? 'manTab-' :
-                  t.dataset.lbtab ? 'lbTab-' :
-                  t.dataset.manualtab ? 'manualTab-' : '';
+      const cls = t.dataset.roomtab ? 'roomTab-' : t.dataset.opttab ? 'optTab-' : t.dataset.mantab ? 'manTab-' : t.dataset.lbtab ? 'lbTab-' : t.dataset.manualtab ? 'manualTab-' : '';
       root.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
       const target = $(cls + key); if (target) target.classList.add('active');
     });
@@ -5014,7 +4561,7 @@ function bindAllEvents() {
     winScore = parseInt(btn.dataset.optScore, 10);
     document.querySelectorAll('.score-input').forEach(i => { i.value = ''; });
     syncUI(); updateControlsHint();
-    if (onlineRole === 'host' || lanRole === 'host') broadcastRoomState();
+    if (onlineRole === 'host') broadcastRoomState();
   }));
   document.querySelectorAll('.score-input').forEach(inp => {
     if (inp.id === 'onlineSpeedCustom') return;
@@ -5033,11 +4580,7 @@ function bindAllEvents() {
     aiCfg.value = aiCfg.value.replace(/[^0-9]/g, '').slice(0, 6);
     const raw = aiCfg.value.trim(); if (!raw) return;
     const v = parseInt(raw, 10);
-    if (v && v >= 1) {
-      winScore = Math.min(v, 99);
-      document.querySelectorAll('[data-opt-score]').forEach(b => b.classList.remove('selected'));
-      updateControlsHint();
-    }
+    if (v && v >= 1) { winScore = Math.min(v, 99); document.querySelectorAll('[data-opt-score]').forEach(b => b.classList.remove('selected')); updateControlsHint(); }
   });
   document.querySelectorAll('[data-opt-time]').forEach(btn => btn.addEventListener('click', () => { timerSeconds = parseInt(btn.dataset.optTime, 10); syncUI(); }));
   document.querySelectorAll('[data-opt-aimode]').forEach(btn => btn.addEventListener('click', () => { timerMode = btn.dataset.optAimode === 'timer'; syncUI(); }));
@@ -5100,26 +4643,26 @@ function bindAllEvents() {
     document.querySelectorAll('[data-opt-omode]').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     onlineMode = btn.dataset.optOmode; syncUI(); updateRoomUI();
-    if (onlineRole === 'host' || lanRole === 'host') broadcastRoomState();
+    if (onlineRole === 'host') broadcastRoomState();
   }));
   document.querySelectorAll('[data-opt-oailevel]').forEach(btn => btn.addEventListener('click', () => {
     document.querySelectorAll('[data-opt-oailevel]').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     onlineAILevel = btn.dataset.optOailevel;
-    if (onlineRole === 'host' || lanRole === 'host') broadcastRoomState();
+    if (onlineRole === 'host') broadcastRoomState();
   }));
   document.querySelectorAll('[data-opt-otime]').forEach(btn => btn.addEventListener('click', () => {
     document.querySelectorAll('[data-opt-otime]').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     onlineTimerSeconds = parseInt(btn.dataset.optOtime, 10);
-    if (onlineRole === 'host' || lanRole === 'host') broadcastRoomState();
+    if (onlineRole === 'host') broadcastRoomState();
   }));
   document.querySelectorAll('[data-opt-obspeed]').forEach(btn => btn.addEventListener('click', () => {
     document.querySelectorAll('[data-opt-obspeed]').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     onlineBallSpeed = parseFloat(btn.dataset.optObspeed);
     const sc = $('onlineSpeedCustom'); if (sc) sc.value = '';
-    if (onlineRole === 'host' || lanRole === 'host') broadcastRoomState();
+    if (onlineRole === 'host') broadcastRoomState();
   }));
   const sc = $('onlineSpeedCustom');
   if (sc) sc.addEventListener('input', () => {
@@ -5127,53 +4670,53 @@ function bindAllEvents() {
     if (v && v >= 0.3 && v <= 3) {
       onlineBallSpeed = v;
       document.querySelectorAll('[data-opt-obspeed]').forEach(b => b.classList.remove('selected'));
-      if (onlineRole === 'host' || lanRole === 'host') broadcastRoomState();
+      if (onlineRole === 'host') broadcastRoomState();
     }
   });
   const opm = $('onlinePaddleMul');
   if (opm) opm.addEventListener('input', () => {
     onlinePaddleMul = parseFloat(opm.value);
     const v = $('onlinePaddleMulVal'); if (v) v.textContent = onlinePaddleMul.toFixed(2) + 'x';
-    if (onlineRole === 'host' || lanRole === 'host') broadcastRoomState();
+    if (onlineRole === 'host') broadcastRoomState();
   });
   const opsp = $('onlinePaddleSpeed');
   if (opsp) opsp.addEventListener('input', () => {
     onlinePaddleSpeed = parseFloat(opsp.value);
     const v = $('onlinePaddleSpeedVal'); if (v) v.textContent = onlinePaddleSpeed.toFixed(2) + 'x';
-    if (onlineRole === 'host' || lanRole === 'host') broadcastRoomState();
+    if (onlineRole === 'host') broadcastRoomState();
   });
   const ocm = $('onlineCurveMul');
   if (ocm) ocm.addEventListener('input', () => {
     onlineCurveMul = parseFloat(ocm.value);
     const v = $('onlineCurveMulVal'); if (v) v.textContent = onlineCurveMul.toFixed(2) + 'x';
-    if (onlineRole === 'host' || lanRole === 'host') broadcastRoomState();
+    if (onlineRole === 'host') broadcastRoomState();
   });
   const opum = $('onlinePowerupMul');
   if (opum) opum.addEventListener('input', () => {
     onlinePowerupMul = parseFloat(opum.value);
     const v = $('onlinePowerupMulVal'); if (v) v.textContent = onlinePowerupMul.toFixed(2) + 'x';
-    if (onlineRole === 'host' || lanRole === 'host') broadcastRoomState();
+    if (onlineRole === 'host') broadcastRoomState();
   });
   document.querySelectorAll('[data-opt-form]').forEach(btn => btn.addEventListener('click', () => {
     document.querySelectorAll('[data-opt-form]').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     teamFormation = btn.dataset.optForm; recomputeSpeeds();
-    if (onlineRole === 'host' || lanRole === 'host') broadcastRoomState();
+    if (onlineRole === 'host') broadcastRoomState();
   }));
   document.querySelectorAll('[data-opt-squeeze]').forEach(btn => btn.addEventListener('click', () => {
     document.querySelectorAll('[data-opt-squeeze]').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     teamSqueeze = btn.dataset.optSqueeze === 'on'; recomputeSpeeds();
-    if (onlineRole === 'host' || lanRole === 'host') broadcastRoomState();
+    if (onlineRole === 'host') broadcastRoomState();
   }));
 
+  /* ★ 秒进房间面板：先 navigate，再后台 createRoom */
   document.querySelectorAll('[data-online-mode]').forEach(btn => {
     btn.addEventListener('click', () => {
       const mode = parseInt(btn.dataset.onlineMode, 10);
-      createRoom(mode).then(() => {
-        navStack = navStack.filter(x => x !== 'online-mode');
-        navigate('room');
-      });
+      navStack = navStack.filter(x => x !== 'online-mode');
+      navigate('room');
+      createRoom(mode).catch(() => {});
     });
   });
   const bc = $('btnCreate');
@@ -5186,7 +4729,7 @@ function bindAllEvents() {
     setTopStatus('', '');
   });
   const bmp = $('btnManualP2P');
-if (bmp) bmp.addEventListener('click', () => {
+  if (bmp) bmp.addEventListener('click', () => {
     try { AudioEngine.init(); } catch (e) {}
     try { onlineCleanup(); } catch (e) {}
     onlineTransport = 'mqtt';
@@ -5199,7 +4742,7 @@ if (bmp) bmp.addEventListener('click', () => {
     const ac = $('manualAnswerCode');  if (ac) ac.value = '';
     manualSetStatus('manualHostStatus', '等待生成邀请码', '');
     manualSetStatus('manualClientStatus', '等待输入邀请码', '');
-});
+  });
 
   const bs = $('btnSearchRoom'); if (bs) bs.addEventListener('click', () => doSearchRoom());
   const jci = $('joinCodeInput');
@@ -5224,14 +4767,14 @@ if (bmp) bmp.addEventListener('click', () => {
   const brs = $('btnRetrySignal');
   if (brs) brs.addEventListener('click', () => {
     hideRetry();
-    if (onlineRole === 'host' || lanRole === 'host') createRoom(playerCount);
-    else if (onlineRole === 'client' || lanRole === 'client') { const c = currentRoom; joinRoom(c); }
+    if (onlineRole === 'host') createRoom(playerCount);
+    else if (onlineRole === 'client') { const c = currentRoom; joinRoom(c); }
     else resetOnlinePanel();
   });
 
   document.querySelectorAll('[data-start]').forEach(btn => btn.addEventListener('click', () => {
     AudioEngine.init();
-    const isHost = transportMode === 'lan' ? (lanRole === 'host') : (onlineRole === 'host');
+    const isHost = onlineRole === 'host';
     if (gameMode === 'online') {
       if (isHost) {
         if (playerCount === 2) {
@@ -5300,27 +4843,21 @@ if (bmp) bmp.addEventListener('click', () => {
   const qb = $('quitBtn'); if (qb) qb.addEventListener('click', quitToMenu);
   const rrb = $('resultRoomBtn'); if (rrb) rrb.addEventListener('click', quitToRoom);
   const bcr = $('btnCloseRoom');
-if (bcr) bcr.addEventListener('click', () => {
-    const isHost = transportMode === 'lan' ? (lanRole === 'host') : (onlineRole === 'host');
+  if (bcr) bcr.addEventListener('click', () => {
+    const isHost = onlineRole === 'host';
     if (!currentRoom) { navStack = []; applyPanel('main'); return; }
     const tip = isHost ? '确定关闭房间？所有玩家将被断开。' : '确定离开房间？';
     if (!confirm(tip)) return;
-    if (isHost) {
-        try { transportSend(JSON.stringify({ t: 'roomClosed' })); } catch (e) {}
-    } else {
-        try { transportSend(JSON.stringify({ t: 'leave' })); } catch (e) {}
-    }
+    if (isHost) { try { transportSend(JSON.stringify({ t: 'roomClosed' })); } catch (e) {} }
+    else { try { transportSend(JSON.stringify({ t: 'leave' })); } catch (e) {} }
     setTimeout(() => {
-        try { onlineCleanup(); } catch (e) {}
-        navStack = [];
-        applyPanel('main');
-        updateControlsHint();
-        updateStatsDisplay();
-        showScoreboard(false);
-        const ti = $('topInfo'); if (ti) ti.classList.remove('show');
-        const sbe = $('statusBar'); if (sbe) sbe.classList.remove('show');
+      try { onlineCleanup(); } catch (e) {}
+      navStack = []; applyPanel('main');
+      updateControlsHint(); updateStatsDisplay(); showScoreboard(false);
+      const ti = $('topInfo'); if (ti) ti.classList.remove('show');
+      const sbe = $('statusBar'); if (sbe) sbe.classList.remove('show');
     }, 60);
-});
+  });
   const fsb = $('fsBtn'); if (fsb) fsb.addEventListener('click', toggleFullscreen);
 
   const ni = $('lbNameInput'), nsb = $('lbSaveNameBtn');
@@ -5334,14 +4871,12 @@ if (bcr) bcr.addEventListener('click', () => {
     ni.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); nsb.click(); } });
   }
 
-  /* ---- 手动 P2P 事件 ---- */
   const mgo = $('manualGenOffer');       if (mgo) mgo.addEventListener('click', manualHostGenerateOffer);
   const mca = $('manualAcceptAnswer');   if (mca) mca.addEventListener('click', manualHostAcceptAnswer);
   const mco = $('manualCopyOffer');      if (mco) mco.addEventListener('click', () => manualCopy('manualOfferCode', 'manualHostStatus'));
   const mga = $('manualGenAnswer');      if (mga) mga.addEventListener('click', manualClientGenerateAnswer);
   const mcaa = $('manualCopyAnswer');    if (mcaa) mcaa.addEventListener('click', () => manualCopy('manualAnswerCode', 'manualClientStatus'));
 
-  /* 复制提示文字 */
   const hintSetup = [
     ['manualCopyOffer', 'manualHostStatus', '把邀请码发给朋友（微信/QQ 均可）'],
     ['manualCopyAnswer', 'manualClientStatus', '把应答码发回给房主，房主粘贴并点「接受应答码」即可连接']
@@ -5396,11 +4931,11 @@ function init() {
   draw();
   initInput(); setupFollowTouch(); bindAllEvents(); updateFsIcon();
 
-  /* 排行榜：延迟连接 */
-  setTimeout(() => { try { lbConnect(); } catch (e) {} }, 800);
+  /* ★ 后台探测信令服务器（不阻塞） */
+  updateSignalingBadge('探测中…');
+  probeAllServers().catch(() => {});
 
-  /* 信令服务器：延迟探测（避免和首帧抢带宽） */
-  setTimeout(() => { try { probeSignalingServers(); } catch (e) {} }, 1200);
+  setTimeout(() => { try { lbConnect(); } catch (e) {} }, 800);
 
   requestAnimationFrame(() => { layoutAll(); syncUI(); draw(); });
 
