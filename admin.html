@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PONG-84 管理控制台</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'SF Mono','Courier New','PingFang SC','Microsoft YaHei',monospace;background:radial-gradient(ellipse at center,#0a110a 0%,#020402 100%);color:#33ff33;min-height:100vh;padding:20px;}
+.wrap{max-width:1440px;margin:0 auto;}
+h1{font-size:22px;letter-spacing:6px;text-shadow:0 0 12px rgba(51,255,51,.6);margin-bottom:4px;}
+.sub{font-size:11px;color:rgba(51,255,51,.65);letter-spacing:2px;margin-bottom:18px;}
+.card{background:rgba(0,0,0,.5);border:1px solid rgba(51,255,51,.25);border-radius:8px;padding:16px;margin-bottom:14px;}
+.card h2{font-size:13px;letter-spacing:2px;margin-bottom:10px;color:#33ff33;text-transform:uppercase;}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px;}
+label{font-size:11px;color:rgba(51,255,51,.75);letter-spacing:1px;}
+input,button,textarea,select{font-family:inherit;font-size:12px;}
+input[type=text],input[type=password],input[type=number]{background:rgba(0,0,0,.6);border:1px solid rgba(51,255,51,.35);color:#33ff33;padding:8px 12px;border-radius:4px;outline:none;min-width:180px;letter-spacing:1px;}
+input[type=text]:focus,input[type=password]:focus,input[type=number]:focus{border-color:#33ff33;box-shadow:0 0 10px rgba(51,255,51,.5);}
+select{background:rgba(0,0,0,.6);border:1px solid rgba(51,255,51,.35);color:#33ff33;padding:7px 12px;border-radius:4px;outline:none;letter-spacing:1px;cursor:pointer;}
+select option{background:#0a110a;color:#33ff33;}
+button{background:rgba(51,255,51,.08);border:1px solid rgba(51,255,51,.4);color:#33ff33;padding:8px 16px;border-radius:4px;cursor:pointer;letter-spacing:1.5px;transition:all .15s;}
+button:hover{background:rgba(51,255,51,.2);box-shadow:0 0 12px rgba(51,255,51,.5);}
+button:disabled{opacity:.35;cursor:not-allowed;box-shadow:none!important;background:rgba(51,255,51,.04)!important;}
+button.danger{border-color:#ff4444;color:#ff6666;background:rgba(255,68,68,.08);}
+button.danger:hover:not(:disabled){background:rgba(255,68,68,.2);box-shadow:0 0 12px rgba(255,68,68,.5);color:#fff;}
+button.warn{border-color:#ffaa33;color:#ffaa33;background:rgba(255,170,51,.08);}
+button.warn:hover:not(:disabled){background:rgba(255,170,51,.2);color:#fff;}
+button.small{padding:4px 10px;font-size:11px;letter-spacing:1px;}
+table{width:100%;border-collapse:collapse;font-size:11px;}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid rgba(51,255,51,.12);vertical-align:middle;}
+th{color:rgba(51,255,51,.8);letter-spacing:1px;text-transform:uppercase;font-size:10px;background:rgba(51,255,51,.06);}
+tr:hover{background:rgba(51,255,51,.04);}
+tr.banned{background:rgba(255,68,68,.08);}
+tr.banned td{color:#ff8888;}
+tr.risk-high{background:rgba(255,68,68,.10);}
+tr.risk-mid{background:rgba(255,170,51,.08);}
+tr.selected{background:rgba(51,255,51,.10)!important;box-shadow:inset 3px 0 0 #33ff33;}
+.mono{font-family:'Courier New',monospace;letter-spacing:.5px;font-size:10.5px;}
+.muted{color:rgba(51,255,51,.5);font-size:10px;}
+.name{font-weight:700;color:#33ff33;}
+.stat{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;}
+.stat-item{padding:8px 14px;background:rgba(51,255,51,.06);border:1px solid rgba(51,255,51,.2);border-radius:4px;}
+.stat-item .num{font-size:18px;font-weight:700;color:#33ff33;}
+.stat-item .lbl{font-size:9px;color:rgba(51,255,51,.65);letter-spacing:1px;}
+.tabs{display:flex;gap:6px;margin-bottom:14px;border-bottom:1px solid rgba(51,255,51,.2);padding-bottom:8px;flex-wrap:wrap;}
+.tab{padding:8px 18px;font-size:12px;letter-spacing:1px;cursor:pointer;border-radius:4px 4px 0 0;background:transparent;border:1px solid transparent;color:rgba(51,255,51,.6);transition:all .13s;}
+.tab:hover{color:#33ff33;}
+.tab.active{background:rgba(51,255,51,.1);border-color:rgba(51,255,51,.35);color:#33ff33;text-shadow:0 0 6px rgba(51,255,51,.6);}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+.hidden{display:none!important;}
+.status{font-size:11px;letter-spacing:1px;padding:4px 10px;border-radius:3px;display:inline-block;}
+.status.online{color:#33ff33;background:rgba(51,255,51,.12);}
+.status.offline{color:#ff6666;background:rgba(255,68,68,.12);}
+.status.connecting{color:#ffaa33;background:rgba(255,170,51,.12);}
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:20px;}
+#loginScreen .card{min-width:340px;text-align:center;}
+.scroll{max-height:560px;overflow-y:auto;}
+.scroll::-webkit-scrollbar{width:6px;}
+.scroll::-webkit-scrollbar-thumb{background:rgba(51,255,51,.3);border-radius:3px;}
+.badge{display:inline-block;padding:2px 7px;font-size:9px;letter-spacing:1px;border-radius:3px;font-weight:700;}
+.badge.risk-high{background:rgba(255,68,68,.2);color:#ff6666;border:1px solid rgba(255,68,68,.5);}
+.badge.risk-mid{background:rgba(255,170,51,.2);color:#ffaa33;border:1px solid rgba(255,170,51,.5);}
+.badge.risk-low{background:rgba(51,255,51,.15);color:#33ff33;border:1px solid rgba(51,255,51,.35);}
+.badge.risk-clean{background:rgba(51,255,51,.08);color:rgba(51,255,51,.65);}
+.badge.dev-shared{background:rgba(255,80,180,.15);color:#ff88cc;border:1px solid rgba(255,80,180,.4);}
+.badge.ip-shared{background:rgba(255,170,51,.15);color:#ffaa33;border:1px solid rgba(255,170,51,.4);}
+.empty{text-align:center;color:rgba(51,255,51,.4);padding:24px;font-size:11px;letter-spacing:1px;}
+input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:#33ff33;vertical-align:middle;}
+.check-wrap{display:inline-flex;align-items:center;gap:6px;cursor:pointer;user-select:none;}
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 12px;margin-bottom:12px;background:rgba(51,255,51,.04);border:1px solid rgba(51,255,51,.18);border-radius:5px;}
+.toolbar .sep{width:1px;height:22px;background:rgba(51,255,51,.2);margin:0 4px;}
+.toolbar .selected-count{font-size:11px;color:rgba(51,255,51,.85);letter-spacing:1px;padding:4px 10px;background:rgba(51,255,51,.1);border-radius:3px;min-width:90px;text-align:center;}
+.risk-detail{font-size:10px;color:rgba(255,170,51,.9);line-height:1.5;max-width:240px;}
+.risk-detail .reason{display:block;}
+.analysis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:12px;}
+.analysis-box{padding:10px 14px;background:rgba(51,255,51,.05);border:1px solid rgba(51,255,51,.18);border-radius:5px;}
+.analysis-box.high{border-color:rgba(255,68,68,.4);background:rgba(255,68,68,.05);}
+.analysis-box.mid{border-color:rgba(255,170,51,.4);background:rgba(255,170,51,.05);}
+.analysis-box .n{font-size:22px;font-weight:700;}
+.analysis-box.high .n{color:#ff6666;}
+.analysis-box.mid .n{color:#ffaa33;}
+.analysis-box .t{font-size:10px;letter-spacing:1px;color:rgba(51,255,51,.7);margin-top:2px;}
+.analysis-box .d{font-size:9.5px;color:rgba(51,255,51,.5);margin-top:4px;line-height:1.4;}
+.legend{font-size:10px;color:rgba(51,255,51,.6);line-height:1.8;margin-top:8px;}
+.legend b{color:#33ff33;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px;}
+.modal-overlay.show{display:flex;}
+.modal{background:#0a110a;border:1px solid rgba(51,255,51,.4);border-radius:8px;padding:20px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 0 30px rgba(51,255,51,.3);}
+.modal h3{font-size:15px;letter-spacing:2px;margin-bottom:14px;color:#33ff33;border-bottom:1px solid rgba(51,255,51,.25);padding-bottom:8px;}
+.modal-field{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.modal-field label{flex:0 0 110px;font-size:11px;color:rgba(51,255,51,.75);letter-spacing:1px;}
+.modal-field input{flex:1;background:rgba(0,0,0,.6);border:1px solid rgba(51,255,51,.35);color:#33ff33;padding:7px 10px;border-radius:4px;outline:none;font-family:inherit;font-size:12px;min-width:0;}
+.modal-field input:focus{border-color:#33ff33;box-shadow:0 0 8px rgba(51,255,51,.5);}
+.modal-field input[readonly]{opacity:.55;cursor:not-allowed;}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;padding-top:14px;border-top:1px solid rgba(51,255,51,.2);}
+.modal-actions button{padding:8px 18px;}
+.modal-section{font-size:10px;color:rgba(51,255,51,.5);letter-spacing:1.5px;margin:14px 0 8px;text-transform:uppercase;border-bottom:1px dashed rgba(51,255,51,.15);padding-bottom:4px;}
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="card">
+    <h1>PONG-84 管理控制台</h1>
+    <p class="sub">MOONSHOT ELECTRONICS · CONTROL ROOM</p>
+    <div style="margin-top:14px;">
+      <input type="password" id="pwInput" placeholder="输入管理密码" style="width:100%;">
+    </div>
+    <div style="margin-top:10px;">
+      <button id="loginBtn" style="width:100%;padding:10px;">进入控制台</button>
+    </div>
+    <div id="loginError" class="muted" style="margin-top:10px;color:#ff6666;display:none;">密码错误</div>
+  </div>
+</div>
+
+<div id="consoleScreen" class="wrap hidden">
+  <h1>PONG-84 管理控制台</h1>
+  <p class="sub">SUPABASE · CONTROL ROOM · v8</p>
+
+  <div class="row">
+    <span class="status connecting" id="connStatus">连接中...</span>
+    <span class="muted" id="lastUpdate">—</span>
+    <div style="flex:1;"></div>
+    <button id="refreshBtn">刷新数据</button>
+    <button id="resetSnapshotBtn">重置行为快照</button>
+    <button class="warn" id="clearAllBtn">清空排行榜</button>
+    <button class="danger" id="logoutBtn">退出登录</button>
+  </div>
+
+  <div class="stat">
+    <div class="stat-item"><div class="num" id="statPlayers">0</div><div class="lbl">玩家总数</div></div>
+    <div class="stat-item"><div class="num" id="statBans">0</div><div class="lbl">设备封禁</div></div>
+    <div class="stat-item"><div class="num" id="statIpBans">0</div><div class="lbl">IP 封禁</div></div>
+    <div class="stat-item"><div class="num" id="statTotalWins">0</div><div class="lbl">胜场总数</div></div>
+    <div class="stat-item"><div class="num" id="statTotalTime">0</div><div class="lbl">累计游戏时长</div></div>
+    <div class="stat-item"><div class="num" id="statHighRisk" style="color:#ff6666;">0</div><div class="lbl">高危账号</div></div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="players">玩家列表</div>
+    <div class="tab" data-tab="analysis">自动分析</div>
+    <div class="tab" data-tab="bans">封禁列表</div>
+  </div>
+
+  <div class="card tab-content active" id="tab-players">
+    <div class="toolbar">
+      <label class="check-wrap"><input type="checkbox" id="selectAll"> 全选</label>
+      <span class="selected-count" id="selectedCount">已选 0 项</span>
+      <div class="sep"></div>
+      <select id="filterSelect">
+        <option value="all">全部玩家</option>
+        <option value="risk-high">仅高危</option>
+        <option value="risk-mid">仅中危</option>
+        <option value="risk-suspicious">可疑（中+高危）</option>
+        <option value="clean">正常</option>
+        <option value="shared">设备复用</option>
+        <option value="sharedip">同 IP 多账号</option>
+        <option value="banned">已封禁设备/IP</option>
+      </select>
+      <div class="sep"></div>
+      <button class="small danger" id="batchBanBtn" disabled>批量封设备</button>
+      <button class="small danger" id="batchBanIpBtn" disabled>批量封 IP</button>
+      <button class="small warn" id="batchUnbanBtn" disabled>批量解封</button>
+      <button class="small danger" id="batchDeleteBtn" disabled>批量删除</button>
+      <div class="sep"></div>
+      <button class="small danger" id="autoBanHighBtn">一键封高危</button>
+      <button class="small warn" id="addPlayerBtn">+ 新增玩家</button>
+    </div>
+    <div class="muted" style="margin-bottom:8px;">
+      勾选玩家后使用批量操作。点「编辑」可修改任意玩家数据（含手动造数据）。所有写操作走服务端密码校验。
+    </div>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:34px;"><input type="checkbox" id="selectAllTop"></th>
+            <th style="width:36px;">#</th>
+            <th>昵称</th>
+            <th style="width:110px;">玩家 ID</th>
+            <th style="width:110px;">设备 ID</th>
+            <th style="width:120px;">IP</th>
+            <th style="width:56px;">地狱</th>
+            <th style="width:56px;">困难</th>
+            <th style="width:72px;">时长</th>
+            <th style="width:72px;">最近</th>
+            <th style="width:88px;">风险</th>
+            <th style="width:320px;">操作</th>
+          </tr>
+        </thead>
+        <tbody id="playersBody">
+          <tr><td colspan="12" class="empty">等待数据加载…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card tab-content" id="tab-analysis">
+    <h2>自动作弊检测引擎</h2>
+    <div class="muted" style="margin-bottom:12px;">
+      每 20 秒对所有玩家做一次快照比对，并结合静态规则自动评估风险分（0-100）。达到 60 分标记为高危。
+    </div>
+    <div class="analysis-grid">
+      <div class="analysis-box high"><div class="n" id="anaHigh">0</div><div class="t">高危账号</div><div class="d">风险分 ≥ 60</div></div>
+      <div class="analysis-box mid"><div class="n" id="anaMid">0</div><div class="t">中危账号</div><div class="d">风险分 30-59</div></div>
+      <div class="analysis-box"><div class="n" id="anaShared">0</div><div class="t">设备复用</div><div class="d">同设备 ID 关联多个账号</div></div>
+      <div class="analysis-box"><div class="n" id="anaSharedIp">0</div><div class="t">同 IP 多账号</div><div class="d">同 IP 关联多个账号</div></div>
+      <div class="analysis-box"><div class="n" id="anaGrowth">0</div><div class="t">爆发增长</div><div class="d">20 秒内新增 ≥ 2 胜</div></div>
+      <div class="analysis-box"><div class="n" id="anaShortWin">0</div><div class="t">异常胜率</div><div class="d">每胜平均时长 &lt; 90 秒</div></div>
+      <div class="analysis-box"><div class="n" id="anaBanned">0</div><div class="t">已封设备活跃</div><div class="d">已被封禁设备仍在上报</div></div>
+    </div>
+    <div class="legend">
+      <b>风险分规则</b>：设备/IP 已封禁 +100 · 会话爆发增长 +25/胜 · 每胜时长 &lt; 90 秒最高 +50 ·
+      时间戳在未来 +50 · 计时赛单次平均分超上限 +25 · 多账号共享设备 +10/额外账号 ·
+      多账号共享 IP +8/额外账号 · 极端胜场数 +20 · 昵称含可疑词 +5
+    </div>
+    <div class="scroll" style="margin-top:12px;max-height:420px;">
+      <table>
+        <thead>
+          <tr>
+            <th>昵称</th>
+            <th style="width:80px;">风险分</th>
+            <th>触发原因</th>
+            <th style="width:240px;">操作</th>
+          </tr>
+        </thead>
+        <tbody id="analysisBody">
+          <tr><td colspan="4" class="empty">暂无数据</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card tab-content" id="tab-bans">
+    <h2>封禁列表</h2>
+    <div class="muted" style="margin-bottom:8px;">
+      封禁只阻止新成绩上传，<b>不会删除已有的排行榜数据</b>。解封后历史数据立即可见。
+    </div>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:120px;">设备 ID</th>
+            <th style="width:130px;">IP</th>
+            <th>原因</th>
+            <th style="width:100px;">操作者</th>
+            <th style="width:150px;">封禁时间</th>
+            <th style="width:100px;">操作</th>
+          </tr>
+        </thead>
+        <tbody id="bansBody">
+          <tr><td colspan="6" class="empty">暂无封禁记录</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <h3 id="editModalTitle">编辑玩家</h3>
+    <div class="modal-field">
+      <label>玩家 ID</label>
+      <input type="text" id="editPlayerId" maxlength="12" placeholder="12 位大写字母数字">
+    </div>
+    <div class="modal-field">
+      <label>昵称</label>
+      <input type="text" id="editName" maxlength="32">
+    </div>
+    <div class="modal-field">
+      <label>设备 ID</label>
+      <input type="text" id="editDeviceId" maxlength="32" placeholder="可留空">
+    </div>
+
+    <div class="modal-section">胜场</div>
+    <div class="modal-field">
+      <label>地狱 21 胜</label>
+      <input type="number" id="editHell21" min="0" value="0">
+    </div>
+    <div class="modal-field">
+      <label>困难 21 胜</label>
+      <input type="number" id="editHard21" min="0" value="0">
+    </div>
+    <div class="modal-field">
+      <label>游戏时长 (分钟)</label>
+      <input type="number" id="editPlayMin" min="0" value="0">
+    </div>
+
+    <div class="modal-section">计时赛</div>
+    <div class="modal-field">
+      <label>30s 分数</label>
+      <input type="number" id="editT30Score" min="0" value="0">
+    </div>
+    <div class="modal-field">
+      <label>30s 胜场</label>
+      <input type="number" id="editT30Wins" min="0" value="0">
+    </div>
+    <div class="modal-field">
+      <label>60s 分数</label>
+      <input type="number" id="editT60Score" min="0" value="0">
+    </div>
+    <div class="modal-field">
+      <label>60s 胜场</label>
+      <input type="number" id="editT60Wins" min="0" value="0">
+    </div>
+    <div class="modal-field">
+      <label>120s 分数</label>
+      <input type="number" id="editT120Score" min="0" value="0">
+    </div>
+    <div class="modal-field">
+      <label>120s 胜场</label>
+      <input type="number" id="editT120Wins" min="0" value="0">
+    </div>
+
+    <div class="modal-actions">
+      <button id="editDeleteBtn" class="danger" style="margin-right:auto;">删除该玩家</button>
+      <button id="editCancelBtn">取消</button>
+      <button id="editSaveBtn">保存</button>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* ★ 密码已从前端移除，改由服务端 admin_check 验证 */
+
+/* ============================================================
+   Supabase 配置
+   ============================================================ */
+const SUPABASE_URL = 'https://grfhbtszcrwdbrphaiaw.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_1FoCHLurAbMImr14Vnruaw_xMPoUTa6';
+let supabaseClient = null;
+try {
+  if (window.supabase && window.supabase.createClient) {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+} catch (e) { console.warn('[admin] Supabase 初始化失败', e); }
+
+const SNAPSHOT_KEY = 'pong84.admin.snapshots.v1';
+
+const RISK_RULES = {
+  minPlayTimePerWin: 90000,
+  futureTsTolerance: 5 * 60 * 1000,
+  maxHell21: 500,
+  maxHard21: 2000,
+  timerScoreCap: { 30: 40, 60: 80, 120: 160 },
+  sessionWinsThreshold: 2,
+  suspiciousNicknames: ['test','hack','cheat','bot','admin','script','fuck','auto','macro','脚本','外挂','测试'],
+  highRiskThreshold: 60,
+  midRiskThreshold: 30
+};
+
+let entries = {};
+let bans = {};
+let banByIp = {};
+let risks = {};
+let selected = new Set();
+let currentFilter = 'all';
+let snapshots = {};
+let sessionGrowth = {};
+let _adminRefreshTimer = null;
+let ADMIN_PW = '';
+
+const $ = id => document.getElementById(id);
+
+function loadSnapshots() {
+  try {
+    const raw = localStorage.getItem(SNAPSHOT_KEY);
+    if (!raw) return;
+    const obj = JSON.parse(raw);
+    if (obj && typeof obj === 'object') snapshots = obj;
+  } catch (e) { snapshots = {}; }
+}
+function saveSnapshots() {
+  try { localStorage.setItem(SNAPSHOT_KEY, JSON.stringify(snapshots)); } catch (e) {}
+}
+
+/* ============================================================
+   登录（服务端验证密码）
+   ============================================================ */
+$('loginBtn').addEventListener('click', tryLogin);
+$('pwInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') tryLogin(); });
+
+async function tryLogin() {
+  const pw = $('pwInput').value.trim();
+  if (!pw) return;
+  if (!supabaseClient) { alert('Supabase 未加载'); return; }
+  const btn = $('loginBtn'), err = $('loginError');
+  btn.disabled = true;
+  btn.textContent = '验证中…';
+  err.style.display = 'none';
+  try {
+    const { data, error } = await supabaseClient.rpc('admin_check', { p_password: pw });
+    if (error || !data) {
+      err.style.display = 'block';
+      err.textContent = '密码错误';
+      $('pwInput').value = '';
+      $('pwInput').focus();
+      return;
+    }
+    ADMIN_PW = pw;
+    $('loginScreen').classList.add('hidden');
+    $('consoleScreen').classList.remove('hidden');
+    loadSnapshots();
+    connectSupabase();
+    startSnapshotLoop();
+  } catch (e) {
+    err.style.display = 'block';
+    err.textContent = '验证失败：' + e.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '进入控制台';
+  }
+}
+$('logoutBtn').addEventListener('click', () => {
+  if (_adminRefreshTimer) { clearInterval(_adminRefreshTimer); _adminRefreshTimer = null; }
+  stopSnapshotLoop();
+  ADMIN_PW = '';
+  $('consoleScreen').classList.add('hidden');
+  $('loginScreen').classList.remove('hidden');
+  $('pwInput').value = '';
+});
+$('pwInput').focus();
+
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    const el = $('tab-' + t.dataset.tab);
+    if (el) el.classList.add('active');
+  });
+});
+
+/* ============================================================
+   Supabase 连接
+   ============================================================ */
+async function connectSupabase() {
+  if (!supabaseClient) { setStatus('offline', 'Supabase 未加载'); return; }
+  setStatus('connecting', '连接中...');
+  try {
+    await refreshFromSupabase();
+    setStatus('online', '已连接');
+    if (_adminRefreshTimer) clearInterval(_adminRefreshTimer);
+    _adminRefreshTimer = setInterval(() => {
+      refreshFromSupabase().catch(() => {});
+    }, 20000);
+  } catch (e) {
+    setStatus('offline', '连接失败：' + e.message);
+  }
+}
+function setStatus(cls, text) {
+  const el = $('connStatus');
+  el.className = 'status ' + cls;
+  el.textContent = text;
+}
+
+async function refreshFromSupabase() {
+  if (!supabaseClient) return;
+  const [lbRes, banRes] = await Promise.all([
+    supabaseClient.from('leaderboard').select('*'),
+    supabaseClient.from('bans').select('*')
+  ]);
+  if (lbRes.error) throw lbRes.error;
+  if (banRes.error) throw banRes.error;
+
+  entries = {};
+  for (const row of lbRes.data) {
+    entries[row.player_id] = {
+      v: 2, id: row.player_id, name: row.name, ts: new Date(row.updated_at).getTime(),
+      deviceId: row.device_id,
+      ipAddress: row.ip_address || '—',
+      hell21Wins: row.hell21_wins, hard21Wins: row.hard21_wins, playMs: row.play_ms,
+      lastIntegrity: row.last_integrity || '',
+      hellTimer: {
+        30: { wins: row.timer_30_wins, totalScore: row.timer_30_score },
+        60: { wins: row.timer_60_wins, totalScore: row.timer_60_score },
+        120:{ wins: row.timer_120_wins, totalScore: row.timer_120_score }
+      }
+    };
+  }
+  bans = {};
+  banByIp = {};
+  for (const row of banRes.data) {
+    if (row.device_id) {
+      bans[row.device_id] = {
+        reason: row.reason, by: row.by_who,
+        ts: new Date(row.created_at).getTime(),
+        ip: row.ip_address || ''
+      };
+    }
+    if (row.ip_address) {
+      banByIp[row.ip_address] = {
+        reason: row.reason, by: row.by_who,
+        ts: new Date(row.created_at).getTime(),
+        deviceId: row.device_id || ''
+      };
+    }
+  }
+  renderAll();
+}
+
+/* ============================================================
+   自动分析
+   ============================================================ */
+function analyzeAll() {
+  risks = {};
+  const deviceCount = {};
+  const ipCount = {};
+  for (const id in entries) {
+    const dev = entries[id].deviceId;
+    if (dev && dev !== '—') deviceCount[dev] = (deviceCount[dev] || 0) + 1;
+    const ip = entries[id].ipAddress;
+    if (ip && ip !== '—') ipCount[ip] = (ipCount[ip] || 0) + 1;
+  }
+  for (const id in entries) {
+    risks[id] = analyzeEntry(entries[id], { deviceCount, ipCount, allBans: bans, allIpBans: banByIp, sessionGrowth });
+  }
+}
+function analyzeEntry(e, ctx) {
+  const reasons = [];
+  let score = 0;
+  const playMs = e.playMs | 0;
+  const hell = e.hell21Wins | 0;
+  const hard = e.hard21Wins | 0;
+  const ts = e.ts | 0;
+  const totalWins = hell + hard;
+
+  if (ts > Date.now() + RISK_RULES.futureTsTolerance) {
+    reasons.push('时间戳异常（未来时间）');
+    score += 50;
+  }
+  if (totalWins > 0) {
+    const perWin = playMs / totalWins;
+    if (perWin < RISK_RULES.minPlayTimePerWin) {
+      const deficit = RISK_RULES.minPlayTimePerWin - perWin;
+      reasons.push('异常胜率（每胜 ' + (perWin / 1000).toFixed(0) + 's）');
+      score += Math.min(50, Math.floor(deficit / 1500));
+    }
+  }
+  if (hell > RISK_RULES.maxHell21) { reasons.push('地狱胜场数过高（' + hell + '）'); score += 20; }
+  if (hard > RISK_RULES.maxHard21) { reasons.push('困难胜场数过高（' + hard + '）'); score += 20; }
+  if (e.deviceId && e.deviceId !== '—') {
+    const dup = ctx.deviceCount[e.deviceId] || 0;
+    if (dup > 1) { reasons.push('设备关联 ' + dup + ' 个账号'); score += 10 * (dup - 1); }
+  }
+  if (e.ipAddress && e.ipAddress !== '—') {
+    const dup = ctx.ipCount[e.ipAddress] || 0;
+    if (dup > 1) { reasons.push('同 IP 关联 ' + dup + ' 个账号'); score += 8 * (dup - 1); }
+  }
+  if (e.deviceId && ctx.allBans[e.deviceId]) { reasons.push('设备已被封禁'); score += 100; }
+  if (e.ipAddress && ctx.allIpBans[e.ipAddress]) { reasons.push('IP 已被封禁'); score += 100; }
+  const nm = String(e.name || '').toLowerCase();
+  for (const kw of RISK_RULES.suspiciousNicknames) {
+    if (nm.indexOf(kw) >= 0) { reasons.push('昵称含可疑词「' + kw + '」'); score += 5; break; }
+  }
+  const ht = e.hellTimer || {};
+  for (const k of [30, 60, 120]) {
+    const s = ht[k];
+    if (s && (s.wins | 0) > 0) {
+      const avg = (s.totalScore | 0) / (s.wins | 0);
+      const cap = RISK_RULES.timerScoreCap[k];
+      if (avg > cap) { reasons.push(k + ' 秒计时赛平均分异常（' + avg.toFixed(0) + '）'); score += 25; }
+    }
+  }
+  const growth = ctx.sessionGrowth[e.id];
+  if (growth) {
+    const age = Date.now() - growth.at;
+    if (age < 120000) {
+      reasons.push(growth.dtSec + 's 内新增 ' + growth.dWins + ' 胜');
+      score += Math.min(80, growth.dWins * 25);
+    }
+  }
+  score = Math.min(100, Math.max(0, score));
+  let level = 'clean';
+  if (score >= RISK_RULES.highRiskThreshold) level = 'high';
+  else if (score >= RISK_RULES.midRiskThreshold) level = 'mid';
+  else if (score >= 10) level = 'low';
+  return { score, level, reasons };
+}
+
+let snapshotTimer = null;
+function startSnapshotLoop() {
+  if (snapshotTimer) return;
+  takeSnapshot(true);
+  snapshotTimer = setInterval(() => takeSnapshot(false), 20000);
+}
+function stopSnapshotLoop() {
+  if (snapshotTimer) { clearInterval(snapshotTimer); snapshotTimer = null; }
+}
+function takeSnapshot(isInitial) {
+  const now = Date.now();
+  for (const id in entries) {
+    const e = entries[id];
+    const prev = snapshots[id];
+    if (prev && !isInitial) {
+      const dt = now - prev.ts;
+      if (dt >= 12000 && dt <= 600000) {
+        const dHell = (e.hell21Wins | 0) - (prev.hell21 | 0);
+        const dHard = (e.hard21Wins | 0) - (prev.hard21 | 0);
+        const dWins = dHell + dHard;
+        if (dWins >= RISK_RULES.sessionWinsThreshold) {
+          const winsPerMin = dWins / (dt / 60000);
+          sessionGrowth[id] = {
+            dWins, dtSec: Math.round(dt / 1000),
+            winsPerMin: Math.round(winsPerMin * 10) / 10,
+            at: now
+          };
+        }
+      }
+    }
+    snapshots[id] = {
+      hell21: e.hell21Wins | 0,
+      hard21: e.hard21Wins | 0,
+      playMs: e.playMs | 0,
+      ts: now
+    };
+  }
+  for (const id in sessionGrowth) {
+    if (now - sessionGrowth[id].at > 180000) delete sessionGrowth[id];
+  }
+  saveSnapshots();
+  if (!isInitial) renderAll();
+}
+
+/* ============================================================
+   渲染
+   ============================================================ */
+let renderPending = false;
+function renderAll() {
+  if (renderPending) return;
+  renderPending = true;
+  requestAnimationFrame(() => {
+    renderPending = false;
+    analyzeAll();
+    renderPlayers();
+    renderAnalysis();
+    renderBans();
+    renderStats();
+    $('lastUpdate').textContent = '最后更新 ' + new Date().toLocaleTimeString();
+  });
+}
+function renderStats() {
+  const total = Object.keys(entries).length;
+  const banCount = Object.keys(bans).length;
+  const ipBanCount = Object.keys(banByIp).length;
+  let wins = 0, timeMs = 0, high = 0;
+  for (const k in entries) {
+    const e = entries[k];
+    wins += (e.hell21Wins | 0) + (e.hard21Wins | 0);
+    timeMs += (e.playMs | 0);
+  }
+  for (const k in risks) if (risks[k].level === 'high') high++;
+  $('statPlayers').textContent = total;
+  $('statBans').textContent = banCount;
+  $('statIpBans').textContent = ipBanCount;
+  $('statTotalWins').textContent = wins;
+  $('statTotalTime').textContent = fmtTime(timeMs);
+  $('statHighRisk').textContent = high;
+}
+function fmtTime(ms) {
+  const min = Math.floor(ms / 60000);
+  if (min < 60) return min + ' 分';
+  return (min / 60).toFixed(1) + ' 时';
+}
+function fmtAgo(ts) {
+  if (!ts) return '—';
+  const d = Date.now() - ts;
+  if (d < 60000) return '刚刚';
+  if (d < 3600000) return Math.floor(d / 60000) + ' 分前';
+  if (d < 86400000) return Math.floor(d / 3600000) + ' 时前';
+  return Math.floor(d / 86400000) + ' 天前';
+}
+function esc(s) { return String(s || '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]); }
+
+function getFilteredList() {
+  const all = Object.values(entries).sort((a, b) => {
+    const wa = (a.hell21Wins | 0) * 3 + (a.hard21Wins | 0) * 2;
+    const wb = (b.hell21Wins | 0) * 3 + (b.hard21Wins | 0) * 2;
+    if (wb !== wa) return wb - wa;
+    return (b.ts | 0) - (a.ts | 0);
+  });
+  const f = currentFilter;
+  if (f === 'all') return all;
+  return all.filter(e => {
+    const r = risks[e.id] || { level: 'clean' };
+    if (f === 'risk-high') return r.level === 'high';
+    if (f === 'risk-mid') return r.level === 'mid';
+    if (f === 'risk-suspicious') return r.level === 'high' || r.level === 'mid';
+    if (f === 'clean') return r.level === 'clean' || r.level === 'low';
+    if (f === 'shared') {
+      if (!e.deviceId || e.deviceId === '—') return false;
+      const dup = Object.values(entries).filter(x => x.deviceId === e.deviceId).length;
+      return dup > 1;
+    }
+    if (f === 'sharedip') {
+      if (!e.ipAddress || e.ipAddress === '—') return false;
+      const dup = Object.values(entries).filter(x => x.ipAddress === e.ipAddress).length;
+      return dup > 1;
+    }
+    if (f === 'banned') return !!((e.deviceId && bans[e.deviceId]) || (e.ipAddress && banByIp[e.ipAddress]));
+    return true;
+  });
+}
+
+function renderPlayers() {
+  const list = getFilteredList();
+  const tb = $('playersBody');
+  if (list.length === 0) {
+    tb.innerHTML = '<tr><td colspan="12" class="empty">暂无符合条件的记录</td></tr>';
+    updateSelectionUI();
+    return;
+  }
+  tb.innerHTML = list.map((e, i) => {
+    const devId = e.deviceId || '—';
+    const ipAddr = e.ipAddress || '—';
+    const isBanned = (bans[devId] || banByIp[ipAddr]) ? 'banned' : '';
+    const r = risks[e.id] || { score: 0, level: 'clean', reasons: [] };
+    const rowCls = ['risk-' + r.level, isBanned].filter(Boolean).join(' ');
+    const isSel = selected.has(e.id) ? ' selected' : '';
+    const devDup = (e.deviceId && e.deviceId !== '—') ? Object.values(entries).filter(x => x.deviceId === e.deviceId).length : 0;
+    const ipDup = (e.ipAddress && e.ipAddress !== '—') ? Object.values(entries).filter(x => x.ipAddress === e.ipAddress).length : 0;
+    const riskLabel = { high: '高危', mid: '中危', low: '低危', clean: '正常' }[r.level] || '正常';
+    const riskTitle = r.reasons.length ? r.reasons.join(' · ') : '无明显异常';
+    const ipSafe = ipAddr !== '—';
+    return '<tr class="' + rowCls + isSel + '" data-id="' + esc(e.id) + '">' +
+      '<td><input type="checkbox" data-check="' + esc(e.id) + '"' + (selected.has(e.id) ? ' checked' : '') + '></td>' +
+      '<td>' + (i + 1) + '</td>' +
+      '<td><span class="name">' + esc(e.name || '匿名') + '</span></td>' +
+      '<td><span class="mono">' + esc(e.id || '') + '</span></td>' +
+      '<td><span class="mono">' + esc(devId) + '</span>' + (devDup > 1 ? '<span class="badge dev-shared" style="margin-left:4px;">×' + devDup + '</span>' : '') + '</td>' +
+      '<td><span class="mono">' + esc(ipAddr) + '</span>' + (ipDup > 1 ? '<span class="badge ip-shared" style="margin-left:4px;">×' + ipDup + '</span>' : '') + '</td>' +
+      '<td>' + (e.hell21Wins | 0) + '</td>' +
+      '<td>' + (e.hard21Wins | 0) + '</td>' +
+      '<td>' + fmtTime(e.playMs | 0) + '</td>' +
+      '<td class="muted">' + fmtAgo(e.ts | 0) + '</td>' +
+      '<td><span class="badge risk-' + r.level + '" title="' + esc(riskTitle) + '">' + riskLabel + ' ' + r.score + '</span></td>' +
+      '<td>' +
+        '<button class="small" data-edit="' + esc(e.id) + '">编辑</button> ' +
+        '<button class="small danger" data-ban="' + esc(devId) + '" data-name="' + esc(e.name || '匿名') + '">封设备</button> ' +
+        (ipSafe ? '<button class="small danger" data-banip="' + esc(ipAddr) + '" data-name="' + esc(e.name || '匿名') + '">封 IP</button> ' : '') +
+        '<button class="small" data-del="' + esc(e.id) + '">删除</button>' +
+      '</td>' +
+    '</tr>';
+  }).join('');
+
+  tb.querySelectorAll('[data-check]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const id = cb.dataset.check;
+      if (cb.checked) selected.add(id); else selected.delete(id);
+      updateSelectionUI();
+      const row = cb.closest('tr');
+      if (row) row.classList.toggle('selected', cb.checked);
+    });
+  });
+  tb.querySelectorAll('[data-edit]').forEach(b => {
+    b.addEventListener('click', () => openEditModal(b.dataset.edit));
+  });
+  tb.querySelectorAll('[data-ban]').forEach(b => {
+    b.addEventListener('click', () => banDevice(b.dataset.ban, b.dataset.name));
+  });
+  tb.querySelectorAll('[data-banip]').forEach(b => {
+    b.addEventListener('click', () => banIp(b.dataset.banip, b.dataset.name));
+  });
+  tb.querySelectorAll('[data-del]').forEach(b => {
+    b.addEventListener('click', () => deleteEntry(b.dataset.del));
+  });
+  updateSelectionUI();
+}
+
+function renderAnalysis() {
+  const highList = [], midList = [], sharedList = [], sharedIpList = [], growthList = [], shortWinList = [], bannedActiveList = [];
+  for (const id in entries) {
+    const e = entries[id];
+    const r = risks[id];
+    if (!r) continue;
+    if (r.level === 'high') highList.push({ id, e, r });
+    else if (r.level === 'mid') midList.push({ id, e, r });
+    if (r.reasons.some(x => x.indexOf('设备关联') >= 0)) sharedList.push(id);
+    if (r.reasons.some(x => x.indexOf('同 IP 关联') >= 0)) sharedIpList.push(id);
+    if (r.reasons.some(x => x.indexOf('内新增') >= 0)) growthList.push(id);
+    if (r.reasons.some(x => x.indexOf('异常胜率') >= 0)) shortWinList.push(id);
+    if (r.reasons.some(x => x.indexOf('设备已被封禁') >= 0 || x.indexOf('IP 已被封禁') >= 0)) bannedActiveList.push(id);
+  }
+  $('anaHigh').textContent = highList.length;
+  $('anaMid').textContent = midList.length;
+  $('anaShared').textContent = sharedList.length;
+  $('anaSharedIp').textContent = sharedIpList.length;
+  $('anaGrowth').textContent = growthList.length;
+  $('anaShortWin').textContent = shortWinList.length;
+  $('anaBanned').textContent = bannedActiveList.length;
+
+  const combined = highList.concat(midList).sort((a, b) => b.r.score - a.r.score);
+  const tb = $('analysisBody');
+  if (combined.length === 0) {
+    tb.innerHTML = '<tr><td colspan="4" class="empty">暂无可疑账号 · 分析引擎运行正常</td></tr>';
+    return;
+  }
+  tb.innerHTML = combined.map(x => {
+    const devId = x.e.deviceId || '—';
+    const ip = x.e.ipAddress || '—';
+    const ipSafe = ip !== '—';
+    return '<tr class="risk-' + x.r.level + '">' +
+      '<td><span class="name">' + esc(x.e.name || '匿名') + '</span><br><span class="mono muted">' + esc(x.id) + '</span></td>' +
+      '<td><span class="badge risk-' + x.r.level + '">' + x.r.score + '</span></td>' +
+      '<td class="risk-detail">' + x.r.reasons.map(y => '<span class="reason">· ' + esc(y) + '</span>').join('') + '</td>' +
+      '<td>' +
+        '<button class="small" data-edit="' + esc(x.id) + '">编辑</button> ' +
+        '<button class="small danger" data-anaban="' + esc(devId) + '" data-name="' + esc(x.e.name || '匿名') + '">封设备</button> ' +
+        (ipSafe ? '<button class="small danger" data-anabanip="' + esc(ip) + '" data-name="' + esc(x.e.name || '匿名') + '">封 IP</button> ' : '') +
+        '<button class="small" data-anadel="' + esc(x.id) + '">删除</button>' +
+      '</td>' +
+    '</tr>';
+  }).join('');
+  tb.querySelectorAll('[data-edit]').forEach(b => {
+    b.addEventListener('click', () => openEditModal(b.dataset.edit));
+  });
+  tb.querySelectorAll('[data-anaban]').forEach(b => {
+    b.addEventListener('click', () => banDevice(b.dataset.anaban, b.dataset.name));
+  });
+  tb.querySelectorAll('[data-anabanip]').forEach(b => {
+    b.addEventListener('click', () => banIp(b.dataset.anabanip, b.dataset.name));
+  });
+  tb.querySelectorAll('[data-anadel]').forEach(b => {
+    b.addEventListener('click', () => deleteEntry(b.dataset.anadel));
+  });
+}
+
+function renderBans() {
+  const list = [];
+  for (const k in bans) list.push(Object.assign({ kind: 'device', key: k }, bans[k]));
+  for (const k in banByIp) list.push(Object.assign({ kind: 'ip', key: k }, banByIp[k]));
+  list.sort((a, b) => (b.ts | 0) - (a.ts | 0));
+  const tb = $('bansBody');
+  if (list.length === 0) {
+    tb.innerHTML = '<tr><td colspan="6" class="empty">暂无封禁记录</td></tr>';
+    return;
+  }
+  tb.innerHTML = list.map(b => {
+    const devShow = b.kind === 'device' ? b.key : (b.deviceId || '—');
+    const ipShow = b.kind === 'ip' ? b.key : (b.ip || '—');
+    return '<tr>' +
+      '<td><span class="mono">' + esc(devShow) + '</span></td>' +
+      '<td><span class="mono">' + esc(ipShow) + '</span></td>' +
+      '<td>' + esc(b.reason || '违规行为') + '</td>' +
+      '<td class="muted">' + esc(b.by || 'admin') + '</td>' +
+      '<td class="muted">' + new Date(b.ts || Date.now()).toLocaleString() + '</td>' +
+      '<td><button class="small" data-unban="' + esc(b.key) + '" data-kind="' + b.kind + '">解封</button></td>' +
+    '</tr>';
+  }).join('');
+  tb.querySelectorAll('[data-unban]').forEach(b => {
+    b.addEventListener('click', () => unbanItem(b.dataset.unban, b.dataset.kind));
+  });
+}
+
+function updateSelectionUI() {
+  for (const id of Array.from(selected)) if (!entries[id]) selected.delete(id);
+  const list = getFilteredList();
+  const visible = list.map(x => x.id);
+  const selVisible = visible.filter(id => selected.has(id)).length;
+  $('selectedCount').textContent = '已选 ' + selected.size + ' 项';
+  const selAllTop = $('selectAllTop'), selAll = $('selectAll');
+  const allChecked = visible.length > 0 && selVisible === visible.length;
+  if (selAllTop) { selAllTop.checked = allChecked; selAllTop.indeterminate = !allChecked && selVisible > 0; }
+  if (selAll) { selAll.checked = allChecked; selAll.indeterminate = !allChecked && selVisible > 0; }
+  const has = selected.size > 0;
+  $('batchBanBtn').disabled = !has;
+  $('batchBanIpBtn').disabled = !has;
+  $('batchDeleteBtn').disabled = !has;
+  $('batchUnbanBtn').disabled = !has;
+}
+
+$('selectAllTop').addEventListener('change', () => {
+  const visible = getFilteredList().map(x => x.id);
+  if ($('selectAllTop').checked) visible.forEach(id => selected.add(id));
+  else visible.forEach(id => selected.delete(id));
+  renderPlayers();
+});
+$('selectAll').addEventListener('change', () => {
+  const visible = getFilteredList().map(x => x.id);
+  if ($('selectAll').checked) visible.forEach(id => selected.add(id));
+  else visible.forEach(id => selected.delete(id));
+  renderPlayers();
+});
+$('filterSelect').addEventListener('change', () => {
+  currentFilter = $('filterSelect').value;
+  renderPlayers();
+});
+
+/* ============================================================
+   批量操作（全部走服务端 RPC）
+   ============================================================ */
+$('batchBanBtn').addEventListener('click', async () => {
+  if (selected.size === 0) return;
+  const devices = new Set();
+  for (const id of selected) {
+    const e = entries[id];
+    if (e && e.deviceId && e.deviceId !== '—') devices.add(e.deviceId);
+  }
+  if (devices.size === 0) { alert('选中的玩家没有设备指纹，无法封禁'); return; }
+  const reason = prompt('批量封禁 ' + devices.size + ' 台设备？\n\n请输入封禁原因（可直接确定）', '批量封禁');
+  if (reason === null) return;
+  try {
+    const { data, error } = await supabaseClient.rpc('admin_batch_ban_devices', {
+      p_password: ADMIN_PW, p_devices: Array.from(devices), p_reason: reason || '批量封禁'
+    });
+    if (error) throw error;
+    if (data && data.ok === false) throw new Error(data.err);
+    selected.clear();
+    await refreshFromSupabase();
+  } catch (e) { alert('操作失败：' + e.message); }
+});
+
+$('batchBanIpBtn').addEventListener('click', async () => {
+  if (selected.size === 0) return;
+  const ips = new Set();
+  for (const id of selected) {
+    const e = entries[id];
+    if (e && e.ipAddress && e.ipAddress !== '—') ips.add(e.ipAddress);
+  }
+  if (ips.size === 0) { alert('选中的玩家没有 IP 地址，无法封禁'); return; }
+  const reason = prompt('批量封禁 ' + ips.size + ' 个 IP？\n\n请输入封禁原因（可直接确定）', '批量封 IP');
+  if (reason === null) return;
+  try {
+    const { data, error } = await supabaseClient.rpc('admin_batch_ban_ips', {
+      p_password: ADMIN_PW, p_ips: Array.from(ips), p_reason: reason || '批量封 IP'
+    });
+    if (error) throw error;
+    if (data && data.ok === false) throw new Error(data.err);
+    selected.clear();
+    await refreshFromSupabase();
+  } catch (e) { alert('操作失败：' + e.message); }
+});
+
+$('batchUnbanBtn').addEventListener('click', async () => {
+  if (selected.size === 0) return;
+  const devices = new Set();
+  const ips = new Set();
+  for (const id of selected) {
+    const e = entries[id];
+    if (e && e.deviceId && bans[e.deviceId]) devices.add(e.deviceId);
+    if (e && e.ipAddress && banByIp[e.ipAddress]) ips.add(e.ipAddress);
+  }
+  if (devices.size === 0 && ips.size === 0) { alert('选中的玩家没有已封禁的设备或 IP'); return; }
+  if (!confirm('批量解封 ' + devices.size + ' 台设备 + ' + ips.size + ' 个 IP？')) return;
+  try {
+    if (devices.size) {
+      const r1 = await supabaseClient.rpc('admin_batch_unban', {
+        p_password: ADMIN_PW, p_keys: Array.from(devices), p_kind: 'device'
+      });
+      if (r1.error) throw r1.error;
+    }
+    if (ips.size) {
+      const r2 = await supabaseClient.rpc('admin_batch_unban', {
+        p_password: ADMIN_PW, p_keys: Array.from(ips), p_kind: 'ip'
+      });
+      if (r2.error) throw r2.error;
+    }
+    selected.clear();
+    await refreshFromSupabase();
+  } catch (e) { alert('操作失败：' + e.message); }
+});
+
+$('batchDeleteBtn').addEventListener('click', async () => {
+  if (selected.size === 0) return;
+  if (!confirm('批量删除 ' + selected.size + ' 条玩家排行榜记录？')) return;
+  try {
+    const { data, error } = await supabaseClient.rpc('admin_batch_delete_players', {
+      p_password: ADMIN_PW, p_ids: Array.from(selected)
+    });
+    if (error) throw error;
+    if (data && data.ok === false) throw new Error(data.err);
+    selected.clear();
+    await refreshFromSupabase();
+  } catch (e) { alert('操作失败：' + e.message); }
+});
+
+$('autoBanHighBtn').addEventListener('click', async () => {
+  const highIds = [];
+  for (const id in risks) if (risks[id].level === 'high') highIds.push(id);
+  if (highIds.length === 0) { alert('当前没有高危账号'); return; }
+  const devices = new Set();
+  const ips = new Set();
+  for (const id of highIds) {
+    const e = entries[id];
+    if (e && e.deviceId && e.deviceId !== '—') devices.add(e.deviceId);
+    if (e && e.ipAddress && e.ipAddress !== '—') ips.add(e.ipAddress);
+  }
+  if (devices.size === 0 && ips.size === 0) { alert('高危账号没有设备/IP 指纹'); return; }
+  if (!confirm('一键封禁 ' + highIds.length + ' 个高危账号\n设备 ' + devices.size + ' 台 + IP ' + ips.size + ' 个？\n（排行榜数据保留，解禁后恢复显示）')) return;
+  try {
+    if (devices.size) {
+      const r1 = await supabaseClient.rpc('admin_batch_ban_devices', {
+        p_password: ADMIN_PW, p_devices: Array.from(devices), p_reason: '自动分析判定高危'
+      });
+      if (r1.error) throw r1.error;
+    }
+    if (ips.size) {
+      const r2 = await supabaseClient.rpc('admin_batch_ban_ips', {
+        p_password: ADMIN_PW, p_ips: Array.from(ips), p_reason: '自动分析判定高危'
+      });
+      if (r2.error) throw r2.error;
+    }
+    await refreshFromSupabase();
+  } catch (e) { alert('操作失败：' + e.message); }
+});
+
+/* ============================================================
+   单个操作（走服务端 RPC）
+   ============================================================ */
+async function banDevice(deviceId, name) {
+  if (!deviceId || deviceId === '—') { alert('该记录没有设备指纹，无法封禁'); return; }
+  const reason = prompt('封禁 ' + name + ' 的设备？\n设备 ID: ' + deviceId + '\n\n请输入封禁原因（可直接确定）', '数据异常');
+  if (reason === null) return;
+  try {
+    const { data, error } = await supabaseClient.rpc('admin_ban_device', {
+      p_password: ADMIN_PW, p_device_id: deviceId, p_reason: reason || '数据异常'
+    });
+    if (error) throw error;
+    if (data && data.ok === false) throw new Error(data.err);
+    await refreshFromSupabase();
+  } catch (e) { alert('操作失败：' + e.message); }
+}
+
+async function banIp(ip, name) {
+  if (!ip || ip === '—') { alert('该记录没有 IP 地址，无法封禁'); return; }
+  const reason = prompt('封禁 IP：' + ip + '\n玩家：' + name + '\n\n请输入封禁原因（可直接确定）', '数据异常');
+  if (reason === null) return;
+  try {
+    const { data, error } = await supabaseClient.rpc('admin_ban_ip', {
+      p_password: ADMIN_PW, p_ip: ip, p_reason: reason || '数据异常'
+    });
+    if (error) throw error;
+    if (data && data.ok === false) throw new Error(data.err);
+    await refreshFromSupabase();
+  } catch (e) { alert('操作失败：' + e.message); }
+}
+
+async function unbanItem(key, kind) {
+  if (!confirm('解除对 ' + key + ' 的封禁？')) return;
+  try {
+    const { data, error } = await supabaseClient.rpc('admin_unban', {
+      p_password: ADMIN_PW, p_key: key, p_kind: kind
+    });
+    if (error) throw error;
+    if (data && data.ok === false) throw new Error(data.err);
+    await refreshFromSupabase();
+  } catch (e) { alert('操作失败：' + e.message); }
+}
+
+async function deleteEntry(id) {
+  if (!confirm('确定删除该玩家的排行榜数据？')) return;
+  try {
+    const { data, error } = await supabaseClient.rpc('admin_delete_player', {
+      p_password: ADMIN_PW, p_player_id: id
+    });
+    if (error) throw error;
+    if (data && data.ok === false) throw new Error(data.err);
+    await refreshFromSupabase();
+  } catch (e) { alert('操作失败：' + e.message); }
+}
+
+$('refreshBtn').addEventListener('click', () => {
+  refreshFromSupabase().catch(e => alert('刷新失败：' + e.message));
+});
+$('resetSnapshotBtn').addEventListener('click', () => {
+  if (!confirm('重置所有行为快照？\n下次分析将从当前状态重新建立基线。')) return;
+  snapshots = {}; sessionGrowth = {};
+  saveSnapshots();
+  takeSnapshot(true);
+  renderAll();
+});
+$('clearAllBtn').addEventListener('click', async () => {
+  if (!confirm('确定清空整个排行榜？\n这将删除所有玩家的排行榜数据（不会解除设备/IP 封禁）。')) return;
+  const ids = Object.keys(entries);
+  if (!confirm('确认操作 ' + ids.length + ' 条记录？')) return;
+  try {
+    const { data, error } = await supabaseClient.rpc('admin_clear_leaderboard', {
+      p_password: ADMIN_PW
+    });
+    if (error) throw error;
+    if (data && data.ok === false) throw new Error(data.err);
+    entries = {};
+    selected.clear();
+    await refreshFromSupabase();
+  } catch (e) { alert('操作失败：' + e.message); }
+});
+
+/* ============================================================
+   编辑/新增玩家 Modal（走服务端 RPC）
+   ============================================================ */
+let _editMode = 'edit';
+let _editPlayerId = null;
+
+function openEditModal(playerId) {
+  const modal = $('editModal');
+  if (!modal) return;
+  _editMode = (playerId === null) ? 'new' : 'edit';
+  _editPlayerId = playerId;
+
+  const title = $('editModalTitle');
+  const piEl = $('editPlayerId');
+  const nameEl = $('editName');
+  const devEl = $('editDeviceId');
+  const delBtn = $('editDeleteBtn');
+
+  if (_editMode === 'new') {
+    title.textContent = '新增玩家';
+    piEl.value = ''; piEl.readOnly = false;
+    nameEl.value = ''; devEl.value = '';
+    $('editHell21').value = 0;
+    $('editHard21').value = 0;
+    $('editPlayMin').value = 0;
+    $('editT30Score').value = 0;
+    $('editT30Wins').value = 0;
+    $('editT60Score').value = 0;
+    $('editT60Wins').value = 0;
+    $('editT120Score').value = 0;
+    $('editT120Wins').value = 0;
+    delBtn.style.display = 'none';
+    setTimeout(() => piEl.focus(), 100);
+  } else {
+    const e = entries[playerId];
+    if (!e) { alert('找不到该玩家'); return; }
+    title.textContent = '编辑玩家 · ' + playerId;
+    piEl.value = e.id; piEl.readOnly = true;
+    nameEl.value = e.name || '';
+    devEl.value = e.deviceId || '';
+    $('editHell21').value = e.hell21Wins | 0;
+    $('editHard21').value = e.hard21Wins | 0;
+    $('editPlayMin').value = Math.floor((e.playMs | 0) / 60000);
+    const t = e.hellTimer || {};
+    $('editT30Score').value = (t[30] && t[30].totalScore) | 0;
+    $('editT30Wins').value = (t[30] && t[30].wins) | 0;
+    $('editT60Score').value = (t[60] && t[60].totalScore) | 0;
+    $('editT60Wins').value = (t[60] && t[60].wins) | 0;
+    $('editT120Score').value = (t[120] && t[120].totalScore) | 0;
+    $('editT120Wins').value = (t[120] && t[120].wins) | 0;
+    delBtn.style.display = '';
+  }
+  modal.classList.add('show');
+}
+
+function closeEditModal() {
+  const modal = $('editModal');
+  if (modal) modal.classList.remove('show');
+  _editMode = 'edit';
+  _editPlayerId = null;
+}
+
+async function saveEditModal() {
+  const pi = $('editPlayerId').value.trim().toUpperCase();
+  const nameVal = $('editName').value.trim() || '匿名';
+  const dev = $('editDeviceId').value.trim();
+  const h21 = parseInt($('editHell21').value, 10) || 0;
+  const hd21 = parseInt($('editHard21').value, 10) || 0;
+  const pm = parseInt($('editPlayMin').value, 10) || 0;
+  const t30s = parseInt($('editT30Score').value, 10) || 0;
+  const t30w = parseInt($('editT30Wins').value, 10) || 0;
+  const t60s = parseInt($('editT60Score').value, 10) || 0;
+  const t60w = parseInt($('editT60Wins').value, 10) || 0;
+  const t120s = parseInt($('editT120Score').value, 10) || 0;
+  const t120w = parseInt($('editT120Wins').value, 10) || 0;
+
+  if (_editMode === 'new') {
+    if (!/^[A-Z0-9]{12}$/.test(pi)) {
+      alert('玩家 ID 必须是 12 位大写字母或数字');
+      return;
+    }
+  } else {
+    if (pi !== _editPlayerId) {
+      alert('玩家 ID 不可修改');
+      return;
+    }
+  }
+
+  try {
+    const { data, error } = await supabaseClient.rpc('admin_upsert_player', {
+      p_password: ADMIN_PW,
+      p_player_id: pi, p_name: nameVal, p_device_id: dev,
+      p_hell21: h21, p_hard21: hd21, p_play_ms: pm * 60000,
+      p_t30s: t30s, p_t60s: t60s, p_t120s: t120s,
+      p_t30w: t30w, p_t60w: t60w, p_t120w: t120w
+    });
+    if (error) throw error;
+    if (data && data.ok === false) throw new Error(data.err);
+    closeEditModal();
+    await refreshFromSupabase();
+  } catch (e) { alert('保存失败：' + e.message); }
+}
+
+async function deleteFromModal() {
+  if (!_editPlayerId) return;
+  if (!confirm('确定删除玩家 ' + _editPlayerId + ' 的所有排行榜数据？')) return;
+  try {
+    const { data, error } = await supabaseClient.rpc('admin_delete_player', {
+      p_password: ADMIN_PW, p_player_id: _editPlayerId
+    });
+    if (error) throw error;
+    if (data && data.ok === false) throw new Error(data.err);
+    closeEditModal();
+    await refreshFromSupabase();
+  } catch (e) { alert('删除失败：' + e.message); }
+}
+
+$('addPlayerBtn').addEventListener('click', () => openEditModal(null));
+$('editCancelBtn').addEventListener('click', closeEditModal);
+$('editSaveBtn').addEventListener('click', saveEditModal);
+$('editDeleteBtn').addEventListener('click', deleteFromModal);
+$('editModal').addEventListener('click', (e) => {
+  if (e.target === $('editModal')) closeEditModal();
+});
+$('editPlayerId').addEventListener('input', (e) => {
+  e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
+});
+</script>
+</body>
+</html>
