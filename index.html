@@ -7,8 +7,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#051005">
 <title>PONG-84</title>
-<script src="./PONG-84_files/mqtt.min.js.下载"></script>
-<script src="./PONG-84_files/supabase-js@2"></script>
+<script src="https://unpkg.com/mqtt@5/dist/mqtt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
   --crt-color:#33ff33;--crt-glow:rgba(51,255,51,0.5);--crt-bg:#051005;--crt-dim:rgba(51,255,51,0.2);
@@ -4030,6 +4030,39 @@ async function lbPublishMine() {
       120: { wins: myStats.hellTimer[120].wins, totalScore: myStats.hellTimer[120].totalScore }
     }
   };
+  try {
+    const { data, error } = await supabaseClient.rpc('submit_score', {
+      p_player_id: PLAYER_ID,
+      p_name: playerName,
+      p_device_id: DEVICE_ID,
+      p_hell21_wins: myStats.hell21Wins,
+      p_hard21_wins: myStats.hard21Wins,
+      p_hell21_points: myStats.hell21Points,
+      p_hard21_points: myStats.hard21Points,
+      p_play_ms: myStats.playMs,
+      p_t30s: myStats.hellTimer[30].totalScore,
+      p_t60s: myStats.hellTimer[60].totalScore,
+      p_t120s: myStats.hellTimer[120].totalScore,
+      p_t30w: myStats.hellTimer[30].wins,
+      p_t60w: myStats.hellTimer[60].wins,
+      p_t120w: myStats.hellTimer[120].wins,
+      p_sig: computeSig(tempEntry)
+    });
+    if (error) throw error;
+    // 服务端返回 { ok: true } 或 { ok: false, err: '...' }
+    if (data && data.ok === false) {
+      if (data.err === 'banned') {
+        deviceBanned = true;
+        deviceBanReason = '服务端拒绝上传';
+        updateBanBanner();
+      }
+      console.warn('[PONG-84] 服务端拒收：', data.err);
+      return;
+    }
+    allEntries[PLAYER_ID] = lbEntryFromMyStats();
+    lbScheduleRender();
+  } catch (e) { console.warn('[PONG-84] 上传排行榜失败', e); }
+}
   const row = {
     player_id: PLAYER_ID, name: playerName, device_id: DEVICE_ID,
     ip_address: ip,
