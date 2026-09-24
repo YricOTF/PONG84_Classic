@@ -2729,11 +2729,12 @@ function resetCheat() { cheatActive = false; cheatBallSpeedMul = 1; cheatSequenc
    ============================================================ */
 
 /* ---------- 多路信令服务器 ---------- */
+
 const SIGNALING_SERVERS = [
-  { name: 'EMQX 主站',   url: 'wss://broker.emqx.io:8084/mqtt' },
-  { name: 'HiveMQ 公共', url: 'wss://broker.hivemq.com:8884/mqtt' },
-  { name: 'Mosquitto',   url: 'wss://test.mosquitto.org:8081/mqtt' },
-  { name: 'EMQX 备用',   url: 'wss://broker.emqx.io:8083/mqtt' }
+  { name: 'EMQX 主站',     url: 'wss://broker.emqx.io:8084/mqtt' },
+  { name: 'MQTTX 公共',    url: 'wss://broker.mqttx.io:8084/mqtt' },
+  { name: 'Eclipse Paho',  url: 'wss://mqtt.eclipseprojects.io:8083/mqtt' },
+  { name: 'HiveMQ 备用',   url: 'wss://broker.hivemq.com:8884/mqtt' }
 ];
 let serverRank = [];
 let probing = false;
