@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0041)https://yricotf.github.io/PONG84_Classic/ -->
+<html lang="zh-CN" style="--crt-color: #e0e0e0; --crt-glow: rgba(224,224,224,0.6); --crt-bg: #050505; --crt-dim: rgba(224,224,224,0.2); --crt-mid: rgba(224,224,224,0.75); --crt-bg-03: rgba(224,224,224,0.03); --crt-bg-04: rgba(224,224,224,0.04); --crt-bg-08: rgba(224,224,224,0.08); --crt-bg-09: rgba(224,224,224,0.09); --crt-bg-11: rgba(224,224,224,0.11); --crt-bg-12: rgba(224,224,224,0.12); --crt-bg-20: rgba(224,224,224,0.2); --crt-bg-22: rgba(224,224,224,0.22);"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#051005">
 <title>PONG-84</title>
-<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./PONG-84_files/mqtt.min.js.下载"></script>
+<script src="./PONG-84_files/supabase-js@2"></script>
 <style>
 :root{
   --crt-color:#33ff33;--crt-glow:rgba(51,255,51,0.5);--crt-bg:#051005;--crt-dim:rgba(51,255,51,0.2);
@@ -319,10 +319,8 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
   .status-chip{font-size:8px;padding:2px 6px;}
   .stats-panel{font-size:8px;left:6px;top:70px;}
 }
-</style></head><body>
-
-<div class="rotate-hint" id="rotateHint">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="18" r="1.5" fill="currentColor"/></svg>
+</style></head><body class="cinematic-mode ui-small"><div class="rotate-hint" id="rotateHint">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"></rect><circle cx="12" cy="18" r="1.5" fill="currentColor"></circle></svg>
   <p>请旋转屏幕至横屏</p>
 </div>
 
@@ -330,10 +328,10 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
   <div class="header">
     <h1>PONG-84</h1>
     <button id="pauseBtn" class="hdr-btn disabled" title="暂停" aria-label="暂停">
-      <svg id="pauseIcon" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+      <svg id="pauseIcon" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
     </button>
     <button id="fsBtn" class="hdr-btn" title="全屏" aria-label="全屏">
-      <svg id="fsIcon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+      <svg id="fsIcon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M16 3h3a2 2 0 0 1 2 2v3"></path><path d="M8 21H5a2 2 0 0 1-2-2v-3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path></svg>
     </button>
   </div>
 
@@ -364,21 +362,21 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
 
   <div class="game-layout" id="gameLayout">
     <div class="ctrl-side ctrl-left" id="ctrlLeft">
-      <button class="ctrl-btn" data-ctrl="p1up" aria-label="上"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 15 12 9 18 15"/></svg></button>
-      <button class="ctrl-btn" data-ctrl="p1down" aria-label="下"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <button class="ctrl-btn" data-ctrl="p1up" aria-label="上"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 15 12 9 18 15"></polyline></svg></button>
+      <button class="ctrl-btn" data-ctrl="p1down" aria-label="下"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
     </div>
 
-    <div class="crt-assembly" id="crtAssembly">
-      <div class="crt-bezel">
-        <div class="crt-screen" id="crtScreen">
+    <div class="crt-assembly" id="crtAssembly" style="width: 1113.33px; padding: 12px;">
+      <div class="crt-bezel" style="padding: 6px;">
+        <div class="crt-screen gpu-on" id="crtScreen">
           <div class="game-container" id="gameContainer">
-            <canvas id="gameCanvas"></canvas>
+            <canvas id="gameCanvas" width="960" height="540"></canvas>
             <div class="hud-layer" id="hudLayer">
               <div class="scoreboard" id="scoreboard"><span id="scorePlayer">0</span><span class="score-sep">—</span><span id="scoreAI">0</span></div>
               <div class="timer-display" id="timerDisplay">00:00</div>
               <div class="shields" id="shieldsBox">
-                <div class="shield-indicator" id="shieldP1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span id="shieldP1Count">0</span></div>
-                <div class="shield-indicator" id="shieldP2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span id="shieldP2Count">0</span></div>
+                <div class="shield-indicator" id="shieldP1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg><span id="shieldP1Count">0</span></div>
+                <div class="shield-indicator" id="shieldP2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg><span id="shieldP2Count">0</span></div>
               </div>
               <div class="round-display" id="roundDisplay">回合 <span class="rv" id="roundNum">1</span></div>
             </div>
@@ -397,8 +395,8 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
     </div>
 
     <div class="ctrl-side ctrl-right" id="ctrlRight">
-      <button class="ctrl-btn" data-ctrl="p2up" aria-label="上"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 15 12 9 18 15"/></svg></button>
-      <button class="ctrl-btn" data-ctrl="p2down" aria-label="下"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <button class="ctrl-btn" data-ctrl="p2up" aria-label="上"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 15 12 9 18 15"></polyline></svg></button>
+      <button class="ctrl-btn" data-ctrl="p2down" aria-label="下"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
     </div>
   </div>
 
@@ -415,7 +413,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
 
   <div class="overlay" id="overlay">
     <button class="back-btn hidden-section" id="backBtn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
       返回
     </button>
 
@@ -435,16 +433,16 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
       <div class="main-foot">
         <div class="foot-left">
           <button class="icon-btn" data-goto="options" aria-label="设置" title="设置">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
           </button>
           <button class="icon-btn" data-goto="manual" aria-label="手册" title="说明手册">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
           </button>
         </div>
         <div class="foot-right">
           <button class="account-chip" data-goto="account" id="accountChip">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <span id="mainNickname">匿名</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span id="mainNickname">大师Master</span>
           </button>
         </div>
       </div>
@@ -463,7 +461,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
       <div class="setting-block"><div class="setting-label">难度</div>
         <div class="opt-grid">
           <button class="opt-btn" data-opt-diff="easy">简单</button>
-          <button class="opt-btn" data-opt-diff="normal">普通</button>
+          <button class="opt-btn selected" data-opt-diff="normal">普通</button>
           <button class="opt-btn" data-opt-diff="hard">困难</button>
           <button class="opt-btn" data-opt-diff="hell">地狱</button>
         </div>
@@ -478,7 +476,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
         <div class="opt-grid">
           <button class="opt-btn" data-opt-score="5">5</button>
           <button class="opt-btn" data-opt-score="7">7</button>
-          <button class="opt-btn" data-opt-score="11">11</button>
+          <button class="opt-btn selected" data-opt-score="11">11</button>
           <button class="opt-btn" data-opt-score="15">15</button>
           <button class="opt-btn" data-opt-score="21">21</button>
           <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" class="score-input" id="_aiCfg" placeholder="自定义">
@@ -501,7 +499,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <button class="opt-btn" data-goto="blessing">更换加护</button>
         </div>
       </div>
-      <button class="mc-btn start" data-start>开始游戏</button>
+      <button class="mc-btn start" data-start="">开始游戏</button>
     </div>
 
     <div class="menu-panel hidden-section" id="panel-pvp">
@@ -511,7 +509,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
         <div class="opt-grid">
           <button class="opt-btn" data-opt-score="5">5</button>
           <button class="opt-btn" data-opt-score="7">7</button>
-          <button class="opt-btn" data-opt-score="11">11</button>
+          <button class="opt-btn selected" data-opt-score="11">11</button>
           <button class="opt-btn" data-opt-score="15">15</button>
           <button class="opt-btn" data-opt-score="21">21</button>
           <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" class="score-input" placeholder="自定义">
@@ -527,7 +525,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <button class="opt-btn" data-goto="blessing">更换加护</button>
         </div>
       </div>
-      <button class="mc-btn start" data-start>开始游戏</button>
+      <button class="mc-btn start" data-start="">开始游戏</button>
     </div>
 
     <div class="menu-panel hidden-section slim" id="panel-online">
@@ -547,7 +545,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
       <button class="mc-btn big" id="btnJoin">加入房间</button>
       <button class="mc-btn big" id="btnManualP2P" style="font-size:12px;padding:12px;letter-spacing:2px;">手动 P2P 直连</button>
       <div style="font-size:9.5px;color:var(--crt-mid);text-align:center;margin-top:8px;letter-spacing:.5px;">
-        信令服务器：<span id="signalingName" style="color:var(--crt-color);font-weight:700;">探测中…</span>
+        信令服务器：<span id="signalingName" style="color:var(--crt-color);font-weight:700;">Mosquitto · 920ms (+2 备用)</span>
       </div>
       <div id="onlineStep" class="hidden-section" style="width:100%;margin-top:8px;">
         <p id="onlineInstruction" style="font-size:10px;color:var(--crt-mid);margin:6px 0;text-align:center;line-height:1.5;"></p>
@@ -593,7 +591,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
       <div class="tab-content active" id="manualTab-host">
         <div class="setting-label">步骤 1 · 生成邀请码</div>
         <button class="btn" id="manualGenOffer" style="width:100%;padding:10px;">生成邀请码</button>
-        <textarea class="room-code-input" id="manualOfferCode" readonly placeholder="点击上方按钮生成" style="height:90px;font-size:10px;letter-spacing:0;resize:none;font-family:monospace;text-align:left;padding:8px;margin-top:6px;line-height:1.3;"></textarea>
+        <textarea class="room-code-input" id="manualOfferCode" readonly="" placeholder="点击上方按钮生成" style="height:90px;font-size:10px;letter-spacing:0;resize:none;font-family:monospace;text-align:left;padding:8px;margin-top:6px;line-height:1.3;"></textarea>
         <button class="btn" id="manualCopyOffer" style="width:100%;font-size:11px;padding:6px;">复制邀请码</button>
         <div class="room-hint">把邀请码发给朋友（微信/QQ 均可）</div>
 
@@ -609,7 +607,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
         <button class="btn" id="manualGenAnswer" style="width:100%;padding:10px;margin-top:6px;">生成应答码</button>
 
         <div class="setting-label" style="margin-top:12px;">步骤 2 · 发送应答码</div>
-        <textarea class="room-code-input" id="manualAnswerCode" readonly placeholder="点击上方按钮后自动生成" style="height:90px;font-size:10px;letter-spacing:0;resize:none;font-family:monospace;text-align:left;padding:8px;line-height:1.3;"></textarea>
+        <textarea class="room-code-input" id="manualAnswerCode" readonly="" placeholder="点击上方按钮后自动生成" style="height:90px;font-size:10px;letter-spacing:0;resize:none;font-family:monospace;text-align:left;padding:8px;line-height:1.3;"></textarea>
         <button class="btn" id="manualCopyAnswer" style="width:100%;font-size:11px;padding:6px;">复制应答码</button>
         <div class="room-hint">把应答码发回给房主，房主粘贴并点「接受应答码」即可连接</div>
         <div id="manualClientStatus" class="room-status-bar" style="margin-top:10px;">等待输入邀请码</div>
@@ -637,7 +635,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <div class="opt-grid" id="roomBlessingPicker"></div>
           <div class="room-hint" id="roomBlessingHint">部分加护在四人模式下会削弱</div>
         </div>
-        <button class="mc-btn start" id="onlineStartBtn" data-start style="display:none;">开始游戏（主机）</button>
+        <button class="mc-btn start" id="onlineStartBtn" data-start="" style="display:none;">开始游戏（主机）</button>
 	<button class="mc-btn start hidden-section" id="clientReadyBtn">准备</button>
         <button class="mc-btn warn" id="btnCloseRoom" style="margin-top:8px;">关闭房间 / 离开房间</button>
       </div>
@@ -659,7 +657,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
               <div class="opt-grid" id="onlineScoreBlock">
                 <button class="opt-btn" data-opt-score="5">5</button>
                 <button class="opt-btn" data-opt-score="7">7</button>
-                <button class="opt-btn" data-opt-score="11">11</button>
+                <button class="opt-btn selected" data-opt-score="11">11</button>
                 <button class="opt-btn" data-opt-score="15">15</button>
                 <button class="opt-btn" data-opt-score="21">21</button>
               </div>
@@ -751,7 +749,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
 
     <div class="menu-panel wide hidden-section" id="panel-leaderboard">
       <h2>排行榜</h2>
-      <p class="menu-sub" id="leaderboardStatus">连接中...</p>
+      <p class="menu-sub" id="leaderboardStatus">已同步至全球服务器</p>
       <div class="ban-banner hidden-section" id="banBanner">本设备已被限制参与排行榜</div>
       <div class="admin-banner hidden-section" id="lbDebugBanner">调试模式已开启 · 当前成绩不会计入排行榜</div>
       <div class="tabs">
@@ -766,7 +764,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <span class="lb-hard">困难</span>
           <span class="lb-times">30s/60s/120s</span>
         </div>
-        <div class="lb-list" id="lbList"></div>
+        <div class="lb-list" id="lbList"><div class="lb-row "><span class="lb-rank">1</span><span class="lb-name">加载中…</span><span class="lb-win">0</span><span class="lb-hard">0</span><span class="lb-times">0/0/0</span></div></div>
       </div>
       <div class="tab-content" id="lbTab-time">
         <div class="lb-header-row">
@@ -774,9 +772,9 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <span class="lb-name">昵称</span>
           <span class="lb-win">累计时长</span>
         </div>
-        <div class="lb-list" id="lbTimeList"></div>
+        <div class="lb-list" id="lbTimeList"><div class="lb-row "><span class="lb-rank">1</span><span class="lb-name">加载中…</span><span class="lb-win">—</span></div></div>
       </div>
-      <div class="room-hint" style="margin-top:6px;">只统计通过完整性校验 · 按键模式完成的人机对局 · 地狱胜 3 分 · 困难胜 2 分</div>
+      <div class="room-hint" style="margin-top:6px;">只统计通过完整性校验的人机对局 · 按键积分 ×3 · 触屏积分 ×1</div>
     </div>
 
     <div class="menu-panel hidden-section" id="panel-account">
@@ -792,16 +790,16 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
       <div class="lb-section">
         <div class="setting-label">我的战绩</div>
         <div class="lb-my-stats">
-          <div class="lb-stat-row"><span class="lb-label">排名</span><span class="lb-value" id="lbMyRank">--</span></div>
+          <div class="lb-stat-row"><span class="lb-label">排名</span><span class="lb-value" id="lbMyRank">—</span></div>
           <div class="lb-stat-row"><span class="lb-label">累计游戏时长</span><span class="lb-value" id="lbMyPlayTime">0 分钟</span></div>
-          <div class="lb-stat-row"><span class="lb-label">地狱 21分 人机 胜利</span><span class="lb-value" id="lbMyHell21">0</span></div>
-          <div class="lb-stat-row"><span class="lb-label">困难 21分 人机 胜利</span><span class="lb-value" id="lbMyHard21">0</span></div>
+          <div class="lb-stat-row"><span class="lb-label">地狱 21分 人机 积分</span><span class="lb-value" id="lbMyHell21">0</span></div>
+          <div class="lb-stat-row"><span class="lb-label">困难 21分 人机 积分</span><span class="lb-value" id="lbMyHard21">0</span></div>
           <div class="lb-stat-row"><span class="lb-label">地狱 30秒 AI 计时赛 累计分</span><span class="lb-value" id="lbMyT30">0</span></div>
           <div class="lb-stat-row"><span class="lb-label">地狱 60秒 AI 计时赛 累计分</span><span class="lb-value" id="lbMyT60">0</span></div>
           <div class="lb-stat-row"><span class="lb-label">地狱 120秒 AI 计时赛 累计分</span><span class="lb-value" id="lbMyT120">0</span></div>
         </div>
       </div>
-      <div class="room-hint" id="accountIdHint">玩家 ID 保存在本机 · 战绩受完整性校验保护</div>
+      <div class="room-hint" id="accountIdHint">玩家 ID：— · 战绩受完整性校验保护</div>
     </div>
 
     <div class="menu-panel wide hidden-section" id="panel-options">
@@ -818,14 +816,14 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <div class="opt-grid">
             <button class="opt-btn" data-opt-theme="green">绿色</button>
             <button class="opt-btn" data-opt-theme="amber">琥珀</button>
-            <button class="opt-btn" data-opt-theme="white">白色</button>
+            <button class="opt-btn selected" data-opt-theme="white">白色</button>
             <button class="opt-btn" data-opt-theme="blue">蓝色</button>
           </div>
         </div>
         <div class="setting-block"><div class="setting-label">渲染预设</div>
           <div class="opt-grid">
             <button class="opt-btn" data-opt-render="classic">经典 CRT</button>
-            <button class="opt-btn" data-opt-render="cinematic">精致光影</button>
+            <button class="opt-btn selected" data-opt-render="cinematic">精致光影</button>
             <button class="opt-btn" data-opt-render="simple">简约省电</button>
           </div>
         </div>
@@ -838,7 +836,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
         <div class="setting-block"><div class="setting-label">界面尺寸</div>
           <div class="opt-grid">
             <button class="opt-btn" data-opt-uisize="large">大</button>
-            <button class="opt-btn" data-opt-uisize="small">小</button>
+            <button class="opt-btn selected" data-opt-uisize="small">小</button>
           </div>
         </div>
       </div>
@@ -850,7 +848,8 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           </div>
           <p class="room-hint" style="text-align:left;margin-top:6px;">
             方向按钮：屏幕两侧的上下按键控制球拍。<br>
-            <b>触屏跟随</b>：手指直接在屏幕上拖动，球拍实时跟随手指高度（有拍速上限）。
+            <b>触屏跟随</b>：手指（或鼠标）直接在屏幕上拖动，球拍实时跟随高度（有拍速上限）。<br>
+            注意：触屏跟随模式下积分按 ×1 计算（按键模式 ×3）。
           </p>
         </div>
         <div class="setting-block">
@@ -858,7 +857,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <div class="debug-row" style="padding:6px 0;">
             <label style="flex:0 0 34px;">速度</label>
             <input type="range" id="optPaddleSpeed" min="10" max="120" step="5" value="100">
-            <span class="debug-val" id="optPaddleSpeedVal">100%</span>
+            <span class="debug-val" id="optPaddleSpeedVal">120%</span>
           </div>
           <p class="room-hint" style="text-align:left;margin-top:6px;">调节球拍移动速度（10% ~ 120%），<b>不影响排行榜计分</b>。</p>
         </div>
@@ -942,9 +941,9 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
           <div class="kv"><span class="k">右拍</span><span class="v">↑ / ↓</span></div>
           <div class="kv"><span class="k">暂停</span><span class="v">P 或 ESC（单机/联机均可用）</span></div>
           <div class="kv"><span class="k">全屏</span><span class="v">右上角图标</span></div>
-          <h3>触屏</h3>
+          <h3>触屏 / 鼠标</h3>
           <p>方向按钮：屏幕两侧的上下按键控制球拍。</p>
-          <p><b>触屏跟随</b>：手指直接在屏幕上拖动，球拍实时跟随手指高度，但有拍速上限（不会瞬移）。</p>
+          <p><b>触屏跟随</b>：手指（或鼠标）直接在屏幕上拖动，球拍实时跟随高度，但有拍速上限（不会瞬移）。</p>
           <h3>球拍速度</h3>
           <p>在「设置 · 操控」中可以调节球拍移动速度（10% ~ 120%）。</p>
         </div>
@@ -1026,7 +1025,7 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
     <div class="menu-panel hidden-section" id="panel-result">
       <h2 id="resultTitle">游戏结束</h2>
       <p class="menu-sub" id="resultSub">0 : 0</p>
-      <button class="mc-btn start" data-start id="resultStartBtn">再来一局</button>
+      <button class="mc-btn start" data-start="" id="resultStartBtn">再来一局</button>
       <button class="mc-btn" id="resultRoomBtn" style="display:none;">返回房间</button>
       <button class="mc-btn" data-goto="main">返回主菜单</button>
     </div>
@@ -1043,7 +1042,9 @@ body.is-mobile .controls-hint{font-size:8.5px;bottom:3px;}
       </div>
     </div>
   </div>
-</div><script>"use strict";
+</div>
+
+<script>"use strict";
 
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
   || (navigator.maxTouchPoints > 0 && 'ontouchstart' in window);
@@ -1553,6 +1554,10 @@ function recomputeSpeeds() {
   if (gameMode === 'ai') {
     if (playerBlessing === 'longPaddle') player.baseHeight *= 1.3;
     if (aiBlessing === 'longPaddle') ai.baseHeight *= 1.3;
+  } else if (gameMode === 'pvp') {
+    /* ★ 修复：本地 PvP 玩家 2 的长拍加护 */
+    if (playerBlessing === 'longPaddle') player.baseHeight *= 1.3;
+    if (player2Blessing === 'longPaddle') ai.baseHeight *= 1.3;
   } else if (gameMode === 'online' && playerCount === 4) {
     if (getBlessingBySlot(1) === 'longPaddle') player.baseHeight *= 1.3;
     if (getBlessingBySlot(2) === 'longPaddle') p2Paddle.baseHeight *= 1.3;
@@ -1591,7 +1596,8 @@ function updateShields() {
 }
 function updateRoundDisplay() { const e = $('roundNum'); if (e) e.textContent = Math.max(1, roundNumber); }
 function updateBlessingDisplay() {
-  const showBlessings = gameStartedOnce && (gameMode === 'ai' || gameMode === 'online');
+  /* ★ 修复：pvp 也显示加护 */
+  const showBlessings = gameStartedOnce && (gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp');
   const topInfo = $('topInfo');
   if (!topInfo) return;
   topInfo.classList.toggle('show', showBlessings);
@@ -1627,6 +1633,12 @@ function updateBlessingDisplay() {
     const p2B = BLESSINGS[aiBlessing] || BLESSINGS.none;
     html += '<div class="blessing-chip"><span class="bl-dot" style="background:' + p1B.color + ';color:' + p1B.color + ';"></span><span class="bl-txt" style="color:' + p1B.color + ';">你 · ' + p1B.label + '</span>' + (p1ShieldCount > 0 ? '<span class="bl-shield">🛡×' + p1ShieldCount + '</span>' : '') + '</div>';
     html += '<div class="blessing-chip"><span class="bl-dot" style="background:' + p2B.color + ';color:' + p2B.color + ';"></span><span class="bl-txt" style="color:' + p2B.color + ';">电脑 · ' + p2B.label + '</span>' + (p2ShieldCount > 0 ? '<span class="bl-shield">🛡×' + p2ShieldCount + '</span>' : '') + '</div>';
+  } else if (gameMode === 'pvp') {
+    /* ★ 本地 PvP 显示双玩家加护 */
+    const p1B = BLESSINGS[playerBlessing] || BLESSINGS.none;
+    const p2B = BLESSINGS[player2Blessing] || BLESSINGS.none;
+    html += '<div class="blessing-chip"><span class="bl-dot" style="background:' + p1B.color + ';color:' + p1B.color + ';"></span><span class="bl-txt" style="color:' + p1B.color + ';">玩家1 · ' + p1B.label + '</span>' + (p1ShieldCount > 0 ? '<span class="bl-shield">🛡×' + p1ShieldCount + '</span>' : '') + '</div>';
+    html += '<div class="blessing-chip"><span class="bl-dot" style="background:' + p2B.color + ';color:' + p2B.color + ';"></span><span class="bl-txt" style="color:' + p2B.color + ';">玩家2 · ' + p2B.label + '</span>' + (p2ShieldCount > 0 ? '<span class="bl-shield">🛡×' + p2ShieldCount + '</span>' : '') + '</div>';
   } else if (gameMode === 'online') {
     const isLeftTeam = (mySlot === 1 || mySlot === 2);
     const myB = BLESSINGS[getBlessingBySlot(mySlot)] || BLESSINGS.none;
@@ -1675,7 +1687,20 @@ function updateControlsHint() {
   if (gameMode === 'pvp') ch.textContent = isMobile ? '左侧按钮控制左拍 · 右侧按钮控制右拍 · 领先 2 分获胜' : 'W / S 控制左拍 · ↑ / ↓ 控制右拍 · 领先 2 分获胜';
   else ch.textContent = isMobile ? '左右按钮均可控制球拍 · 领先 2 分获胜' : 'W / S 或 ↑ / ↓ 控制球拍 · 领先 2 分获胜';
 }
-function getBlessingBySlot(slot) { return roomBlessings[slot] || 'none'; }
+/* ★ 修复：本地 PvP 加护失效 —— getBlessingBySlot 全模式正确返回 */
+function getBlessingBySlot(slot) {
+  if (gameMode === 'pvp') {
+    if (slot === 1) return playerBlessing;
+    if (slot === 3) return player2Blessing;
+    return 'none';
+  }
+  if (gameMode === 'ai') {
+    if (slot === 1) return playerBlessing;
+    if (slot === 3) return aiBlessing;
+    return 'none';
+  }
+  return roomBlessings[slot] || 'none';
+}
 function getPaddleBySlot(slot) {
   if (slot === 1) return player;
   if (slot === 2) return p2Paddle;
@@ -1752,9 +1777,9 @@ function onRoundStart() {
   updateRoundDisplay();
   playerControlledByAI = false;
   if (gameMode === 'ai' && playerBlessing === 'firstStrike' && (roundNumber % 10 === 1)) playerControlledByAI = true;
-  frenzyActiveP1 = ((gameMode === 'ai' || gameMode === 'online') && getBlessingBySlot(1) === 'frenzy' && (roundNumber % 8 === 0));
-  frenzyActiveP2 = ((gameMode === 'ai' || gameMode === 'online') && getBlessingBySlot(3) === 'frenzy' && (roundNumber % 8 === 0));
-  if (gameMode === 'ai' || gameMode === 'online') {
+  frenzyActiveP1 = ((gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp') && getBlessingBySlot(1) === 'frenzy' && (roundNumber % 8 === 0));
+  frenzyActiveP2 = ((gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp') && getBlessingBySlot(3) === 'frenzy' && (roundNumber % 8 === 0));
+  if (gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp') {
     const nerf = isFourPlayerOnline();
     const shieldChance = nerf ? FOUR_NERF.shieldChance : 0.10;
     const shieldMax = nerf ? FOUR_NERF.shieldMax : 3;
@@ -1788,7 +1813,7 @@ function applyPowerupEffect(pu) {
     case 'small': ball.size = ball.baseSize * 0.5; break;
     case 'long': {
       const b1 = gameMode === 'ai' ? playerBlessing : getBlessingBySlot(1);
-      const p1HasLongBlessing = (b1 === 'longPaddle' && (gameMode === 'ai' || gameMode === 'online'));
+      const p1HasLongBlessing = (b1 === 'longPaddle' && (gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp'));
       if (!p1HasLongBlessing && Math.random() < 0.5) {
         player.height = Math.min(player.baseHeight * 1.5, LOGICAL_H);
         player.y = clamp(player.y, 0, LOGICAL_H - player.height);
@@ -1833,7 +1858,7 @@ function updateStatusChips() {
     if (c1b) { c1b.style.width = pct + '%'; c1b.style.background = info.color; }
     anyVisible = true;
   } else if (c1) c1.classList.add('hidden');
-  if (berserkStack > 0 && (gameMode === 'ai' || gameMode === 'online') && getBlessingBySlot(1) === 'berserk' && cb) {
+  if (berserkStack > 0 && (gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp') && getBlessingBySlot(1) === 'berserk' && cb) {
     cb.classList.remove('hidden');
     if (cbb) cbb.style.width = (berserkStack / BERSERK_MAX * 100) + '%';
     anyVisible = true;
@@ -1864,9 +1889,9 @@ function checkPaddle(paddle, isPlayer, slot) {
   ball.baseSpeed = Math.min(ball.baseSpeed + ball.initialSpeed * 0.05, ball.maxSpeed);
   const dir = isLeft ? 1 : -1;
   const spinIntensity = Math.abs(hitPos);
-  const slotBlessing = slot !== undefined ? getBlessingBySlot(slot) : (isLeft ? playerBlessing : aiBlessing);
+  const slotBlessing = slot !== undefined ? getBlessingBySlot(slot) : (isLeft ? playerBlessing : (gameMode === 'pvp' ? player2Blessing : aiBlessing));
   let spinThreshold = 0.4;
-  if (isLeft && (gameMode === 'ai' || gameMode === 'online') && slotBlessing === 'spin') spinThreshold = 0.4 / 1.4;
+  if (isLeft && (gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp') && slotBlessing === 'spin') spinThreshold = 0.4 / 1.4;
   let newSpeedX = Math.cos(angle) * ball.baseSpeed * dir;
   let newSpeedY = Math.sin(angle) * ball.baseSpeed;
   let newSpin = 0;
@@ -1880,7 +1905,7 @@ function checkPaddle(paddle, isPlayer, slot) {
       newSpeedY = Math.sin(angle) * ball.baseSpeed;
     }
   } else newSpin = hitPos * 0.5 * spinIntensity;
-  if (isLeft && (gameMode === 'ai' || gameMode === 'online') && slotBlessing === 'berserk') {
+  if (isLeft && (gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp') && slotBlessing === 'berserk') {
     const per = 0.07;
     if (berserkStack < BERSERK_MAX) { berserkStack++; AudioEngine.berserk(); }
     const baseFromBerserk = Math.min(ball.initialSpeed * (1 + per * berserkStack), ball.maxSpeed);
@@ -1930,13 +1955,13 @@ function handleOutOfBounds() {
     }
     let scoreAmount = 1;
     const spearDouble = isFourPlayerOnline() ? FOUR_NERF.spearDouble : 0.06;
-    if ((gameMode === 'ai' || gameMode === 'online') && getBlessingBySlot(3) === 'spear' && Math.random() < spearDouble) scoreAmount = 2;
+    if ((gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp') && getBlessingBySlot(3) === 'spear' && Math.random() < spearDouble) scoreAmount = 2;
     aiScore += scoreAmount;
     updateScore();
     Integrity.score(false);
     if (gameMode === 'ai') AudioEngine.lose(); else AudioEngine.score();
     const gamblerChance = 0.00008;
-    if ((gameMode === 'ai' || gameMode === 'online') && getBlessingBySlot(3) === 'gambler' && Math.random() < gamblerChance) {
+    if ((gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp') && getBlessingBySlot(3) === 'gambler' && Math.random() < gamblerChance) {
       endGame('赌神加护触发！对手直接获胜', false); return;
     }
     if (checkWin()) return;
@@ -1950,7 +1975,7 @@ function handleOutOfBounds() {
     if (p2ShieldCount > 0) {
       let ignoreShield = false;
       const spearPierce = isFourPlayerOnline() ? FOUR_NERF.spearPierce : 0.5;
-      if ((gameMode === 'ai' || gameMode === 'online') && getBlessingBySlot(1) === 'spear' && Math.random() < spearPierce) ignoreShield = true;
+      if ((gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp') && getBlessingBySlot(1) === 'spear' && Math.random() < spearPierce) ignoreShield = true;
       if (!ignoreShield) {
         p2ShieldCount--; updateShields(); updateBlessingDisplay(); AudioEngine.shieldBreak();
         ballRespawnDelay = SERVE_DELAY_FRAMES; nextBallDirection = -1; return;
@@ -1958,12 +1983,12 @@ function handleOutOfBounds() {
     }
     let scoreAmount = 1;
     const spearDouble = isFourPlayerOnline() ? FOUR_NERF.spearDouble : 0.06;
-    if ((gameMode === 'ai' || gameMode === 'online') && getBlessingBySlot(1) === 'spear' && Math.random() < spearDouble) scoreAmount = 2;
+    if ((gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp') && getBlessingBySlot(1) === 'spear' && Math.random() < spearDouble) scoreAmount = 2;
     playerScore += scoreAmount;
     updateScore(); AudioEngine.score();
     Integrity.score(true);
     const gamblerChance = 0.00008;
-    if ((gameMode === 'ai' || gameMode === 'online') && getBlessingBySlot(1) === 'gambler' && Math.random() < gamblerChance) {
+    if ((gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp') && getBlessingBySlot(1) === 'gambler' && Math.random() < gamblerChance) {
       endGame('赌神加护触发！直接获胜', true); return;
     }
     if (checkWin()) return;
@@ -2000,7 +2025,7 @@ function endGame(msg, isWin) {
     if (debugDirty && couldReport) rs.textContent += ' · 调试模式已开启，本局不计入排行榜';
     else if (couldReport && deviceBanned) rs.textContent += ' · 本设备已被限制参与排行榜';
     else if (couldReport && !lastIntegrityResult.ok) rs.textContent += ' · 数据未通过校验，不计入排行榜';
-    else if (couldReport && lastGameControlMode !== 'buttons') rs.textContent += ' · 触屏跟随模式，本局不计入排行榜';
+    else if (couldReport && lastGameControlMode !== 'buttons' && lastGameControlMode !== 'follow') rs.textContent += ' · 本局模式未纳入积分';
   }
   if (gameMode === 'online' && onlineRole === 'client') {
     if (rsb) rsb.style.display = 'none';
@@ -2406,9 +2431,9 @@ function draw() {
   if (!shouldDrawEntities) return;
   const b1 = gameMode === 'ai' ? playerBlessing : getBlessingBySlot(1);
   const b3 = gameMode === 'ai' ? aiBlessing : getBlessingBySlot(3);
-  const p1IsLong = ((gameMode === 'ai' || gameMode === 'online') && b1 === 'longPaddle');
-  const p2IsLong = ((gameMode === 'ai' || gameMode === 'online') && b3 === 'longPaddle');
-  const p1IsBerserk = ((gameMode === 'ai' || gameMode === 'online') && b1 === 'berserk' && berserkStack > 0);
+  const p1IsLong = ((gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp') && b1 === 'longPaddle');
+  const p2IsLong = ((gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp') && b3 === 'longPaddle');
+  const p1IsBerserk = ((gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp') && b1 === 'berserk' && berserkStack > 0);
   if (playerCount === 4) {
     drawPaddle(player, t, { side:'left', shields: p1ShieldCount, firstStrike: playerControlledByAI, frenzy: frenzyActiveP1, color: FOUR_PADDLE_COLORS[1], longPaddle: getBlessingBySlot(1) === 'longPaddle', botControl: slotAiControl[1] });
     drawPaddle(p2Paddle, t, { side:'left', color: FOUR_PADDLE_COLORS[2], longPaddle: getBlessingBySlot(2) === 'longPaddle', botControl: slotAiControl[2] });
@@ -2433,7 +2458,7 @@ function draw() {
     }
     let ballColor = t.color, glowColor = t.glow, glowBlur = 20;
     if (isCurvedBall) { ballColor = '#ffaa33'; glowColor = 'rgba(255, 170, 51, 0.8)'; glowBlur = 35; }
-    else if ((gameMode === 'ai' || gameMode === 'online') && b1 === 'berserk' && berserkStack > 0) {
+    else if ((gameMode === 'ai' || gameMode === 'online' || gameMode === 'pvp') && b1 === 'berserk' && berserkStack > 0) {
       ballColor = '#ff6622'; glowColor = 'rgba(255, 102, 34, 0.9)'; glowBlur = 28 + berserkStack * 4;
     }
     else if (activePowerups.length > 0) {
@@ -2997,14 +3022,12 @@ function setupDataChannel(channel) {
       if (oi) oi.textContent = '对手已加入，等待准备';
       const osb = $('onlineStartBtn'); if (osb) osb.style.display = 'none';
       const crb = $('clientReadyBtn'); if (crb) crb.classList.add('hidden-section');
-      /* ★ 房主启用暂停按钮 */
       if (pb && gameRunning) pb.classList.remove('disabled');
     } else {
       if (playerCount === 2) mySlot = 2;
       if (oi) oi.textContent = '已连接，请点击「准备」';
       const osb = $('onlineStartBtn'); if (osb) osb.style.display = 'none';
       const crb = $('clientReadyBtn'); if (crb) crb.classList.remove('hidden-section');
-      /* ★ 客户端禁用暂停按钮 */
       if (pb) pb.classList.add('disabled');
     }
     updateRoomUI();
@@ -3365,7 +3388,6 @@ function setupFourClientChannel(channel) {
     if (connectTimeout) { clearTimeout(connectTimeout); connectTimeout = null; }
     try { channel.send(JSON.stringify({ t: 'name', name: playerName })); } catch (e) {}
     const oi = $('onlineInstruction'); if (oi) oi.textContent = '已连接，等待主机开始游戏...';
-    /* ★ 客户端禁用暂停按钮 */
     const pb = $('pauseBtn'); if (pb) pb.classList.add('disabled');
     updateRoomUI();
     netAccum = 0; stats.ping = -1;
@@ -3699,9 +3721,12 @@ const LB_SECRET = 'pong84_personal_lb_v5_2025_doNotShare_xQ4mK9pL';
 const LB_LOCAL_SIG_KEY = 'pong84_local_sig_v5';
 const LB_ID_KEY = 'pong84.player.id';
 const LB_NAME_KEY = 'pong84.player.name';
-const LB_MY_STATS_KEY = 'pong84.my.stats.v5';
+const LB_MY_STATS_KEY = 'pong84.my.stats.v6';   /* ★ 版本升级 */
+const LB_DEVICE_KEY  = 'pong84.device.id';     /* ★ 设备码持久化 */
 const LB_MAX_HELL21 = 20000;
 const LB_MAX_HARD21 = 50000;
+const LB_MAX_HELL21_POINTS = 200000;           /* ★ 积分上限 */
+const LB_MAX_HARD21_POINTS = 200000;
 const LB_MAX_TIMER_SCORE = { 30: 999999, 60: 999999, 120: 999999 };
 const LB_MAX_PLAYTIME = 100000 * 3600 * 1000;
 const LB_MAX_NAME_LEN = 16;
@@ -3747,6 +3772,16 @@ function computeDeviceFingerprint() {
   } catch (e) {}
   return 'D' + lbFastHash(parts.join('|')).toUpperCase().slice(0, 15);
 }
+/* ★ 设备码持久化：刷新不变 */
+function getOrCreateDeviceId() {
+  let id = '';
+  try { id = localStorage.getItem(LB_DEVICE_KEY) || ''; } catch (e) {}
+  if (!/^D[A-Z0-9]{15}$/.test(id)) {
+    id = computeDeviceFingerprint();
+    try { localStorage.setItem(LB_DEVICE_KEY, id); } catch (e) {}
+  }
+  return id;
+}
 function getOrCreatePlayerId() {
   let id = '';
   try { id = localStorage.getItem(LB_ID_KEY) || ''; } catch (e) {}
@@ -3763,7 +3798,14 @@ function getPlayerName() { try { return localStorage.getItem(LB_NAME_KEY) || '';
 function setPlayerNameStore(n) { try { localStorage.setItem(LB_NAME_KEY, n); } catch (e) {} }
 function sanitizeName(n) { n = String(n || '').replace(/[\x00-\x1f\x7f]/g, '').trim(); return n.slice(0, LB_MAX_NAME_LEN) || '匿名'; }
 let playerName = getPlayerName() || '匿名';
-let myStats = { hell21Wins: 0, hard21Wins: 0, playMs: 0, hellTimer: { 30: { wins: 0, totalScore: 0 }, 60: { wins: 0, totalScore: 0 }, 120: { wins: 0, totalScore: 0 } } };
+
+/* ★ myStats 增加积分字段 */
+let myStats = {
+  hell21Wins: 0, hard21Wins: 0,
+  hell21Points: 0, hard21Points: 0,
+  playMs: 0,
+  hellTimer: { 30: { wins: 0, totalScore: 0 }, 60: { wins: 0, totalScore: 0 }, 120: { wins: 0, totalScore: 0 } }
+};
 function loadMyStats() {
   try {
     const raw = localStorage.getItem(LB_MY_STATS_KEY);
@@ -3782,6 +3824,8 @@ function applyStatsObject(d) {
   if (!d || typeof d !== 'object') return;
   myStats.hell21Wins = Math.max(0, Math.min(LB_MAX_HELL21, (d.hell21Wins | 0) || 0));
   myStats.hard21Wins = Math.max(0, Math.min(LB_MAX_HARD21, (d.hard21Wins | 0) || 0));
+  myStats.hell21Points = Math.max(0, Math.min(LB_MAX_HELL21_POINTS, (d.hell21Points | 0) || 0));
+  myStats.hard21Points = Math.max(0, Math.min(LB_MAX_HARD21_POINTS, (d.hard21Points | 0) || 0));
   myStats.playMs = Math.max(0, Math.min(LB_MAX_PLAYTIME, (d.playMs | 0) || 0));
   if (d.hellTimer && typeof d.hellTimer === 'object') {
     for (const k of [30, 60, 120]) {
@@ -3797,23 +3841,40 @@ function saveMyStats() {
   try {
     const dataStr = JSON.stringify(myStats);
     const sig = lbFastHash(dataStr + '|' + LB_LOCAL_SIG_KEY);
-    localStorage.setItem(LB_MY_STATS_KEY, JSON.stringify({ d: dataStr, s: sig, v: 1, t: Date.now() }));
+    localStorage.setItem(LB_MY_STATS_KEY, JSON.stringify({ d: dataStr, s: sig, v: 2, t: Date.now() }));
   } catch (e) {}
 }
 function computeSig(entry) {
   const t = entry.hellTimer;
   const payload = entry.v + '|' + entry.id + '|' + entry.name + '|' + entry.ts + '|' + entry.hell21Wins + '|' +
     (entry.hard21Wins | 0) + '|' + (entry.playMs | 0) + '|' + (entry.deviceId || '') + '|' +
+    (entry.hell21Points | 0) + '|' + (entry.hard21Points | 0) + '|' +
     t[30].wins + ',' + t[30].totalScore + '|' + t[60].wins + ',' + t[60].totalScore + '|' + t[120].wins + ',' + t[120].totalScore + '|' +
     (entry.lastIntegrity || '');
   return lbFastHash(payload + '|' + LB_SECRET) + lbFastHash(LB_SECRET + '|' + payload + '|' + LB_SECRET);
 }
 let allEntries = {}, leaderboardStatus = 'connecting', renderPending = false, lastPublishedIntegrity = '';
+let cachedIP = null;
+
+/* ★ 获取公网 IP（缓存） */
+async function getCachedIP() {
+  if (cachedIP) return cachedIP;
+  try {
+    const res = await fetch('https://api.ipify.org?format=json', { cache: 'no-store' });
+    const data = await res.json();
+    cachedIP = data.ip || '—';
+  } catch (e) {
+    cachedIP = '—';
+  }
+  return cachedIP;
+}
 
 function lbEntryFromMyStats() {
   return {
-    v: 2, id: PLAYER_ID, name: playerName, ts: Date.now(), deviceId: DEVICE_ID,
-    hell21Wins: myStats.hell21Wins, hard21Wins: myStats.hard21Wins, playMs: myStats.playMs | 0,
+    v: 3, id: PLAYER_ID, name: playerName, ts: Date.now(), deviceId: DEVICE_ID,
+    hell21Wins: myStats.hell21Wins, hard21Wins: myStats.hard21Wins,
+    hell21Points: myStats.hell21Points, hard21Points: myStats.hard21Points,
+    playMs: myStats.playMs | 0,
     lastIntegrity: lastPublishedIntegrity || '',
     hellTimer: {
       30: { wins: myStats.hellTimer[30].wins, totalScore: myStats.hellTimer[30].totalScore },
@@ -3827,8 +3888,8 @@ function lbTotalTimer(e) {
   for (const k of [30, 60, 120]) if (t[k] && t[k].totalScore) s += t[k].totalScore;
   return s;
 }
-/* ★ 地狱 ×3，困难 ×2 */
-function lbWinScore(e) { return (e.hell21Wins | 0) * 3 + (e.hard21Wins | 0) * 2; }
+/* ★ 排行榜排序改为积分 */
+function lbWinScore(e) { return (e.hell21Points | 0) + (e.hard21Points | 0); }
 function lbEscapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]); }
 function fmtPlayTime(ms) { const min = Math.floor((ms | 0) / 60000); if (min < 60) return min + ' 分钟'; return (min / 60).toFixed(1) + ' 小时'; }
 function updateBanBanner() {
@@ -3851,14 +3912,14 @@ function lbSortedByWins() {
 function lbSortedByTime() {
   return Object.values(allEntries).filter(e => e && e.id).sort((a, b) => {
     const d1 = (b.playMs | 0) - (a.playMs | 0); if (d1 !== 0) return d1;
-    return (b.hell21Wins | 0) - (a.hell21Wins | 0);
+    return lbWinScore(b) - lbWinScore(a);
   });
 }
 function lbRenderMyStats() {
   const e1 = $('lbMyHell21'), e1b = $('lbMyHard21'), e2 = $('lbMyT30'), e3 = $('lbMyT60'),
         e4 = $('lbMyT120'), e5 = $('lbMyPlayTime');
-  if (e1) e1.textContent = myStats.hell21Wins | 0;
-  if (e1b) e1b.textContent = myStats.hard21Wins | 0;
+  if (e1) e1.textContent = myStats.hell21Points | 0;
+  if (e1b) e1b.textContent = myStats.hard21Points | 0;
   if (e2) e2.textContent = myStats.hellTimer[30].totalScore | 0;
   if (e3) e3.textContent = myStats.hellTimer[60].totalScore | 0;
   if (e4) e4.textContent = myStats.hellTimer[120].totalScore | 0;
@@ -3921,13 +3982,16 @@ async function lbConnect() {
   if (!supabaseClient) { leaderboardStatus = 'offline'; lbScheduleRender(); return; }
   leaderboardStatus = 'connecting'; lbScheduleRender();
   try {
-    const { data, error } = await supabaseClient.from('leaderboard').select('*').order('hell21_wins', { ascending: false }).limit(200);
+    const { data, error } = await supabaseClient.from('leaderboard').select('*').order('hell21_points', { ascending: false }).limit(200);
     if (error) throw error;
     allEntries = {};
     for (const row of data) {
       allEntries[row.player_id] = {
-        v: 2, id: row.player_id, name: row.name, ts: new Date(row.updated_at).getTime(), deviceId: row.device_id,
-        hell21Wins: row.hell21_wins, hard21Wins: row.hard21_wins, playMs: row.play_ms,
+        v: 3, id: row.player_id, name: row.name, ts: new Date(row.updated_at).getTime(), deviceId: row.device_id,
+        hell21Wins: row.hell21_wins, hard21Wins: row.hard21_wins,
+        hell21Points: Number(row.hell21_points) || 0,
+        hard21Points: Number(row.hard21_points) || 0,
+        playMs: Number(row.play_ms) || 0,
         lastIntegrity: row.last_integrity || '',
         hellTimer: {
           30: { wins: row.timer_30_wins, totalScore: row.timer_30_score },
@@ -3953,9 +4017,12 @@ async function lbCheckBan() {
 }
 async function lbPublishMine() {
   if (!supabaseClient || deviceBanned) return;
+  const ip = await getCachedIP();
   const tempEntry = {
-    v: 2, id: PLAYER_ID, name: playerName, ts: Date.now(), deviceId: DEVICE_ID,
-    hell21Wins: myStats.hell21Wins, hard21Wins: myStats.hard21Wins, playMs: myStats.playMs,
+    v: 3, id: PLAYER_ID, name: playerName, ts: Date.now(), deviceId: DEVICE_ID,
+    hell21Wins: myStats.hell21Wins, hard21Wins: myStats.hard21Wins,
+    hell21Points: myStats.hell21Points, hard21Points: myStats.hard21Points,
+    playMs: myStats.playMs,
     lastIntegrity: lastPublishedIntegrity || '',
     hellTimer: {
       30: { wins: myStats.hellTimer[30].wins, totalScore: myStats.hellTimer[30].totalScore },
@@ -3965,7 +4032,10 @@ async function lbPublishMine() {
   };
   const row = {
     player_id: PLAYER_ID, name: playerName, device_id: DEVICE_ID,
-    hell21_wins: myStats.hell21Wins, hard21_wins: myStats.hard21Wins, play_ms: myStats.playMs,
+    ip_address: ip,
+    hell21_wins: myStats.hell21Wins, hard21_wins: myStats.hard21Wins,
+    hell21_points: myStats.hell21Points, hard21_points: myStats.hard21Points,
+    play_ms: myStats.playMs,
     timer_30_score: myStats.hellTimer[30].totalScore,
     timer_60_score: myStats.hellTimer[60].totalScore,
     timer_120_score: myStats.hellTimer[120].totalScore,
@@ -3983,11 +4053,11 @@ async function lbPublishMine() {
     lbScheduleRender();
   } catch (e) { console.warn('[PONG-84] 上传排行榜失败', e); }
 }
+/* ★ 允许按键和触屏跟随，按键 ×3 触屏 ×1 */
 function lbScoreValidForReport() {
   if (onlineRole !== null || lanRole !== null) return false;
   if (gameMode !== 'ai') return false;
-  /* ★ 只统计按键模式 */
-  if (lastGameControlMode !== 'buttons') return false;
+  if (lastGameControlMode !== 'buttons' && lastGameControlMode !== 'follow') return false;
   if (playerScore <= aiScore) return false;
   if (isDebugDirty()) return false;
   if (deviceBanned) return false;
@@ -4005,16 +4075,24 @@ function lbScoreValidForReport() {
     return true;
   }
 }
+/* ★ 积分：按键地狱 9 / 困难 6；触屏地狱 3 / 困难 2；计时赛同理乘 3 或 1 */
 function lbTryReport() {
   if (!lbScoreValidForReport()) return;
   lastPublishedIntegrity = lastIntegrityResult ? (lastIntegrityResult.hash || '') : '';
+  const isTouch = (lastGameControlMode === 'follow');
+  const pointMul = isTouch ? 1 : 3;
   if (timerMode) {
     const k = timerSeconds;
     myStats.hellTimer[k].wins++;
-    myStats.hellTimer[k].totalScore += playerScore;
+    myStats.hellTimer[k].totalScore += playerScore * pointMul;
   } else {
-    if (currentDiff === 'hell') myStats.hell21Wins++;
-    else if (currentDiff === 'hard') myStats.hard21Wins++;
+    if (currentDiff === 'hell') {
+      myStats.hell21Wins++;
+      myStats.hell21Points += 3 * pointMul;   /* 按键 9，触屏 3 */
+    } else if (currentDiff === 'hard') {
+      myStats.hard21Wins++;
+      myStats.hard21Points += 2 * pointMul;   /* 按键 6，触屏 2 */
+    }
   }
   saveMyStats(); lbRenderMyStats(); lbPublishMine();
 }
@@ -4025,13 +4103,13 @@ function updateNicknameDisplay() {
   const el = $('mainNickname');
   if (el) el.textContent = playerName || '匿名';
   const hint = $('accountIdHint');
-  if (hint) hint.textContent = '玩家 ID：' + PLAYER_ID + ' · 战绩受完整性校验保护';
+  if (hint) hint.textContent = '玩家 ID：' + PLAYER_ID + ' · 设备 ID：' + DEVICE_ID + ' · 战绩受完整性校验保护';
 }
 
 /* ============================================================
    设置
    ============================================================ */
-const SETTINGS_KEY = 'pong84.settings.v23';
+const SETTINGS_KEY = 'pong84.settings.v24';
 function loadSettings() {
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
@@ -4392,9 +4470,11 @@ function syncUI() {
   if (timeBlock) timeBlock.classList.toggle('hidden-section', !timerMode);
 }
 
-/* 触屏跟随 */
+/* ★ 触屏跟随：支持鼠标 mousemove（电脑端无需按住） */
 function setupFollowTouch() {
-  const container = $('gameContainer'); if (!container) return;
+  const container = $('gameContainer');
+  if (!container) return;
+
   const setTargetFromEvent = (e) => {
     if (touchControlMode !== 'follow') return;
     if (!gameRunning) return;
@@ -4404,10 +4484,23 @@ function setupFollowTouch() {
     const rel = (clientY - rect.top) / rect.height;
     followTouchTargetY = clamp(rel * LOGICAL_H, 0, LOGICAL_H);
   };
+
+  // 触摸
   container.addEventListener('touchstart', (e) => { if (touchControlMode === 'follow') { e.preventDefault(); setTargetFromEvent(e); } }, { passive: false });
   container.addEventListener('touchmove', (e) => { if (touchControlMode === 'follow') { e.preventDefault(); setTargetFromEvent(e); } }, { passive: false });
-  container.addEventListener('pointerdown', (e) => { if (touchControlMode === 'follow') setTargetFromEvent(e); });
-  container.addEventListener('pointermove', (e) => { if (touchControlMode === 'follow' && e.buttons) setTargetFromEvent(e); });
+
+  // 鼠标：移动即跟随，无需按住
+  container.addEventListener('mousemove', (e) => {
+    if (touchControlMode === 'follow') setTargetFromEvent(e);
+  });
+  // 触控笔等保留 pointermove
+  container.addEventListener('pointermove', (e) => {
+    if (touchControlMode === 'follow' && e.pointerType === 'mouse') {
+      setTargetFromEvent(e);
+    } else if (touchControlMode === 'follow' && e.buttons) {
+      setTargetFromEvent(e);
+    }
+  });
 }
 
 /* 检索房间 */
@@ -4455,10 +4548,11 @@ function showCountdownTip() {
     '狂暴加护会让你越打越快',
     '四人模式每位玩家可选独立加护',
     '同列互挤时全场拍速减半',
-    '触屏跟随模式：手指拖动屏幕控制球拍',
+    '触屏跟随模式：手指/鼠标拖动屏幕控制球拍',
     '联机掉线会自动切换为 AI 托管',
     '房间号第一位表示使用的信令服务器编号',
-    '手动 P2P 支持微信/QQ 交换邀请码'
+    '手动 P2P 支持微信/QQ 交换邀请码',
+    '按键模式积分 ×3，触屏模式积分 ×1'
   ];
   ct.textContent = TIPS[Math.floor(Math.random() * TIPS.length)];
   ct.classList.add('show');
@@ -4710,7 +4804,6 @@ function bindAllEvents() {
     if (onlineRole === 'host') broadcastRoomState();
   }));
 
-  /* ★ 秒进房间面板：先 navigate，再后台 createRoom */
   document.querySelectorAll('[data-online-mode]').forEach(btn => {
     btn.addEventListener('click', () => {
       const mode = parseInt(btn.dataset.onlineMode, 10);
@@ -4917,7 +5010,8 @@ function bindAllEvents() {
    ============================================================ */
 function init() {
   loadSettings(); loadMyStats();
-  DEVICE_ID = computeDeviceFingerprint();
+  /* ★ 设备码持久化：刷新不变 */
+  DEVICE_ID = getOrCreateDeviceId();
   updateCSSVariables(); applyRenderModeClass(); applyUISizeClass(); applyGpuClass(); applyTouchModeClass();
   updateNicknameDisplay(); lbRenderAll(); syncUI(); updateStatsDisplay();
   checkOrientation(); layoutAll(); applyPanel('main'); updateControlsHint();
@@ -4931,7 +5025,7 @@ function init() {
   draw();
   initInput(); setupFollowTouch(); bindAllEvents(); updateFsIcon();
 
-  /* ★ 后台探测信令服务器（不阻塞） */
+  /* 后台探测信令服务器（不阻塞） */
   updateSignalingBadge('探测中…');
   probeAllServers().catch(() => {});
 
