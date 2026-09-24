@@ -3856,18 +3856,7 @@ function computeSig(entry) {
 let allEntries = {}, leaderboardStatus = 'connecting', renderPending = false, lastPublishedIntegrity = '';
 let cachedIP = null;
 
-/* ★ 获取公网 IP（缓存） */
-async function getCachedIP() {
-  if (cachedIP) return cachedIP;
-  try {
-    const res = await fetch('https://api.ipify.org?format=json', { cache: 'no-store' });
-    const data = await res.json();
-    cachedIP = data.ip || '—';
-  } catch (e) {
-    cachedIP = '—';
-  }
-  return cachedIP;
-}
+
 
 function lbEntryFromMyStats() {
   return {
@@ -4017,7 +4006,6 @@ async function lbCheckBan() {
 }
 async function lbPublishMine() {
   if (!supabaseClient || deviceBanned) return;
-  const ip = await getCachedIP();
   const tempEntry = {
     v: 3, id: PLAYER_ID, name: playerName, ts: Date.now(), deviceId: DEVICE_ID,
     hell21Wins: myStats.hell21Wins, hard21Wins: myStats.hard21Wins,
@@ -4049,7 +4037,6 @@ async function lbPublishMine() {
       p_sig: computeSig(tempEntry)
     });
     if (error) throw error;
-    // 服务端返回 { ok: true } 或 { ok: false, err: '...' }
     if (data && data.ok === false) {
       if (data.err === 'banned') {
         deviceBanned = true;
@@ -4063,29 +4050,7 @@ async function lbPublishMine() {
     lbScheduleRender();
   } catch (e) { console.warn('[PONG-84] 上传排行榜失败', e); }
 }
-  const row = {
-    player_id: PLAYER_ID, name: playerName, device_id: DEVICE_ID,
-    ip_address: ip,
-    hell21_wins: myStats.hell21Wins, hard21_wins: myStats.hard21Wins,
-    hell21_points: myStats.hell21Points, hard21_points: myStats.hard21Points,
-    play_ms: myStats.playMs,
-    timer_30_score: myStats.hellTimer[30].totalScore,
-    timer_60_score: myStats.hellTimer[60].totalScore,
-    timer_120_score: myStats.hellTimer[120].totalScore,
-    timer_30_wins: myStats.hellTimer[30].wins,
-    timer_60_wins: myStats.hellTimer[60].wins,
-    timer_120_wins: myStats.hellTimer[120].wins,
-    last_integrity: lastPublishedIntegrity || '',
-    sig: computeSig(tempEntry),
-    updated_at: new Date().toISOString()
-  };
-  try {
-    const { error } = await supabaseClient.from('leaderboard').upsert(row, { onConflict: 'player_id' });
-    if (error) throw error;
-    allEntries[PLAYER_ID] = lbEntryFromMyStats();
-    lbScheduleRender();
-  } catch (e) { console.warn('[PONG-84] 上传排行榜失败', e); }
-}
+
 /* ★ 允许按键和触屏跟随，按键 ×3 触屏 ×1 */
 function lbScoreValidForReport() {
   if (onlineRole !== null || lanRole !== null) return false;
